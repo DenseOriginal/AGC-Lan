@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import { stringify } from "qs";
 import { UserModel } from "../../models/user";
 
 const sortCategories = ['first_name', 'last_name', 'username', 'email', 'class'];
