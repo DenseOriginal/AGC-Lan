@@ -1,0 +1,27 @@
+<html lang="en">
+  <head>
+    {{> meta-head}}
+
+    {{#if title}}
+      <title>{{title}} - AGC Lan</title>
+    {{else}}
+      <title>AGC Lan</title>
+    {{/if}}
+
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/layout-main.css">
+  </head>
+  <body>
+    {{#unless noHeader}}
+    {{> header }}
+    {{/unless}}
+
+    <main class="page">
+      <div class="inner">
+        {{{body}}}
+      </div>
+    </main>
+
+    {{> footer }}
+  </body>
+</html>

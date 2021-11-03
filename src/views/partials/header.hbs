@@ -1,0 +1,103 @@
+  <style>
+    header {
+      background-color: var(--background-alt);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 48px;
+    }
+
+    header > .logo {
+      height: 28px;
+      padding: 0 16px;
+    }
+
+    header > .logo img {
+      height: 100%;
+    }
+
+    header a {
+      text-decoration: none;
+    }
+
+    nav.large {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100%;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      height: 100%;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .user:hover {
+      cursor: pointer;
+      background-color: var(--background-alt-hover);
+    }
+
+    .user > .avatar {
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .setup-banner {
+      width: 100%;
+      padding: 16px;
+      background-color: transparent;
+      text-align: center;
+      position: absolute;
+      top: 10px;
+      color: var(--text);
+    }
+
+    .setup-banner > .inner {
+      background-color: rgb(236, 201, 103);
+      padding: 8px 0;
+    }
+
+    .setup-banner > .inner > a {
+      color: var(--text);
+    }
+  </style>
+
+{{#if user}}
+{{#unless user.setup_finished}}
+<span class="setup-banner">
+  <div class="inner">
+    Vi mangler stadig lidt information omkring dig, <a href="/profile/setup">Klik her</a> for at færdig gøre din bruger
+  </div>
+</span>
+{{/unless}}
+{{/if}}
+
+<header>
+
+  <div class="logo">
+    <a href="/">
+      <img class="logo-img" height="28" src="/images/logo/pill.png" alt="AGC Lan logo" />
+    </a>
+  </div>
+
+  <nav class="large">
+
+    {{#if user}}
+    <a href="/profile">
+      <div class="user">
+        <img class="avatar" height="28" src="{{ user.picture_url }}" alt="Profile image">
+        <p>{{ user.username }}</p>
+      </div>
+    </a>
+    {{else}}
+    <a class="user" href="/login">Login</a>
+    {{/if}}
+  </nav>
+</header>

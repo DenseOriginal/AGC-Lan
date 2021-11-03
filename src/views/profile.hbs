@@ -1,0 +1,68 @@
+<style>
+  .card {
+    background-color: var(--card-color);
+    -webkit-box-shadow: var(--basic-shadow); 
+    box-shadow: var(--basic-shadow);
+    padding: 0 0 32px 0;
+    border-radius: 10px;
+    margin-bottom: 32px;
+  }
+
+  .card > .row {
+    width: 100%;
+    padding: 12px 32px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .card > .row > .title {
+    min-width: 150px !important;
+    color: var(--text-muted);
+  } 
+
+  .card > .row:nth-child(odd) {
+    background-color: var(--background-alt);
+  }
+
+  .card > .head {
+    padding: 32px 32px 16px 32px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--background-alt);
+  }
+</style>
+
+<h1>Din profil</h1>
+<br>
+<div class="card">
+  <div class="head">
+    <h3>Personlig information</h3>
+  </div>
+  <div class="row"><p class="title">Fornavn:</p> {{ user.first_name }}</div>
+  <div class="row"><p class="title">Efternavn:</p> {{ user.last_name }}</div>
+  <div class="row"><p class="title">Klasse:</p> {{ user.class }}</div>
+  <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
+  <div class="row"><p class="title">Brugernavn:</p> {{ user.username }}</div>
+</div>
+
+<div class="card">
+  <div class="head">
+    <h3>Danger zone</h3>
+  </div>
+  <div class="row"><button class="warn" onclick="deleteAccount()">Slet konto</button></div>
+</div>
+
+<a href="/logout">Log ud</a>
+
+<script>
+const email = "{{ user.email }}";
+
+function deleteAccount() {
+  const confirm = prompt(`Indtast din email (${email}) for at bekræfte at din bruger bliver slettet. DETTE KAN IKKE GØRES OM`)
+  if(confirm == email) {
+    // TODO: implement deletion
+  } else {
+    if(!confirm) return;
+    alert('Det du indtastede matcher ikke din email, din bruger vil IKKE blive slettet');
+  }
+}
+</script>

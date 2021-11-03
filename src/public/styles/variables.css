@@ -1,0 +1,72 @@
+:root {
+  --logo-red: rgba(211,62,31,1);
+  --logo-blue: rgba(81,190,224,1);
+  --logo-gradient: linear-gradient(70deg, var(--logo-red) 50%, var(--logo-blue) 50%);
+
+  --fast-transition: all ease-in-out 100ms;
+  --normal-transition: all ease-in-out 300ms;
+  --slow-transition: all ease-in-out 500ms;
+}
+
+:root[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --background: #fafafa;
+  --background-alt: #ebebeb;
+  --background-alt-hover: #d4d4d4;
+  --border-muted: #ebebeb;
+  --card-color: white;
+  --text: #333;
+  --text-muted: #595a6a;
+  --text-alt: rgb(233, 233, 233);
+  --scrollbar-track: #dcdcdc;
+  --scrollbar-thumb: #b3b3b3;
+
+  --link-color: rgb(26, 116, 235);
+
+  --drop-shadow-color: #24242425;
+  --basic-shadow: var(--drop-shadow-color) 1px 1px 4px 2px;
+  
+  --active: #7db2ff;
+  --warn: rgb(243, 59, 59);
+
+  /* Button */
+  --button: #5999f8;
+  --button-hover: #3f7cd6;
+  --button-text: white;
+
+  --warn-button: #d32254;
+  --warn-button-hover: #8e0b30;
+  --warn-button-text: white;
+}
+
+
+/* Defaut classes using variables */
+button {
+  background-color: var(--button);
+  outline: none;
+  border: none;
+  text-align: center;
+  color: var(--button-text);
+  padding: 10px 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+  cursor: pointer;
+}
+
+button.warn {
+  background-color: var(--warn-button);
+  outline: none;
+  border: none;
+  text-align: center;
+  color: var(--warn-button-text);
+}
+
+button.warn:hover {
+  background-color: var(--warn-button-hover);
+  cursor: pointer;
+}

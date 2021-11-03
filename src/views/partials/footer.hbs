@@ -1,0 +1,39 @@
+<footer>
+  <style>
+    footer {
+      display: flex;
+      justify-content: flex-start;
+      background: var(--logo-red);
+      color: var(--text-alt);
+    }
+
+    footer > .copyright {
+      font-weight: 100; 
+    }
+
+    footer > .container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: fit-content;
+      width: 100%;
+    }
+
+    footer > .container > .copyright {
+      background: linear-gradient(70deg, var(--logo-blue) 93%, var(--logo-red) 93%);
+      padding: 8px 16px;
+      padding-right: 32px;
+      height: 100%;
+    }
+
+    footer > .container > .rest {
+      padding: 8px 16px;
+      flex-grow: 1;
+    }
+  </style>
+  <div class="container">
+    <span class="copyright noselect red-gradient">Copyright &copy; 2021 AGCLan</span>
+    <div class="rest">
+    </div>
+  </div>
+</footer>
