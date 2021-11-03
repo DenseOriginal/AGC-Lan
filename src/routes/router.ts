@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getIndex } from ".";
 import { isAuthenticated, notAuthenticated } from "../config/passport";
-import { AdminRouter } from "./admin/router";
+import { StaffRouter } from "./staff/router";
 import { ApiRouter } from "./api/router";
 import { getLogin } from "./login";
 import { getPolicy } from "./policy";
@@ -19,7 +19,7 @@ RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 // Other routers
 RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
-RootRouter.use("/admin", AdminRouter);
+RootRouter.use("/staff", StaffRouter);
 
 // 404
 RootRouter.use("**", (req, res) => res.status(404).render('404', { title: "404", noHeader: true }));
