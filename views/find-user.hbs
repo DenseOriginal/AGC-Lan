@@ -110,13 +110,9 @@
 
         {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
         {{#if foundUser.is_staff}}
-          <a href="/api/remove-staff">
-            <button>Fjern Staff</button>
-          </a>
+          <button onclick="post('/api/remove-staff')">Fjern Staff</button>
         {{else}}
-          <a href="/api/add-staff">
-            <button>Tilføj Staff</button>
-          </a>
+          <button onclick="post('/api/add-staff')">Tilføj Staff</button>
         {{/if}}
       {{/if}}
 
@@ -125,3 +121,15 @@
   </div>
   {{/if}}
 </div>
+
+<script>
+  function post(url) {
+    fetch(url, {
+      method: 'POST',
+      body: "id={{ foundUser._id }}",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }).then(() => location.reload());
+  }
+</script>
