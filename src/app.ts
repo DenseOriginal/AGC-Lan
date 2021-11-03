@@ -26,6 +26,21 @@ app.set("views", join(__dirname, "../views"));
 app.engine('hbs', exphbs({
   extname: 'hbs',
   defaultLayout: 'main',
+  helpers: {
+    eq: (v1: any, v2: any) => v1 === v2,
+    ne: (v1: any, v2: any) => v1 !== v2,
+    lt: (v1: any, v2: any) => v1 < v2,
+    gt: (v1: any, v2: any) => v1 > v2,
+    lte: (v1: any, v2: any) => v1 <= v2,
+    gte: (v1: any, v2: any) => v1 >= v2,
+    not: (v1: any) => !v1,
+    and() {
+        return Array.prototype.every.call(arguments, Boolean);
+    },
+    or() {
+        return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+    }
+}
 }));
 app.set("view engine", "hbs");
 
