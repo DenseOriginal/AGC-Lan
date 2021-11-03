@@ -6,7 +6,5 @@ import { getSetup, postSetup } from "./setup";
 export const ProfileRouter = Router();
 
 ProfileRouter.route('/profile').get(isAuthenticated, getProfile);
-// ProfileRouter.route('/profile/setup').get(getSetup);
 ProfileRouter.route('/profile/setup').get(isAwaitingSetup, getSetup);
-// ProfileRouter.route('/profile/setup').post(postSetup);
 ProfileRouter.route('/profile/setup').post(isAwaitingSetup, postSetup);
