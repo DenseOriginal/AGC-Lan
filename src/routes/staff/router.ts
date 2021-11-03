@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isStaff } from "../../config/passport";
-import { getStaff } from "./admin";
+import { getStaff } from "./staff";
 import { getUsers } from "./users";
 
 export const StaffRouter = Router();
