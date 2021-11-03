@@ -22,6 +22,10 @@
     justify-content: space-between;
   }
 
+  .card.banner {
+    border-top: 3px solid {{ foundUser.accent_color }};
+  }
+
   .card > .avatar {
     width: 80px;
     border-radius: 50%;
@@ -85,7 +89,7 @@
 </style>
 
 <div class="container">
-  <div class="card">
+  <div class="card banner">
       <img
         class="avatar"
         {{!-- width="75px"
