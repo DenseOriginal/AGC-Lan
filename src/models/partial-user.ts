@@ -9,6 +9,7 @@ export interface IPartialUser {
   discord_id: string;
   created_at: Date;
   setup_finished: false;
+  accent_color: string;
 }
 
 export type PartialUserAsDocument = IPartialUser & Document;
@@ -49,6 +50,7 @@ const PartialUserSchema = new Schema({
     default: false,
     immutable: true,
   },
+  accent_color: { type: String, required: true },
 });
 
 /**

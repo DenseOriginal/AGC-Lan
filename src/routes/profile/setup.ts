@@ -48,6 +48,7 @@ export const postSetup: RequestHandler = async (req, res) => {
     picture_url,
     discord_id,
     created_at,
+    accent_color,
   } = req.user as IUser;
 
   const newUser = new UserModel({
@@ -62,6 +63,7 @@ export const postSetup: RequestHandler = async (req, res) => {
     discord_id,
     created_at,
     setup_finished: true,
+    accent_color
   });
 
   try {

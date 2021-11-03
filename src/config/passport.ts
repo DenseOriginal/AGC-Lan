@@ -29,6 +29,8 @@ passport.use(new Strategy({
   scope: [Scope.IDENTIFY, Scope.EMAIL]
 }, async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback<any>) => {
   try {
+    console.log(profile);
+    
     const user = await UserModel.findOne({ "discord_id": profile.id }).exec();
 
     if(!user) {
@@ -52,6 +54,7 @@ passport.use(new Strategy({
         refresh_token: refreshToken,
         picture_url: primaryPhoto?.value,
         discord_id: profile.id,
+        accent_color: (profile._json as any).banner_color
       });
 
       await newPartial.save();

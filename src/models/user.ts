@@ -19,6 +19,7 @@ export interface IUser {
   picture_url: string;
   discord_id: string;
   setup_finished: true;
+  accent_color: string;
   _id: string;
 }
 
@@ -51,6 +52,7 @@ const UserSchema = new Schema({
   picture_url: { type: String, required: true },
   discord_id: { type: String, required: true, unique: true },
   setup_finished: { type: Boolean, default: true, immutable: true },
+  accent_color: { type: String, required: true },
 });
 
 /**
