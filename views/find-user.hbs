@@ -1,0 +1,127 @@
+<style>
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .card {
+    background-color: var(--card-color);
+    -webkit-box-shadow: var(--basic-shadow);
+    box-shadow: var(--basic-shadow);
+    padding: 32px;
+    border-radius: 10px;
+    margin-top: 32px;
+    width: min(500px, 90%);
+    height: fit-content;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .card > .avatar {
+    width: 80px;
+    border-radius: 50%;
+  }
+
+  .card > .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card > .text > .username {
+    margin-bottom: 8px;
+  }
+
+  .card > .text > p {
+    color: var(--text-muted);
+    max-width: 200px;
+  }
+
+  .card.admin {
+    display: flex;
+    flex-direction: column;
+    /* !important to override the media query */
+    align-items: flex-start !important;
+  }
+
+  .card.admin > .header {
+    margin-bottom: 32px;
+  }
+
+  .card.admin .buttons {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card.admin .buttons button {
+    width: 200px;
+    margin: 8px;
+    flex-shrink: 1;
+  }
+
+  @media only screen and (max-width: 400px) {
+    .card {
+      flex-direction: column;
+      align-items: center;
+      width: 95%;
+    }
+
+    .card > .text {
+      width: 100%;
+    }
+
+    .card > .avatar {
+      margin-bottom: 64px;
+      width: min(150px, 100%);
+    }
+  }
+</style>
+
+<div class="container">
+  <div class="card">
+      <img
+        class="avatar"
+        {{!-- width="75px"
+        height="75px" --}}
+        src="{{ foundUser.picture_url }}"
+        alt="{{ foundUser.username }} profile picture"
+      >
+      <div class="text">
+        <h4 class="username">{{ foundUser.username }}</h4>
+        <p>Probably implement bio?</p>
+      </div>
+  </div>
+
+  {{#if user.is_staff}}
+  <div class="card admin">
+    <div class="header">
+      <h4>Admin tools</h4>
+    </div>
+    <div class="buttons">
+      {{!-- If the user is admin and the foundUser isn't an admin, then show the Add/remove staff buttons --}}
+      {{#if (and user.is_admin (not foundUser.is_admin))}}
+
+        {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
+        {{#if foundUser.is_staff}}
+          <a href="/api/remove-staff">
+            <button>Fjern Staff</button>
+          </a>
+        {{else}}
+          <a href="/api/add-staff">
+            <button>Tilføj Staff</button>
+          </a>
+        {{/if}}
+      {{/if}}
+
+      <button class="warn">Ban</button>
+    </div>
+  </div>
+  {{/if}}
+</div>
