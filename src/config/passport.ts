@@ -113,3 +113,10 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   }
   return res.redirect("/");
 }
+
+export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if(req.isAuthenticated() && req.user.is_superadmin) {
+    return next();
+  }
+  return res.redirect("/");
+}
