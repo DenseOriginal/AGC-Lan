@@ -99,3 +99,10 @@ export const notAuthenticated = (req: Request, res: Response, next: NextFunction
 
   res.redirect("/profile");
 };
+
+export const isStaff = (req: Request, res: Response, next: NextFunction) => {
+  if(req.isAuthenticated() && req.user.is_staff) {
+    return next();
+  }
+  return res.redirect("/");
+}
