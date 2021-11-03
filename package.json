@@ -19,6 +19,7 @@
     "@oauth-everything/passport-discord": "^1.0.2",
     "@types/morgan": "^1.9.3",
     "body-parser": "^1.19.0",
+    "copyfiles": "^2.4.1",
     "dotenv": "^10.0.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
@@ -29,6 +30,7 @@
     "mongoose-express-session": "0.0.5",
     "morgan": "^1.10.0",
     "passport": "^0.5.0",
+    "rimraf": "^3.0.2",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
@@ -39,8 +41,6 @@
     "@types/express-session": "^1.17.4",
     "@types/node": "^16.11.2",
     "@types/passport": "^1.0.7",
-    "copyfiles": "^2.4.1",
-    "rimraf": "^3.0.2",
     "ts-node-dev": "^1.1.8"
   }
 }
