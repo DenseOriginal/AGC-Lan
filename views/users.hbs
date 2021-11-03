@@ -1,0 +1,76 @@
+<style>
+  .card {
+    background-color: var(--card-color);
+    -webkit-box-shadow: var(--basic-shadow);
+    box-shadow: var(--basic-shadow);
+    padding: 32px;
+    border-radius: 10px;
+    margin-bottom: 32px;
+  }
+
+  .container {
+    overflow-x: auto;
+  }
+
+  .container>table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 700px;
+    border-radius: 10px;
+  }
+
+  .container>table td,
+  .container>table th {
+    border: 1px solid var(--border-muted);
+    padding: 8px;
+  }
+
+  .container>table td.goto a,
+  .container>table th a {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .container>table tr:nth-child(odd) {
+    background-color: var(--background-alt);
+  }
+
+  .container>table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+</style>
+
+<h1>Alle brugere</h1>
+
+<div class="card">
+  <div class="container">
+    <table id="user-table">
+      <tr>
+        <th></th>
+        <th><a href="?sort=first_name">Fornavn</a></th>
+        <th><a href="?sort=last_name">Efternavn</a></th>
+        <th><a href="?sort=username">Brugernavn</a></th>
+        <th><a href="?sort=email">Email</a></th>
+        <th><a href="?sort=class">Klasse</a></th>
+      </tr>
+      {{#each users}}
+      <tr>
+
+        <td class="goto">
+          <a href="/user/{{ this._id }}"><i class="fas fa-external-link-alt"></i></a>
+        </td>
+
+        <td>{{ this.first_name }}</td>
+        <td>{{ this.last_name }}</td>
+        <td>{{ this.username }}</td>
+        <td>{{ this.email }}</td>
+        <td>{{ this.class }}</td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
