@@ -9,8 +9,6 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser(async (id: string, done) => {
-  console.log('Deserialize, ', id);
-  
   try {
     const user = await UserModel.findOne({ "discord_id": id }).exec();
     if(user) return done(null, user.toObject());
