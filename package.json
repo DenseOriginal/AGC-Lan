@@ -4,7 +4,10 @@
   "description": "",
   "scripts": {
     "watch": "tsnd --respawn src/server.ts",
-    "build": "tsc"
+    "clean": "rimraf dist/",
+    "copy-files": "copyfiles -u 1 src/public/**/* src/views/**/* dist/",
+    "build": "npm run clean && tsc && npm run copy-files",
+    "build:serve": "npm run build && node ./dist/server.js"
   },
   "engines": {
     "node": "14.x"
@@ -36,6 +39,8 @@
     "@types/express-session": "^1.17.4",
     "@types/node": "^16.11.2",
     "@types/passport": "^1.0.7",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2",
     "ts-node-dev": "^1.1.8"
   }
 }
