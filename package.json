@@ -6,6 +6,9 @@
     "watch": "tsnd --respawn src/server.ts",
     "build": "tsc"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
