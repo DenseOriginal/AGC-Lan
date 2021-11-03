@@ -20,7 +20,7 @@ const connection = connect();
 
 // Express config
 app.set('port', process.env.PORT || 3000);
-app.set("views", join(__dirname, "./views"));
+app.set("views", join(__dirname, "../views"));
 
 
 app.engine('hbs', exphbs({
@@ -29,7 +29,7 @@ app.engine('hbs', exphbs({
 }));
 app.set("view engine", "hbs");
 
-app.use(express.static(join(__dirname, './public')));
+app.use(express.static(join(__dirname, '../public')));
 app.use(morgan('dev'));
 app.use(session({
   secret: process.env.SESSION_SECRET as string,

@@ -5,8 +5,7 @@
   "scripts": {
     "watch": "tsnd --respawn src/server.ts",
     "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 src/public/**/* src/views/**/* dist/",
-    "build": "npm run clean && tsc && npm run copy-files",
+    "build": "npm run clean && tsc",
     "build:serve": "npm run build && node ./dist/server.js"
   },
   "engines": {
