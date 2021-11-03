@@ -109,7 +109,7 @@
     <form action="/profile/setup" method="post">
       {{#each infoToCollect}}
       <div class="input">
-        <input type="text" name="{{ this.name }}" id="{{ this.name }}" placeholder="{{ this.placeholder }}">
+        <input type="text" name="{{ this.name }}" id="{{ this.name }}" value="{{ this.value }}" placeholder="{{ this.placeholder }}">
 
         {{#if this.error}}
         <p class="error">{{ this.error }}</p>

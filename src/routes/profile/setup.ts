@@ -3,9 +3,9 @@ import { PartialUserModel } from "../../models/partial-user";
 import { IUser, UserModel } from "../../models/user";
 
 const infoToCollect = [
-  { name: "firstname", placeholder: "Fornavn", error: "" },
-  { name: "lastname", placeholder: "Efternavn", error: "" },
-  { name: "class", placeholder: "Klasse (f. eks. 20HTXCR)", error: "" },
+  { name: "firstname", placeholder: "Fornavn", value: "", error: "" },
+  { name: "lastname", placeholder: "Efternavn", value: "", error: "" },
+  { name: "class", placeholder: "Klasse (f. eks. 20HTXCR)", value: "", error: "" },
 ];
 
 const classRegex = /\d\dHTX\w{1,4}/;
@@ -29,6 +29,10 @@ export const postSetup: RequestHandler = async (req, res) => {
 
   // We have an error so send that resposne
   if(errorMessage.find(cur => cur.error)) {
+    errorMessage[0].value = first_name;
+    errorMessage[1].value = last_name;
+    errorMessage[2].value = klasse;
+
     return res.status(422).render('setup', {
       title: 'Setup',
       noHeader: true,
