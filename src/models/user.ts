@@ -8,6 +8,7 @@ export interface IUser {
   username: string;
   refresh_token: string;
   is_staff: boolean;
+  is_admin: boolean;
   last_login: Date;
   created_at: Date;
   class: string;
@@ -30,6 +31,7 @@ const UserSchema = new Schema({
   username: { type: String, required: true },
   refresh_token: { type: String, required: true },
   is_staff: { type: Boolean, default: false },
+  is_admin: { type: Boolean, default: false },
   last_login: {
     type: Date,
     required: true,

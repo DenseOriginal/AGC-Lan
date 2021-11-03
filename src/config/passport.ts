@@ -106,3 +106,10 @@ export const isStaff = (req: Request, res: Response, next: NextFunction) => {
   }
   return res.redirect("/");
 }
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if(req.isAuthenticated() && req.user.is_admin) {
+    return next();
+  }
+  return res.redirect("/");
+}
