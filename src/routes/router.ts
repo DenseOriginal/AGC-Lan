@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getIndex } from ".";
 import { notAuthenticated } from "../config/passport";
+import { AdminRouter } from "./admin/router";
 import { ApiRouter } from "./api/router";
 import { getLogin } from "./login";
 import { getPolicy } from "./policy";
@@ -16,6 +17,7 @@ RootRouter.route("/policy").get(getPolicy);
 // Other routers
 RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
+RootRouter.use("/admin", AdminRouter);
 
 // 404
 RootRouter.use("**", (req, res) => res.status(404).render('404', { title: "404", noHeader: true }));
