@@ -29,8 +29,6 @@ passport.use(new Strategy({
   scope: [Scope.IDENTIFY, Scope.EMAIL]
 }, async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback<any>) => {
   try {
-    console.log(profile);
-    
     const user = await UserModel.findOne({ "discord_id": profile.id }).exec();
 
     if(!user) {
