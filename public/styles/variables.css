@@ -3,71 +3,147 @@
   --logo-blue: rgba(81,190,224,1);
   --logo-gradient: linear-gradient(70deg, var(--logo-red) 50%, var(--logo-blue) 50%);
 
+  /* Transitions */
   --fast-transition: all ease-in-out 100ms;
   --normal-transition: all ease-in-out 300ms;
   --slow-transition: all ease-in-out 500ms;
 }
 
+/* Inspiration: https://github.com/angular/components/blob/master/src/material/core/theming/_palette.scss */
+/* Other cool pallettes: https://material.io/design/color/the-color-system.html#tools-for-picking-colors */
+
 :root[data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --background: #fafafa;
-  --background-alt: #ebebeb;
-  --background-alt-hover: #d4d4d4;
-  --border-muted: #ebebeb;
-  --card-color: white;
-  --text: #333;
-  --text-muted: #595a6a;
-  --text-alt: rgb(233, 233, 233);
-  --scrollbar-track: #dcdcdc;
-  --scrollbar-thumb: #b3b3b3;
+  --dark-primary-text: #202020;
+  --dark-muted-text: #595a6a;
 
-  --link-color: rgb(26, 116, 235);
+  --light-primary-text: white;
+  --light-muted-text: #a3a3a3;
 
-  --drop-shadow-color: #24242425;
-  --basic-shadow: var(--drop-shadow-color) 1px 1px 4px 2px;
-  
+  --primary-text: var(--dark-primary-text);
+  --muted-text: var(--dark-muted-text);
+
+  --text-alt: var(--light-primary-text);
+
+  --link-color: #1a74eb;
   --active: #7db2ff;
-  --warn: rgb(243, 59, 59);
-  --warn-text: white;
+  --scrollbar-track: var(--background-100);
+  --scrollbar-thumb: var(--background-400);
+  --card-background: var(--background-100);
 
-  /* Button */
-  --button: #5999f8;
-  --button-hover: #3f7cd6;
-  --button-text: white;
+  --background-50: #fafafa;
+  --background-100: #f5f5f5;
+  --background-200: #eeeeee;
+  --background-400: #bdbdbd;
+  --background-500: #9E9E9E;
+  --background-700: #616161;
+  --background-900: #212121;
+  --background-A100: #ffffff;
+  --background-A200: #eeeeee;
+  --background-A400: #bdbdbd;
+  --background-A700: #616161;
 
-  --warn-button: #d32254;
-  --warn-button-hover: #8e0b30;
-  --warn-button-text: white;
+  --background-contrast-50: var(--dark-primary-text);
+  --background-contrast-100: var(--dark-primary-text);
+  --background-contrast-200: var(--dark-primary-text);
+  --background-contrast-400: var(--dark-primary-text);
+  --background-contrast-500: var(--dark-primary-text);
+  --background-contrast-700: var(--light-primary-text);
+  --background-contrast-900: var(--light-primary-text);
+  --background-contrast-A100: var(--dark-primary-text);
+  --background-contrast-A200: var(--dark-primary-text);
+  --background-contrast-A400: var(--dark-primary-text);
+  --background-contrast-A700: var(--light-primary-text);
+
+  /* Shadows */
+  --drop-shadow-color: #24242425; /* CSS doesn't allow us to change alpha on a variable, so we need a new variable */
+  --shadow-basic: var(--drop-shadow-color) 1px 1px 4px 2px;
+
+  /* Warn colors */
+  --warn-400: #ef5350;
+  --warn-500: #f44336;
+  --warn-700: #D32F2F;
+  --warn-800: #c62828;
+  --warn-900: #b71c1c;
+
+  --warn-contrast-400: var(--light-primary-text);
+  --warn-contrast-500: var(--light-primary-text);
+  --warn-contrast-700: var(--light-primary-text);
+  --warn-contrast-800: var(--light-primary-text);
+  --warn-contrast-900: var(--light-primary-text);
+
+  /* Alert colors */
+  --alert-400: #ffca28;
+  --alert-500: #ffc107;
+  --alert-700: #FFA000;
+  --alert-800: #ff8f00;
+  --alert-900: #ff6f00;
+
+  --alert-contrast-400: var(--dark-primary-text);
+  --alert-contrast-500: var(--light-primary-text);
+  --alert-contrast-700: var(--light-primary-text);
+  --alert-contrast-800: var(--light-primary-text);
+  --alert-contrast-900: var(--light-primary-text);
+
+  /* Main button */
+  --button-400: #42a5f5;
+  --button-500: #2196f3;
+  --button-700: #1976D2;
+  --button-800: #2076d8;
+  --button-900: #0d47a1;
+
+  --button-contrast-400: var(--light-primary-text);
+  --button-contrast-500: var(--light-primary-text);
+  --button-contrast-700: var(--light-primary-text);
+  --button-contrast-800: var(--light-primary-text);
+  --button-contrast-900: var(--light-primary-text);
 }
 
-
 /* Defaut classes using variables */
-button {
-  background-color: var(--button);
+button,
+button.main {
+  background-color: var(--button-400);
   outline: none;
   border: none;
   text-align: center;
-  color: var(--button-text);
+  color: var(--button-contrast-400);
   padding: 10px 16px;
   font-weight: 600;
   letter-spacing: 1px;
   border-radius: 4px;
 }
 
-button:hover {
-  background-color: var(--button-hover);
+button:hover,
+button.main:hover {
+  background-color: var(--button-700);
+  color: var(--button-contrast-700);
   cursor: pointer;
 }
 
 button.warn {
-  background-color: var(--warn-button);
+  background-color: var(--warn-400);
   outline: none;
   border: none;
   text-align: center;
-  color: var(--warn-button-text);
+  color: var(--warn-contrast-400);
 }
 
 button.warn:hover {
-  background-color: var(--warn-button-hover);
+  background-color: var(--warn-700);
+  color: var(--warn-contrast-700);
+  cursor: pointer;
+}
+
+button.alert {
+  background-color: var(--alert-400);
+  outline: none;
+  border: none;
+  text-align: center;
+  color: var(--alert-contrast-400);
+}
+
+button.alert:hover {
+  background-color: var(--alert-700);
+  color: var(--alert-contrast-700);
   cursor: pointer;
 }

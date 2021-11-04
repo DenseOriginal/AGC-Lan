@@ -1,11 +1,11 @@
 <style>
   .card {
-    background-color: var(--card-color);
-    -webkit-box-shadow: var(--basic-shadow);
-    box-shadow: var(--basic-shadow);
+    background-color: var(--card-background);
+    -webkit-box-shadow: var(--shadow-basic);
+    box-shadow: var(--shadow-basic);
     padding: 32px;
     border-radius: 10px;
-    margin-bottom: 32px;
+    margin: 32px 0;
   }
 
   .container {
@@ -21,18 +21,18 @@
 
   .container>table td,
   .container>table th {
-    border: 1px solid var(--border-muted);
+    border: 1px solid var(--background-300);
     padding: 8px;
   }
 
   .container>table td.goto a,
   .container>table th a {
-    color: var(--text-color);
+    color: var(--primary-text);
     text-decoration: none;
   }
 
   .container>table tr:nth-child(odd) {
-    background-color: var(--background-alt);
+    background-color: var(--background-200);
   }
 
   .container>table th {

@@ -9,7 +9,7 @@ body {
 
 body {
   font-family: 'Roboto', sans-serif;
-  color: var(--text);
+  color: var(--primary-text);
 }
 
 * {
