@@ -28,6 +28,7 @@
   
   --active: #7db2ff;
   --warn: rgb(243, 59, 59);
+  --warn-text: white;
 
   /* Button */
   --button: #5999f8;
