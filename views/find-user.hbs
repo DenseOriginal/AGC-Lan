@@ -1,3 +1,32 @@
+{{!-- Display the error if an error is present --}}
+{{#if error}}
+<style>
+  .error {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .error>span {
+    background-color: var(--warn);
+    margin-top: 64px;
+    padding: 12px 32px;
+    width: min(100%, fit-content);
+    height: fit-content;
+    color: var(--warn-text);
+    border-radius: 5px;
+    text-align: center;
+  }
+</style>
+
+<div class="error">
+  <span>{{ error }}</span>
+</div>
+
+{{else}}
+
+{{!-- Otherwise just do the regular profile --}}
 <style>
   .container {
     width: 100%;
@@ -148,3 +177,4 @@
     }).then(() => location.reload());
   }
 </script>
+{{/if}}
