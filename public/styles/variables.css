@@ -85,28 +85,28 @@
   --alert-contrast-800: var(--light-primary-text);
   --alert-contrast-900: var(--light-primary-text);
 
-  /* Main button */
-  --button-400: #42a5f5;
-  --button-500: #2196f3;
-  --button-700: #1976D2;
-  --button-800: #2076d8;
-  --button-900: #0d47a1;
+  /* Info colors */
+  --info-400: #42a5f5;
+  --info-500: #2196f3;
+  --info-700: #1976D2;
+  --info-800: #2076d8;
+  --info-900: #0d47a1;
 
-  --button-contrast-400: var(--light-primary-text);
-  --button-contrast-500: var(--light-primary-text);
-  --button-contrast-700: var(--light-primary-text);
-  --button-contrast-800: var(--light-primary-text);
-  --button-contrast-900: var(--light-primary-text);
+  --info-contrast-400: var(--light-primary-text);
+  --info-contrast-500: var(--light-primary-text);
+  --info-contrast-700: var(--light-primary-text);
+  --info-contrast-800: var(--light-primary-text);
+  --info-contrast-900: var(--light-primary-text);
 }
 
 /* Defaut classes using variables */
 button,
 button.main {
-  background-color: var(--button-400);
+  background-color: var(--info-400);
   outline: none;
   border: none;
   text-align: center;
-  color: var(--button-contrast-400);
+  color: var(--info-contrast-400);
   padding: 10px 16px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -115,8 +115,8 @@ button.main {
 
 button:hover,
 button.main:hover {
-  background-color: var(--button-700);
-  color: var(--button-contrast-700);
+  background-color: var(--info-700);
+  color: var(--info-contrast-700);
   cursor: pointer;
 }
 
