@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { UserModel } from "../../models/user";
 
+// Different categories the users can be sorted by
 const sortCategories = ['first_name', 'last_name', 'username', 'email', 'class'];
 
 export const getUsers: RequestHandler = async (req, res) => {

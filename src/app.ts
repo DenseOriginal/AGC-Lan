@@ -27,6 +27,8 @@ app.engine('hbs', exphbs({
   extname: 'hbs',
   defaultLayout: 'main',
   helpers: {
+    // Diffrent helpers, to extend the functionality of handlebars
+    // Hbs doesn't nativly support conditional operators, so we implement our own
     eq: (v1: any, v2: any) => v1 === v2,
     ne: (v1: any, v2: any) => v1 !== v2,
     lt: (v1: any, v2: any) => v1 < v2,
@@ -46,7 +48,7 @@ app.set("view engine", "hbs");
 
 app.use(express.static(join(__dirname, '../public')));
 app.use(morgan('dev'));
-app.use(session({
+app.use(session({ // Setup session storage in mongoDB, this makes sure users stay logged in between session
   secret: process.env.SESSION_SECRET as string,
   resave: true,
   saveUninitialized: true,
@@ -59,5 +61,5 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Routers
+// Import and use the RootRouter
 app.use(RootRouter);

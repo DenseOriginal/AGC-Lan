@@ -17,21 +17,25 @@ export const getUser: RequestHandler = async (req, res) => {
   })
 
   try {
+    // Try to find a user, and convert the user into a object to get rid of mongoose model stuff
     const foundUser = (await UserModel.findOne({ _id: id }).exec())?.toObject();
 
     if(!foundUser) {
+      // If we didn't find a user, the tell the user that
       return res.render('find-user', {
         user: req.user,
         error: "Ingen bruger fundet"
       });
     }
 
+    // Render the find-user page and pass the foundUser to handlebars
     return res.render('find-user', {
       title: foundUser?.username,
       foundUser,
       user: req.user,
     });
   } catch (error) {
+    // If an error happened log it, and tell the user
     console.error(error);
     return res.render('find-user', {
       title: 'Error',

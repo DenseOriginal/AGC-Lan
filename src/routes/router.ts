@@ -10,6 +10,7 @@ import { getUser } from "./find-user";
 
 export const RootRouter = Router();
 
+// Routes at the root level
 RootRouter.route("/").get(getIndex);
 RootRouter.route("/login").get(notAuthenticated, getLogin);
 RootRouter.route("/logout").get((req, res) => { req.logOut(); res.redirect('/'); });
@@ -21,5 +22,5 @@ RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
 RootRouter.use("/staff", StaffRouter);
 
-// 404
+// 404 to catch every request not handled by anything else
 RootRouter.use("**", (req, res) => res.status(404).render('404', { title: "404", noHeader: true }));
