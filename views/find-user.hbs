@@ -143,7 +143,7 @@
 
         {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
         {{#if foundUser.is_staff}}
-          <button onclick="post('/api/remove-staff')">Fjern Staff</button>
+          <button onclick="post('/api/remove-staff')" class="alert">Fjern Staff</button>
         {{else}}
           <button onclick="post('/api/add-staff')">Tilføj Staff</button>
         {{/if}}
@@ -154,7 +154,7 @@
 
         {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
         {{#if foundUser.is_admin}}
-          <button onclick="post('/api/remove-admin')">Fjern Admin</button>
+          <button onclick="post('/api/remove-admin')" class="alert">Fjern Admin</button>
         {{else}}
           <button onclick="post('/api/add-admin')">Tilføj Admin</button>
         {{/if}}
