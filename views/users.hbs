@@ -6,27 +6,31 @@
     padding: 32px;
     border-radius: 10px;
     margin: 32px 0;
+    position: relative;
   }
 
   .container {
     overflow-x: auto;
+    border-radius: 4px;
+    width: min(100%, 700px);
   }
 
   .container>table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 700px;
-    border-radius: 10px;
   }
 
   .container>table td,
   .container>table th {
-    border: 1px solid var(--background-300);
     padding: 8px;
   }
+  .container>table td:not(:last-of-type),
+  .container>table th:not(:last-of-type ) {
+    border-right: 1px solid var(--background-200);
+  }
 
-  .container>table td.goto a,
-  .container>table th a {
+  .container>table td.goto a {
     color: var(--primary-text);
     text-decoration: none;
   }
@@ -39,8 +43,12 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04AA6D;
-    color: white;
+    background-color: var(--info-800);
+  }
+
+  .container>table th a {
+    color: var(--info-contrast-800);
+    text-decoration: none;
   }
 </style>
 
