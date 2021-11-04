@@ -122,14 +122,14 @@ export const notAuthenticated = (req: Request, res: Response, next: NextFunction
 };
 
 export const isStaff = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && req.user.is_staff) {
+  if(req.isAuthenticated() && (req.user.is_staff || req.user.is_admin ||req.user.is_superadmin)) {
     return next();
   }
   return res.redirect("/");
 }
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && req.user.is_admin) {
+  if(req.isAuthenticated() && (req.user.is_admin || req.user.is_superadmin)) {
     return next();
   }
   return res.redirect("/");
