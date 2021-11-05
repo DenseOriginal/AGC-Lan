@@ -4,7 +4,7 @@
       display: flex;
       justify-content: flex-start;
       background: var(--logo-red);
-      color: var(--text-alt);
+      color: white;
     }
 
     footer > .copyright {
@@ -15,7 +15,6 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      height: fit-content;
       width: 100%;
     }
 
@@ -29,11 +28,104 @@
     footer > .container-footer > .rest {
       padding: 8px 16px;
       flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    footer > .container-footer > .rest > .switch {
+      margin: 0 8px;
     }
   </style>
   <div class="container-footer">
     <span class="copyright noselect red-gradient">Copyright &copy; 2021 AGCLan</span>
     <div class="rest">
+      {{!-- Theme toggle --}}
+      <i class="far fa-sun"></i>
+      <label class="switch color-switch">
+        <input type="checkbox" onclick="changeTheme()">
+        <span class="slider round"></span>
+      </label>
+      <i class="far fa-moon"></i>
     </div>
   </div>
 </footer>
+
+{{!-- Script for theme switch --}}
+<script>
+  function changeTheme() {
+    const newTheme = localStorage.getItem('color_theme') == 'light' ? 'dark' : 'light';
+    localStorage.setItem('color_theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  }
+
+  // Onload change to the theme stored in localStorage
+  const theme = localStorage.getItem('color_theme');
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelector('.switch.color-switch > input').checked = theme == 'dark';
+</script>
+
+{{!-- Styles for toogle switch --}}
+{{!-- https://www.w3schools.com/howto/howto_css_switch.asp --}}
+<style>
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.switch > .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-400);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch > .slider:before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch > input:checked + .slider {
+  background-color: var(--active);
+}
+
+.switch > input:focus + .slider {
+  box-shadow: 0 0 1px var(--active);
+}
+
+.switch > input:checked + .slider:before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
+}
+
+/* Rounded sliders */
+.switch > .slider.round {
+  border-radius: 34px;
+}
+
+.switch > .slider.round:before {
+  border-radius: 50%;
+}
+</style>
