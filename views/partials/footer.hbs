@@ -54,14 +54,22 @@
 {{!-- Script for theme switch --}}
 <script>
   function changeTheme() {
-    const newTheme = localStorage.getItem('color_theme') == 'light' ? 'dark' : 'light';
+    // Get the current theme, if nothing is set then use "light"
+    // Then use the current theme to determine the new theme, by swapping between "dark" and "light"
+    const newTheme = (localStorage.getItem('color_theme') || "light") == 'light' ? 'dark' : 'light';
     localStorage.setItem('color_theme', newTheme);
+
+    // Apply the theme
     document.documentElement.setAttribute('data-theme', newTheme);
   }
 
-  // Onload change to the theme stored in localStorage
-  const theme = localStorage.getItem('color_theme');
+  // Onload change to the theme stored in localStorage, if nothing is there use "light"
+  const theme = localStorage.getItem('color_theme') || 'light';
+
+  // Apply the stored theme
   document.documentElement.setAttribute('data-theme', theme);
+
+  // Flip the switch, if the theme is dark then check the switch
   document.querySelector('.switch.color-switch > input').checked = theme == 'dark';
 </script>
 
