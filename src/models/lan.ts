@@ -49,4 +49,4 @@ const LANSchema = new Schema({
   */
  LANSchema.statics = {};
  
- export const LanModel: Model<ILAN> = model('LanModel', LANSchema);
+ export const LanModel: Model<ILAN> = model('Lans', LANSchema);
