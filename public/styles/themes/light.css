@@ -1,0 +1,86 @@
+:root[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --dark-primary-text: #202020;
+  --dark-muted-text: #595a6a;
+
+  --light-primary-text: white;
+  --light-muted-text: #a3a3a3;
+
+  --primary-text: var(--dark-primary-text);
+  --muted-text: var(--dark-muted-text);
+
+  --text-alt: var(--light-primary-text);
+
+  --link-color: #1a74eb;
+  --active: #7db2ff;
+  --scrollbar-track: var(--background-100);
+  --scrollbar-thumb: var(--background-400);
+  --card-background: var(--background-100);
+
+  --background-50: #fafafa;
+  --background-100: #f5f5f5;
+  --background-200: #eeeeee;
+  --background-400: #bdbdbd;
+  --background-500: #9E9E9E;
+  --background-700: #616161;
+  --background-900: #212121;
+  --background-A100: #ffffff;
+  --background-A200: #eeeeee;
+  --background-A400: #bdbdbd;
+  --background-A700: #616161;
+
+  --background-contrast-50: var(--dark-primary-text);
+  --background-contrast-100: var(--dark-primary-text);
+  --background-contrast-200: var(--dark-primary-text);
+  --background-contrast-400: var(--dark-primary-text);
+  --background-contrast-500: var(--dark-primary-text);
+  --background-contrast-700: var(--light-primary-text);
+  --background-contrast-900: var(--light-primary-text);
+  --background-contrast-A100: var(--dark-primary-text);
+  --background-contrast-A200: var(--dark-primary-text);
+  --background-contrast-A400: var(--dark-primary-text);
+  --background-contrast-A700: var(--light-primary-text);
+
+  /* Shadows */
+  --drop-shadow-color: #24242425; /* CSS doesn't allow us to change alpha on a variable, so we need a new variable */
+  --shadow-basic: var(--drop-shadow-color) 1px 1px 4px 2px;
+
+  /* Warn colors */
+  --warn-400: #ef5350;
+  --warn-500: #f44336;
+  --warn-700: #D32F2F;
+  --warn-800: #c62828;
+  --warn-900: #b71c1c;
+
+  --warn-contrast-400: var(--light-primary-text);
+  --warn-contrast-500: var(--light-primary-text);
+  --warn-contrast-700: var(--light-primary-text);
+  --warn-contrast-800: var(--light-primary-text);
+  --warn-contrast-900: var(--light-primary-text);
+
+  /* Alert colors */
+  --alert-400: #ffca28;
+  --alert-500: #ffc107;
+  --alert-700: #FFA000;
+  --alert-800: #ff8f00;
+  --alert-900: #ff6f00;
+
+  --alert-contrast-400: var(--dark-primary-text);
+  --alert-contrast-500: var(--light-primary-text);
+  --alert-contrast-700: var(--light-primary-text);
+  --alert-contrast-800: var(--light-primary-text);
+  --alert-contrast-900: var(--light-primary-text);
+
+  /* Info colors */
+  --info-400: #42a5f5;
+  --info-500: #2196f3;
+  --info-700: #1976D2;
+  --info-800: #2076d8;
+  --info-900: #0d47a1;
+
+  --info-contrast-400: var(--light-primary-text);
+  --info-contrast-500: var(--light-primary-text);
+  --info-contrast-700: var(--light-primary-text);
+  --info-contrast-800: var(--light-primary-text);
+  --info-contrast-900: var(--light-primary-text);
+}
