@@ -62,7 +62,7 @@ passport.use(new Strategy({
         refresh_token: refreshToken,
         picture_url: primaryPhoto?.value,
         discord_id: profile.id,
-        accent_color: (profile._json as any).banner_color
+        accent_color: (profile._json as any).banner_color || `hsla(${~~(360 * Math.random())},70%,70%,0.8)`,
       });
 
       await newPartial.save();
