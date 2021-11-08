@@ -41,6 +41,11 @@ app.engine('hbs', exphbs({
     },
     or() {
         return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
+    },
+    formatDate(time: Date) {
+      // Format the date with date/month
+      // Then if we don't have the same year, then also display the year
+      return `${time.getDate()}/${time.getMonth()}${time.getFullYear() != (new Date()).getFullYear() ? '/' + time.getFullYear() : ''}`
     }
 }
 }));
