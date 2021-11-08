@@ -45,7 +45,7 @@ app.engine('hbs', exphbs({
     formatDate(time: Date) {
       // Format the date with date/month
       // Then if we don't have the same year, then also display the year
-      return `${time.getDate()}/${time.getMonth()}${time.getFullYear() != (new Date()).getFullYear() ? '/' + time.getFullYear() : ''}`
+      return `${time.getDate()}/${time.getMonth() + 1}${time.getFullYear() != (new Date()).getFullYear() ? '/' + time.getFullYear() : ''}`
     }
 }
 }));
