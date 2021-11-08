@@ -8,6 +8,7 @@ const infoToCollect = [
   { name: "start", placeholder: "Start", type: "date", previousValue: "", error: "" },
   { name: "end", placeholder: "Slut", type: "date", previousValue: "", error: "" },
   { name: "price", placeholder: "Pris", type: "number", previousValue: "", error: "" },
+  { name: "cover_url", placeholder: "Cover URL", type: "string", previousValue: "", error: "" },
 ];
 
 export const getCreate: RequestHandler = (req, res) => {

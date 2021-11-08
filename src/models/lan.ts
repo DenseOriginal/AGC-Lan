@@ -10,6 +10,7 @@ interface ILAN {
   public: boolean;
   registration_open: boolean;
   price: number;
+  cover_url: string;
 }
 
 export type LANAsDocument = ILAN & Document;
@@ -24,9 +25,9 @@ const LANSchema = new Schema({
   public: { type: Boolean, default: false, },
   registration_open: { type: Boolean, default: false },
   price: { type: Number, default: 0 },
+  cover_url: { type: String, required: true }
   // TODO: Implement seats
   // TODO: Implement LAN User
-  // TODO: Lan image
 });
 
 /**
