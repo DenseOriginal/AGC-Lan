@@ -12,34 +12,155 @@
 
   .card {
     background-color: var(--card-background);
-    -webkit-box-shadow: var(--shadow-basic); 
+    -webkit-box-shadow: var(--shadow-basic);
     box-shadow: var(--shadow-basic);
     padding: 0 0 32px 0;
     border-radius: 10px;
     margin-bottom: 32px;
-    width: min(600px, 100%);
+    width: min(800px, 100%);
   }
 
-  .card > .head {
+  .card>.head {
     padding: 32px 32px 16px 32px;
     margin-bottom: 24px;
-    border-bottom: 1px solid var(--background-400);
+    border-bottom: 1px solid var(--background-200);
+    width: 100%;
+  }
+
+  .card>.body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 16px 32px 16px 32px;
+    width: 100%;
+  }
+
+  .card>.body>img {
+    height: 70px;
+    aspect-ratio: 2 / 1;
+    margin-right: 24px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .card>.body>.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  .card>.body>.text p {
+    color: var(--muted-text);
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .body>.extra-info {
+    color: var(--muted-text);
+    flex: 1 0 auto;
+    margin-left: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .body>.extra-info>.container>div {
+    margin-bottom: 4px;
+  }
+
+  .body>.extra-info>.container>div>i {
+    width: 18px;
+    text-align: start;
+  }
+
+  .card.previous {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card.previous>hr {
+    width: 92%;
+    border: 1px solid var(--background-200);
+  }
+
+  .card.previous>hr:last-of-type {
+    display: none;
   }
 </style>
 
 <div class="lan-overview">
 
-{{!-- If there are lans display them --}}
-{{#if lans}}
+  {{!-- Only display next lan, if it exists AND (the lan is open OR it's public)  --}}
+  {{#if (and nextLan (or user.is_staff nextLan.public))}}
+  {{!-- Current lan --}}
+  <div class="card current">
+    <h3 class="head">{{ nextLanHeader }} LAN</h3>
+    <div class="body">
+      <img
+        src="https://scontent-cph2-1.xx.fbcdn.net/v/t39.30808-6/252243727_1851034468570793_2068489640544741888_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=340051&_nc_ohc=IX_bSueqQGMAX93Cpgd&_nc_ht=scontent-cph2-1.xx&oh=9df3db7adeee3e46e6cd5c7ec5ae7604&oe=618EBFE1"
+        alt="Cover picture" class="image">
+      <div class="text">
+        <div class="name">
+          <h4>{{ nextLan.name }}</h4>
+        </div>
+        <p>{{ nextLan.description }}</p>
+      </div>
+      <div class="extra-info">
+        <div class="container">
+          <div class="time">
+            <i class="far fa-calendar-alt"></i>
+            <span>{{ formatDate nextLan.start }} - {{ formatDate nextLan.end }}</span>
+          </div>
+          <div class="price">
+            <i class="fas fa-dollar-sign"></i>
+            <span>{{ nextLan.price }} DKK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
 
+  <div class="card previous">
+    <h3 class="head">Tidligere LAN</h3>
+    {{!-- Ïterate over all the previous lans --}}
+    {{#each previousLans}}
+    <div class="body">
+      <img
+        src="https://scontent-cph2-1.xx.fbcdn.net/v/t39.30808-6/252243727_1851034468570793_2068489640544741888_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=340051&_nc_ohc=IX_bSueqQGMAX93Cpgd&_nc_ht=scontent-cph2-1.xx&oh=9df3db7adeee3e46e6cd5c7ec5ae7604&oe=618EBFE1"
+        alt="Cover picture" class="image">
+      <div class="text">
+        <div class="name">
+          <h4>{{ this.name }}</h4>
+        </div>
+        <p>{{ this.description }}</p>
+      </div>
+      <div class="extra-info">
+        <div class="container">
+          <div class="time">
+            <i class="far fa-calendar-alt"></i>
+            <span>{{ formatDate this.start }} - {{ formatDate this.end }}</span>
+          </div>
+          <div class="price">
+            <i class="fas fa-dollar-sign"></i>
+            <span>{{ this.price }} DKK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    {{/each}}
+  </div>
 
+  {{#if noLans}}
+  {{!-- If there are no lans then say that --}}
 
-{{else}}
-{{!-- If there are no lans then say that --}}
+  <h2>Der er ingen LAN</h2>
 
-<h2>Der er ingen LAN</h2>
-
-{{/if}}
+  {{/if}}
 </div>
 
 {{!-- If an error happened --}}
