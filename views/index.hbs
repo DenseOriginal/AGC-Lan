@@ -36,3 +36,87 @@
         voluptate voluptates.
     </p>
 </div>
+
+{{!-- Floating next lan box --}}
+{{#if nextLan.public}}
+<style>
+  .floating {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 275px;
+
+    --border-radius: 6px;
+    border-radius: var(--border-radius);
+  }
+
+  .floating > .container {
+    width: 100%;
+    background-color: var(--background-200);
+    border-radius: var(--border-radius);
+  }
+
+  .floating > .container > .header > i {
+    cursor: pointer;
+  }
+
+  .floating > .container > .header {
+    display: flex;
+    justify-content: space-between;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: 16px;
+    padding-bottom: 12px;
+  }
+
+  .floating > .container > .footer {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding-bottom: 8px;
+  }
+
+  .floating > .container > .body > p {
+    color: var(--muted-text);
+    height: 100px;
+    overflow-y: auto;
+  }
+
+  .floating > .container > .body > h3 {
+    margin: 8px 0;
+  }
+
+  .floating > .container > .body > h3,
+  .floating > .container > .body > p {
+    padding: 0 8px;
+  }
+
+  .floating > .container > .body > img {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+  }
+
+  .floating > .container > .body > button {
+    margin: 0 8px;
+    margin-top: 16px;
+  }
+</style>
+
+<div class="floating basic-shadow" id="nextLanPopup">
+  <div class="container">
+    <div class="header">Næste LAN <i class="fas fa-times" onclick="closeNextLan()"></i></div>
+    <div class="body flex-column">
+      <img src="{{ nextLan.cover_url }}" alt="Cover picture">
+      <h3>{{ nextLan.name }}</h3>
+      <p>{{ nextLan.description }}</p>
+
+      {{!-- If registration isn't open hide the button --}}
+      <button class="{{#unless nextLan.registration_open}}hidden{{/unless}}" onclick="alert('fix me')">Tilmeld</button>
+    </div>
+    <div class="footer"></div>
+  </div>
+</div>
+
+<script>
+  function closeNextLan() {
+    document.getElementById('nextLanPopup').remove();
+  }
+</script>
+{{/if}}

@@ -3,6 +3,11 @@
   justify-content: flex-end;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .hidden {
   display: none;
 }
