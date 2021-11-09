@@ -7,6 +7,7 @@ import { getLogin } from "./login";
 import { getPolicy } from "./policy";
 import { ProfileRouter } from "./profile/router";
 import { getUser } from "./find-user";
+import { LanRouter } from "./lan/router";
 
 export const RootRouter = Router();
 
@@ -21,6 +22,7 @@ RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
 RootRouter.use("/staff", StaffRouter);
+RootRouter.use("/lan", LanRouter);
 
 // 404 to catch every request not handled by anything else
 RootRouter.use("**", (req, res) => res.status(404).render('404', { title: "404", noHeader: true }));
