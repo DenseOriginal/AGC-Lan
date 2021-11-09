@@ -41,19 +41,21 @@
 {{#if nextLan.public}}
 <style>
   .floating {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    width: 275px;
+    --padding: max(2.5vw, 8px);
 
-    --border-radius: 6px;
-    border-radius: var(--border-radius);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: min(calc(275px + var(--padding) * 2), 100%);
+    padding: var(--padding);
+    z-index: 10;
   }
 
   .floating > .container {
     width: 100%;
-    background-color: var(--background-200);
+    --border-radius: 6px;
     border-radius: var(--border-radius);
+    background-color: var(--background-200);
   }
 
   .floating > .container > .header > i {
@@ -99,8 +101,8 @@
   }
 </style>
 
-<div class="floating basic-shadow" id="nextLanPopup">
-  <div class="container">
+<div class="floating" id="nextLanPopup">
+  <div class="container basic-shadow">
     <div class="header">Næste LAN <i class="fas fa-times" onclick="closeNextLan()"></i></div>
     <div class="body flex-column">
       <img src="{{ nextLan.cover_url }}" alt="Cover picture">
