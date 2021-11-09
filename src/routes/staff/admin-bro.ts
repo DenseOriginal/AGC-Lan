@@ -13,9 +13,12 @@ const AdminBroOptions: AdminBroOptions = {
     LanResource
   ],
   rootPath: '/staff',
+  logoutPath: '/logout',
   branding: {
     companyName: 'AGC Lan',
     softwareBrothers: true, // Just because why not
+    favicon: '/favicon/favicon.ico',
+    logo: ''
   },
   dashboard: {
     component: AdminBro.bundle('./custom-dashboard')
