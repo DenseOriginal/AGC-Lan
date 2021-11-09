@@ -52,7 +52,7 @@ export const postSetup: RequestHandler = async (req, res) => {
     errorMessage[2].value = klasse;
 
     // Render the setup page with the errors
-    return res.status(422).render('setup', {
+    return res.status(422).render('profile/setup', {
       title: 'Setup',
       noHeader: true,
       infoToCollect: errorMessage,

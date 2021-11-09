@@ -22,7 +22,7 @@ export const getUsers: RequestHandler = async (req, res) => {
   users.forEach(user => user._id = user._id.toString());
 
   // Render the users views
-  return res.render('users', {
+  return res.render('staff/users', {
     title: 'Users',
     user: req.user,
     users,
