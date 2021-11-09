@@ -10,7 +10,7 @@ export const getUser: RequestHandler = async (req, res) => {
   if(id == req.user?._id) return res.redirect("/profile");
 
   // If the id isn't a valid mongoDB ObjectID then it can't be a valid user
-  if(!isValidObjectId(id)) return res.render("find-user", {
+  if(!isValidObjectId(id)) return res.render("_userId", {
     user: req.user,
     title: 'No user',
     error: 'Denne bruger findes ikke'
@@ -22,14 +22,14 @@ export const getUser: RequestHandler = async (req, res) => {
 
     if(!foundUser) {
       // If we didn't find a user, the tell the user that
-      return res.render('find-user', {
+      return res.render('_userId', {
         user: req.user,
         error: "Ingen bruger fundet"
       });
     }
 
-    // Render the find-user page and pass the foundUser to handlebars
-    return res.render('find-user', {
+    // Render the _userId page and pass the foundUser to handlebars
+    return res.render('_userId', {
       title: foundUser?.username,
       foundUser,
       user: req.user,
@@ -37,7 +37,7 @@ export const getUser: RequestHandler = async (req, res) => {
   } catch (error) {
     // If an error happened log it, and tell the user
     console.error(error);
-    return res.render('find-user', {
+    return res.render('_userId', {
       title: 'Error',
       user: req.user,
       error: "Der er sket en fejl, prøv igen senere"

@@ -6,7 +6,7 @@ import { ApiRouter } from "./api/router";
 import { getLogin } from "./login";
 import { getPolicy } from "./policy";
 import { ProfileRouter } from "./profile/router";
-import { getUser } from "./find-user";
+import { getUser } from "./_userId";
 import { LanRouter } from "./lan/router";
 
 export const RootRouter = Router();
