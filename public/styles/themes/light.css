@@ -1,5 +1,7 @@
 :root[data-theme="light"],
 :root:not([data-theme="dark"]) {
+  --background-image: url("/images/bg-light.png");
+
   --dark-primary-text: #202020;
   --dark-muted-text: #595a6a;
 

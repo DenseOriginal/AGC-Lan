@@ -1,4 +1,6 @@
 :root[data-theme="dark"] {
+  --background-image: url("/images/bg-dark.png");
+
   --dark-primary-text: #202020;
   --dark-muted-text: #595a6a;
 
