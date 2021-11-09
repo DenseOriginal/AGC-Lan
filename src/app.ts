@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import exphbs from "express-handlebars";
 import { RootRouter } from "./routes/router";
 import bodyParser from "body-parser";
+import { setupAdminBro } from "./routes/staff/admin-bro";
 const MongooseStore = require('mongoose-express-session')(session.Store);
 
 // Create server
@@ -69,6 +70,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+// Setup AdminBro
+setupAdminBro(app);
 
 // Import and use the RootRouter
 app.use(RootRouter);

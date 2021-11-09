@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { getIndex } from ".";
 import { isAuthenticated, notAuthenticated } from "../config/passport";
-import { StaffRouter } from "./staff/router";
 import { ApiRouter } from "./api/router";
 import { getLogin } from "./login";
 import { getPolicy } from "./policy";
@@ -21,7 +20,6 @@ RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 // Other routers
 RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
-RootRouter.use("/staff", StaffRouter);
 RootRouter.use("/lan", LanRouter);
 
 // 404 to catch every request not handled by anything else
