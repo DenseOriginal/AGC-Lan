@@ -21,7 +21,18 @@ export const getCreate: RequestHandler = (req, res) => {
 
 export const postCreate: RequestHandler = async (req, res) => {
   try {
-    const newLan = new LanModel(req.body);
+    const { name, description, start, end, price, cover_url } = req.body;
+
+    // TODO: validate the input
+
+    const newLan = new LanModel({
+      name,
+      description,
+      start,
+      end,
+      price,
+      cover_url
+    });
     await newLan.save();
 
     res.render('lan/create', {
