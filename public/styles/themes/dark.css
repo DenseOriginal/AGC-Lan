@@ -33,11 +33,11 @@
 
   --background-contrast-50: var(--light-primary-text);
   --background-contrast-100: var(--light-primary-text);
-  --background-contrast-200: var(--dark-primary-text);
-  --background-contrast-400: var(--dark-primary-text);
-  --background-contrast-500: var(--dark-primary-text);
-  --background-contrast-700: var(--dark-primary-text);
-  --background-contrast-900: var(--dark-primary-text);
+  --background-contrast-200: var(--light-primary-text);
+  --background-contrast-400: var(--light-primary-text);
+  --background-contrast-500: var(--light-primary-text);
+  --background-contrast-700: var(--light-primary-text);
+  --background-contrast-900: var(--light-primary-text);
   --background-contrast-A100: var(--light-primary-text);
   --background-contrast-A200: var(--dark-primary-text);
   --background-contrast-A400: var(--dark-primary-text);
