@@ -64,6 +64,7 @@
   }
 
   .setup-card input {
+    color: var(--background-contrast-200);
     padding: 12px 16px;
     padding-left: 8px;
     border: none;
@@ -74,6 +75,10 @@
     font-size: 16px;
 
     transition: var(--fast-transition);
+  }
+
+  .setup-card input::placeholder {
+    color: var(--muted-text);
   }
 
   .setup-card input[type="text"]:active,
@@ -106,10 +111,10 @@
 
 <div class="setup">
   <div class="setup-card">
-    <form action="/profile/setup" method="post">
+    <form action="/profile/setup" id="setupForm" method="post">
       {{#each infoToCollect}}
       <div class="input">
-        <input type="text" name="{{ this.name }}" id="{{ this.name }}" value="{{ this.value }}" placeholder="{{ this.placeholder }}">
+        <input type="text" name="{{ this.name }}" id="{{ this.name }}" value="{{ this.value }}" placeholder="{{ this.placeholder }}" {{{ this.rest }}}>
 
         {{#if this.error}}
         <p class="error">{{ this.error }}</p>
@@ -126,3 +131,29 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Create the dataset for all the classes
+
+  // Generate all classes for the three current years, including grundforløb
+  const thisYear = new Date().getFullYear().toString().slice(2);
+  const classChars = ['A', 'B', 'C', 'D', 'E', 'J', 'P', 'R']
+
+  const grundforløb = Array.from({ length: 8 }, (_, idx) => `${thisYear}HTXCG${idx + 1}`);
+  const stamklasser = Array.from({ length: 3 }, (_, idx) => {
+    const year = thisYear - idx;
+    return classChars.map(char => `${year}HTXC${char}`);
+  });
+
+  // Prepend the grundforløb array to the stamklasser array
+  stamklasser.unshift(grundforløb);
+
+  // Flatten the array [[1], [2], [3]]   >>>   [1, 2, 3]
+  const flattenedAray = [].concat(...stamklasser);
+
+  document.getElementById('setupForm').insertAdjacentHTML('beforeend', `<datalist id="classes">
+    ${flattenedAray.map(cur => `<option value="${cur}">`).join("")}
+  </datalist>`);
+
+
+</script>

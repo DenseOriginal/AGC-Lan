@@ -6,7 +6,7 @@ import { IUser, UserModel } from "../../models/user";
 const infoToCollect = [
   { name: "firstname", placeholder: "Fornavn", value: "", error: "" },
   { name: "lastname", placeholder: "Efternavn", value: "", error: "" },
-  { name: "class", placeholder: "Klasse (f. eks. 20HTXCR)", value: "", error: "" },
+  { name: "class", placeholder: "Klasse (f. eks. 20HTXCR)", value: "", error: "", rest: 'list="classes" autocomplete="off"' },
 ];
 
 // Regex to validate a klass
@@ -18,7 +18,7 @@ const classRegex = /\d\dHTX\w{1,4}/;
 // On get send the setup page
 // The info we want to collect is dynamicly rendered in the handlebars file
 export const getSetup: RequestHandler = (req, res) => {
-  res.status(200).render('setup', { title: 'Setup', noHeader: true, infoToCollect })
+  res.status(200).render('profile/setup', { title: 'Setup', noHeader: true, infoToCollect })
 };
 
 // Post route used to handle the setup
