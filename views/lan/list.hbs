@@ -106,6 +106,36 @@
   .card.previous>hr:last-of-type {
     display: none;
   }
+
+  /* Responsive shit */
+  @media only screen and (max-width: 700px) {
+    .card {
+      width: min(400px, 100%);
+    }
+
+    .card>.body {
+      flex-direction: column;
+    }
+
+    .card>.body>.left {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+
+    .card>.body>.left>img {
+      width: 100%;
+      height: unset;
+    }
+
+    .card>.body>.text {
+      margin-bottom: 16px;
+    }
+
+    .card>.body>.extra-info {
+      margin-left: 0;
+    }
+  }
 </style>
 
 <div class="lan-overview">
