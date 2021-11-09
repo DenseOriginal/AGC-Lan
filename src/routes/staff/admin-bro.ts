@@ -12,7 +12,14 @@ const AdminBroOptions: AdminBroOptions = {
     UserResource,
     LanResource
   ],
-  rootPath: '/staff'
+  rootPath: '/staff',
+  branding: {
+    companyName: 'AGC Lan',
+    softwareBrothers: true, // Just because why not
+  },
+  dashboard: {
+    component: AdminBro.bundle('./custom-dashboard')
+  }
 }
 
 const adminBro = new AdminBro(AdminBroOptions);
