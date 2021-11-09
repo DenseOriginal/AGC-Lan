@@ -15,12 +15,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@admin-bro/express": "^3.1.0",
+    "@admin-bro/mongoose": "^1.1.0",
     "@oauth-everything/passport-discord": "^1.0.2",
     "@types/morgan": "^1.9.3",
+    "admin-bro": "^4.0.1",
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
     "express-handlebars": "^5.3.4",
     "express-session": "^1.17.2",
     "hbs": "^4.1.2",
@@ -29,6 +33,7 @@
     "morgan": "^1.10.0",
     "passport": "^0.5.0",
     "rimraf": "^3.0.2",
+    "tslib": "^2.3.1",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
