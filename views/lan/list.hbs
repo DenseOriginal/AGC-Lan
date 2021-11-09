@@ -35,12 +35,29 @@
     width: 100%;
   }
 
-  .card>.body>img {
+  .card>.body>.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 24px;
+  }
+
+  .card>.body>.left>img {
     height: 70px;
     aspect-ratio: 2 / 1;
-    margin-right: 24px;
     object-fit: cover;
     border-radius: 4px;
+    margin-bottom: 2px;
+  }
+
+  .card>.body>.left>a {
+    display: flex;
+    align-items: center;
+  }
+
+  .card>.body>.left>a>i {
+    font-size: 14px;
+    margin-right: 4px;
   }
 
   .card>.body>.text {
@@ -99,9 +116,13 @@
   <div class="card current">
     <h3 class="head">{{ nextLanHeader }} LAN</h3>
     <div class="body">
-      <img
-        src="{{ nextLan.cover_url }}"
-        alt="Cover picture" class="image">
+      <div class="left">
+        <img
+          src="{{ nextLan.cover_url }}"
+          alt="Cover picture" class="image"
+        >
+        <a href="/lan/{{ nextLan._id }}"><i class="fas fa-external-link-alt"></i> Gå til</a>
+      </div>
       <div class="text">
         <div class="name">
           <h4>{{ nextLan.name }}</h4>
@@ -129,9 +150,13 @@
     {{!-- Ïterate over all the previous lans --}}
     {{#each previousLans}}
     <div class="body">
-      <img
-        src="{{ this.cover_url }}"
-        alt="Cover picture" class="image">
+      <div class="left">
+        <img
+          src="{{ this.cover_url }}"
+          alt="Cover picture" class="image"
+        >
+        <a href="/lan/{{ this._id }}"><i class="fas fa-external-link-alt"></i> Gå til</a>
+      </div>
       <div class="text">
         <div class="name">
           <h4>{{ this.name }}</h4>
