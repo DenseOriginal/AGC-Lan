@@ -43,12 +43,15 @@
   .floating {
     --padding: max(2.5vw, 8px);
 
+    /* Use some wierd positionning and padding to avoid colliding with the theme switcher z-index */
     position: fixed;
     bottom: 0;
+    bottom: var(--padding);
     right: 0;
     width: min(calc(275px + var(--padding) * 2), 100%);
     padding: var(--padding);
-    z-index: 10;
+    padding-bottom: 0;
+    z-index: 1;
   }
 
   .floating > .container {
