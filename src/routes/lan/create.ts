@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { LanModel } from "../../../models/lan";
+import { LanModel } from "../../models/lan";
 
 // The info we want about the new LAN
 const infoToCollect = [

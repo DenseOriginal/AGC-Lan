@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { LanModel } from "../../../models/lan";
+import { LanModel } from "../../models/lan";
 
 export const getList: RequestHandler = async (req, res) => {
   // Get all lan sorted by their order
