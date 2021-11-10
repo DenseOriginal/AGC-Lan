@@ -1,6 +1,6 @@
 import { Model, model, Schema } from "mongoose";
 
-interface ILAN {
+export interface ILAN {
   name: string;
   description: string;
   start: Date;
