@@ -4,7 +4,7 @@ import expressAdminBro from "@admin-bro/express";
 import { UserResource } from "./users";
 import { LanResource } from "./lan";
 import { Router } from "express";
-import { isStaff } from "../../config/passport";
+import { requestGuardIsStaff } from "../../config/passport";
 
 AdminBro.registerAdapter(mongooseAdminBro);
 const AdminBroOptions: AdminBroOptions = {
@@ -32,7 +32,7 @@ const AdminBroOptions: AdminBroOptions = {
 
 const adminBro = new AdminBro(AdminBroOptions);
 const preRouter = Router(); // Create a router that the adminBro router should be based on
-preRouter.use(isStaff); // Protext the dashboard with isStaff guard
+preRouter.use(requestGuardIsStaff); // Protext the dashboard with isStaff guard
 preRouter.use((req, res, next) => {
   // AdminBro uses req.session.adminUser to authenticate a user
   // So we can set the session.adminUser to our own req.user

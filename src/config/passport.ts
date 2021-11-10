@@ -129,21 +129,35 @@ export const roles: { [index: string]: number } = {
   SUPERADMIN: 3,
 };
 
-export const isStaff = (req: Request, res: Response, next: NextFunction) => {
+// Checks
+export const isStaff = (user: IUser) => {
+  return roles[user.role] > 0;
+}
+
+export const isAdmin = (user: IUser) => {
+  return roles[user.role] > 1;
+}
+
+export const isSuperAdmin = (user: IUser) => {
+  return roles[user.role] > 2;
+}
+
+// Request guards
+export const requestGuardIsStaff = (req: Request, res: Response, next: NextFunction) => {
   if(req.isAuthenticated() && roles[req.user.role] > 0) {
     return next();
   }
   return res.redirect("/");
 }
 
-export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+export const requestGuardIsAdmin = (req: Request, res: Response, next: NextFunction) => {
   if(req.isAuthenticated() && roles[req.user.role] > 1) {
     return next();
   }
   return res.redirect("/");
 }
 
-export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
+export const requestGuardIsSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
   if(req.isAuthenticated() && roles[req.user.role] > 2) {
     return next();
   }
