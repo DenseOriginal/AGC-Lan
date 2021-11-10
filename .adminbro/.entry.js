@@ -1,3 +1,3 @@
 AdminBro.UserComponents = {}
-import Component1 from '../src/routes/staff/custom-dashboard'
+import Component1 from '../views/admin-bro/custom-dashboard'
 AdminBro.UserComponents.Component1 = Component1

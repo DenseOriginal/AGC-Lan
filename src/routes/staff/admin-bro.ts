@@ -21,7 +21,12 @@ const AdminBroOptions: AdminBroOptions = {
     logo: ''
   },
   dashboard: {
-    component: AdminBro.bundle('./custom-dashboard')
+    // The import needs to be outside of src to prevent typescript from compiling it
+    // And fucking with the export type.
+    // Before: export default Dashboard;
+    // After: exports.default = Dashboard;
+    // AdminBro doesn't like this new syntax, so it dies...
+    component: AdminBro.bundle('../../../views/admin-bro/custom-dashboard')
   }
 }
 
