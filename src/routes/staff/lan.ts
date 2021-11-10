@@ -1,6 +1,6 @@
 import { ResourceWithOptions } from "admin-bro";
 import { LanModel } from "../../models/lan";
-import { denyGuard, isAdmin, isSuperAdmin } from "./guards";
+import { denyGuard, isAdmin, isStaff, isSuperAdmin } from "./guards";
 
 export const LanResource: ResourceWithOptions = {
   resource: LanModel,
@@ -16,13 +16,13 @@ export const LanResource: ResourceWithOptions = {
       cover_url: { isVisible: { show: true, list: false, filter: false, edit: true } }
     },
     actions: {
-      list: { isAccessible: isAdmin }, // Makes sure the person viewing this is an admin
-      show: { isAccessible: isAdmin }, // Makes sure the person viewing this is an admin
+      list: { isAccessible: isStaff }, // Makes sure the person viewing this is an admin
+      show: { isAccessible: isStaff }, // Makes sure the person viewing this is an admin
       new: { isAccessible: isSuperAdmin },
       edit: { isAccessible: isSuperAdmin },
       delete: { isAccessible: isSuperAdmin },
       bulkDelete: { isAccessible: denyGuard },
-      search: { isAccessible: isAdmin }
+      search: { isAccessible: isStaff }
     },
     navigation: {
        name: "Database",

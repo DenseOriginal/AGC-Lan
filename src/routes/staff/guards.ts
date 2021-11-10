@@ -27,3 +27,7 @@ export const userIsNotSuperAdmin = ({ record }: ActionContext) => {
 export const multiple = (...fns: IsFunction[]): IsFunction => {
   return (context: ActionContext) => fns.every(fn => fn(context));
 }
+
+export const or = (...fns: IsFunction[]): IsFunction => {
+  return (context: ActionContext) => fns.some(fn => fn(context));
+}
