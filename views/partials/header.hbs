@@ -28,7 +28,15 @@
       height: 100%;
     }
 
-    .user {
+    nav .spacer {
+      content: "";
+      height: 55%;
+      width: 1.5px;
+      margin: auto 4px;
+      background-color: var(--background-400);
+    }
+
+    nav a {
       display: flex;
       align-items: center;
       padding: 0 16px;
@@ -37,9 +45,15 @@
       color: var(--primary-text);
     }
 
-    .user:hover {
+    nav a:hover {
       cursor: pointer;
-      background-color: var(--background-200);
+      background-color: var(--background-300);
+      text-decoration: none;
+    }
+
+    nav .user {
+      display: flex;
+      align-items: center;
     }
 
     .user > .avatar {
@@ -89,7 +103,14 @@
 
   <nav class="large">
 
+    <a href="/lan/list">Lan</a>
+
+    {{#if user.is_staff}}
+    <a href="/staff">Staff</a>
+    {{/if}}
+
     {{#if user}}
+    <div class="spacer"></div>
     <a href="/profile">
       <div class="user">
         <img class="avatar" height="28" src="{{ user.picture_url }}" alt="Profile image">
