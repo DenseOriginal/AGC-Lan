@@ -1,30 +1,38 @@
-import { RequestHandler } from "express";
+import { ResourceWithOptions } from "admin-bro";
 import { UserModel } from "../../models/user";
+import { denyGuard, isSuperAdmin, multiple, notYourself, userIsNotSuperAdmin } from "./guards";
 
-// Different categories the users can be sorted by
-const sortCategories = ['first_name', 'last_name', 'username', 'email', 'class'];
-
-export const getUsers: RequestHandler = async (req, res) => {
-  // Raw url query
-  const rawSort = req.query.sort;
-
-  // Make sure rawSort is both a string and a valid sortCategory
-  const sortBy = (typeof rawSort == 'string' && sortCategories.includes(rawSort)) ? rawSort : 'first_name';
-  
-  // Get all users sort them by sortBy and limit the request
-  // OBS: THIS DOES NOT INCLUDE PARTIAL USERS
-  const usersReq = await UserModel.find().sort(sortBy).limit(100).exec();
-
-  // Map all the users to just the object instead of the mongoose model
-  const users = usersReq.map(user => user.toObject());
-
-  // Change the _id propetry to a string, instead of mongoose's wierd type
-  users.forEach(user => user._id = user._id.toString());
-
-  // Render the users views
-  return res.render('staff/users', {
-    title: 'Users',
-    user: req.user,
-    users,
-  });
-}
+export const UserResource: ResourceWithOptions = {
+  resource: UserModel,
+  options: {
+    properties: {
+      _id: { isVisible: false },
+      refresh_token: { isVisible: false },
+      first_name: { position: 1 },
+      last_name: { position: 2 },
+      email: { position: 3 },
+      username: { position: 4 },
+      class: { position: 5 },
+      setup_finished: { isVisible: false },
+      phone: { isVisible: false },
+      accent_color: { isVisible: false },
+      picture_url: { isVisible: { filter: false } },
+      discord_id: { isVisible: { filter: false } },
+      last_login: { isVisible: { edit: false } },
+      date_joined: { isVisible: { edit: false } },
+    },
+    listProperties: ['first_name', 'last_name', 'email', 'username'],
+    actions: {
+      list: { isAccessible: isSuperAdmin }, // This makes sure only superadmins can see this
+      show: { isAccessible: multiple(isSuperAdmin, notYourself) }, // This makes sure only superadmins can see this
+      edit: { isAccessible: multiple(isSuperAdmin, notYourself, userIsNotSuperAdmin) },
+      delete: { isAccessible: multiple(isSuperAdmin, notYourself) },
+      bulkDelete: { isAccessible: denyGuard },
+      search: { isAccessible: multiple(isSuperAdmin, notYourself) },
+      new: { isAccessible: denyGuard },
+    },
+    navigation: {
+       name: "Database",
+    }
+  }
+};
