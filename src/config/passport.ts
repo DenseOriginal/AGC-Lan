@@ -130,16 +130,16 @@ export const roles: { [index: string]: number } = {
 };
 
 // Checks
-export const isStaff = (user: IUser) => {
-  return roles[user.role] > 0;
+export const isStaff = (user: IUser | undefined) => {
+  return !!user && roles[user.role] > 0;
 }
 
-export const isAdmin = (user: IUser) => {
-  return roles[user.role] > 1;
+export const isAdmin = (user: IUser | undefined) => {
+  return !!user && roles[user.role] > 1;
 }
 
-export const isSuperAdmin = (user: IUser) => {
-  return roles[user.role] > 2;
+export const isSuperAdmin = (user: IUser | undefined) => {
+  return !!user && roles[user.role] > 2;
 }
 
 // Request guards
