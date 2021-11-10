@@ -7,9 +7,6 @@ export interface IUser {
   is_email_verified: boolean;
   username: string;
   refresh_token: string;
-  is_staff: boolean;
-  is_admin: boolean;
-  is_superadmin: boolean;
   last_login: Date;
   created_at: Date;
   class: string;
