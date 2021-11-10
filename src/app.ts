@@ -11,6 +11,8 @@ import exphbs from "express-handlebars";
 import { RootRouter } from "./routes/router";
 import bodyParser from "body-parser";
 import { setupAdminBro } from "./routes/staff/admin-bro";
+import { IUser } from "./models/user";
+import { roles } from "./config/passport";
 const MongooseStore = require('mongoose-express-session')(session.Store);
 
 // Create server
@@ -51,7 +53,10 @@ app.engine('hbs', exphbs({
       // Format the date with date/month
       // Then if we don't have the same year, then also display the year
       return `${time.getDate()}/${time.getMonth() + 1}${time.getFullYear() != (new Date()).getFullYear() ? '/' + time.getFullYear() : ''}`
-    }
+    },
+    isStaff: (user: IUser | undefined) => user && (roles[user.role as string] > 0),
+    isAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 1),
+    isSuperAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 2),
 }
 }));
 app.set("view engine", "hbs");

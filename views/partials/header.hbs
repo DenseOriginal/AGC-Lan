@@ -105,7 +105,7 @@
 
     <a href="/lan/list">Lan</a>
 
-    {{#if user.is_staff}}
+    {{#if (isStaff user)}}
     <a href="/staff">Staff</a>
     {{/if}}
 

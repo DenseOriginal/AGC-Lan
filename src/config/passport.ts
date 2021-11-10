@@ -121,22 +121,30 @@ export const notAuthenticated = (req: Request, res: Response, next: NextFunction
   res.redirect("/profile");
 };
 
+export type RoleType = "USER" | "STAFF" | "ADMIN" | "SUPERADMIN";
+export const roles: { [index: string]: number } = {
+  USER: 0,
+  STAFF: 1,
+  ADMIN: 2,
+  SUPERADMIN: 3,
+};
+
 export const isStaff = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && (req.user.is_staff || req.user.is_admin ||req.user.is_superadmin)) {
+  if(req.isAuthenticated() && roles[req.user.role] > 0) {
     return next();
   }
   return res.redirect("/");
 }
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && (req.user.is_admin || req.user.is_superadmin)) {
+  if(req.isAuthenticated() && roles[req.user.role] > 1) {
     return next();
   }
   return res.redirect("/");
 }
 
 export const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
-  if(req.isAuthenticated() && req.user.is_superadmin) {
+  if(req.isAuthenticated() && roles[req.user.role] > 2) {
     return next();
   }
   return res.redirect("/");

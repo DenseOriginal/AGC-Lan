@@ -1,19 +1,20 @@
 import { ActionContext, IsFunction } from "admin-bro";
+import { roles } from "../../config/passport";
 
 // Admin bro guards
 
 export const denyGuard = () => false;
 
 export const isSuperAdmin = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin?.is_superadmin;
+  return currentAdmin && (roles[(currentAdmin.role as string)] > 2);
 }
 
 export const isAdmin = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin?.is_admin;
+  return currentAdmin && (roles[(currentAdmin.role as string)] > 1);
 }
 
 export const isStaff = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin?.is_staff;
+  return currentAdmin && (roles[(currentAdmin.role as string)] > 0);
 }
 
 export const notYourself = ({ currentAdmin, record }: ActionContext) => {

@@ -141,7 +141,7 @@
 <div class="lan-overview">
 
   {{!-- Only display next lan, if it exists AND (the lan is open OR it's public)  --}}
-  {{#if (and nextLan (or user.is_staff nextLan.public))}}
+  {{#if (and nextLan (or (isStaff user) nextLan.public))}}
   {{!-- Current lan --}}
   <div class="card current">
     <h3 class="head">{{ nextLanHeader }} LAN</h3>

@@ -20,6 +20,7 @@ export interface IUser {
   discord_id: string;
   setup_finished: true;
   accent_color: string;
+  role: "USER" | "STAFF" | "ADMIN" | "SUPERADMIN";
   _id: string;
 }
 
@@ -32,9 +33,6 @@ const UserSchema = new Schema({
   is_email_verified: { type: Boolean, required: true },
   username: { type: String, required: true },
   refresh_token: { type: String, required: true },
-  is_staff: { type: Boolean, default: false },
-  is_admin: { type: Boolean, default: false },
-  is_superadmin: { type: Boolean, default: false },
   last_login: {
     type: Date,
     required: true,
@@ -53,6 +51,11 @@ const UserSchema = new Schema({
   discord_id: { type: String, required: true, unique: true },
   setup_finished: { type: Boolean, default: true, immutable: true },
   accent_color: { type: String, required: true },
+  role: {
+    type: String,
+    enum: ['USER', 'STAFF', 'ADMIN', 'SUPERADMIN'],
+    default: 'USER',
+  }
 });
 
 /**

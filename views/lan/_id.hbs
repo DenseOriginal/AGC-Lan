@@ -71,7 +71,7 @@
   <div class="row"><p class="title">Pris:</p> {{ lan.price }}</div>
   <div class="row"><p class="title">Deltagere:</p> Implement deltagere</div>
 
-  {{#if user.is_staff}}
+  {{#if (isStaff user)}}
     <div class="row"><p class="hidden">blank</p></div>
     <div class="row"><p class="title">Oprettet:</p> {{ lan.created_at }}</div>
     <div class="row"><p class="title">Sidst opdateret:</p> {{ lan.updated_at }}</div>
