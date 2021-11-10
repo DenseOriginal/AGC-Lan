@@ -5,23 +5,23 @@ import { roles } from "../../config/passport";
 
 export const denyGuard = () => false;
 
-export const isSuperAdmin = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin && (roles[(currentAdmin.role as string)] > 2);
+export const isSuperAdmin: IsFunction = ({ currentAdmin }: ActionContext) => {
+  return !!(currentAdmin && (roles[(currentAdmin.role as string)] > 2));
 }
 
-export const isAdmin = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin && (roles[(currentAdmin.role as string)] > 1);
+export const isAdmin: IsFunction = ({ currentAdmin }: ActionContext) => {
+  return !!(currentAdmin && (roles[(currentAdmin.role as string)] > 1));
 }
 
-export const isStaff = ({ currentAdmin }: ActionContext) => {
-  return currentAdmin && (roles[(currentAdmin.role as string)] > 0);
+export const isStaff: IsFunction = ({ currentAdmin }: ActionContext) => {
+  return !!(currentAdmin && (roles[(currentAdmin.role as string)] > 0));
 }
 
-export const notYourself = ({ currentAdmin, record }: ActionContext) => {
+export const notYourself: IsFunction = ({ currentAdmin, record }: ActionContext) => {
   return currentAdmin?._id != record?.params._id;
 }
 
-export const userIsNotSuperAdmin = ({ record }: ActionContext) => {
+export const userIsNotSuperAdmin: IsFunction = ({ record }: ActionContext) => {
   return !record?.params.is_superadmin;
 }
 
