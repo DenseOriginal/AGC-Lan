@@ -6,7 +6,9 @@ export const isNotBanned: RequestHandler = (req, res, next) => {
   if(req.isAuthenticated() && req.user.banned) return res.render('banned', {
     title: "Banned",
     noHeader: true,
-  })
+  });
+
+  next();
 }
 
 export const isAuthenticated: RequestHandler = (req, res, next) => {
