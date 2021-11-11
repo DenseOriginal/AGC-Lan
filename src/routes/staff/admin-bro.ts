@@ -4,7 +4,7 @@ import expressAdminBro from "@admin-bro/express";
 import { UserResource } from "./users";
 import { LanResource } from "./lan";
 import { Router } from "express";
-import { requestGuardIsStaff } from "../../config/passport";
+import { requestGuardIsStaff } from "../../config/guards";
 
 AdminBro.registerAdapter(mongooseAdminBro);
 const AdminBroOptions: AdminBroOptions = {

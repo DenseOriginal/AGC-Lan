@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getIndex } from ".";
-import { isAuthenticated, notAuthenticated } from "../config/passport";
+import { isAuthenticated, notAuthenticated } from "../config/guards";
 import { ApiRouter } from "./api/router";
 import { getLogin } from "./login";
 import { getPolicy } from "./policy";

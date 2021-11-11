@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isNotBanned } from "../../config/guards";
-import { isAuthenticated, isSuperAdmin } from "../../config/passport";
+import { isAuthenticated } from "../../config/guards";
 import { getCreate, postCreate } from "./create";
 import { getList } from "./list";
 import { getTilmeld, postTilmeld } from "./tilmeld";

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { isAuthenticated, isAwaitingSetup } from "../../config/passport";
+import { isAuthenticated, isAwaitingSetup } from "../../config/guards";
 import { getProfile } from "./profile";
 import { getSetup, postSetup } from "./setup";
 
