@@ -1,4 +1,4 @@
-import { Model, model, Schema } from "mongoose";
+import { Model, model, Schema, Document } from "mongoose";
 import { IUser } from "./user";
 
 export interface ILAN {

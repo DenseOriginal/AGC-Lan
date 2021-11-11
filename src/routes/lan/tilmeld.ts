@@ -7,16 +7,9 @@ import { LanUserModel } from "../../models/lan-user";
 export const getTilmeld: RequestHandler = async (req, res) => {
   const lanId = req.params.lanId;
 
-  // If the id isn't a valid mongoDB ObjectID then it can't be a valid user
-  if(!isValidObjectId(lanId)) return res.render("lan/tilmeld", {
-    user: req.user,
-    title: 'No lan',
-    error: 'Dette LAN findes ikke'
-  });
-
   try {
     // Try to find a lan with matching id, the convert it to an object to get rid of mongoose model stuff
-    const foundLan = (await LanModel.findOne({ _id: lanId }).exec())?.toObject();
+    const foundLan = ((req as any).lan as LANAsDocument).toObject();
 
     // Perfom check to see if lan is valid
     await validateLan(foundLan, req, res);
@@ -46,13 +39,6 @@ export const postTilmeld: RequestHandler = async (req, res) => {
 
   const lanId = req.params.lanId;
 
-  // If the user somehow fucked up the lanId, we tell them that something happened
-  if(!isValidObjectId(lanId)) return res.render("lan/tilmeld", {
-    user: req.user,
-    title: 'Error',
-    error: 'Dette LAN findes ikke'
-  });
-
   // We can be sure that the user isn't undefined, because we have a guard in place on this route
   // That makes sure the user is logged in, and if that passes, the user must be a user
   // Therefore we can set the userId as a string
@@ -62,7 +48,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     // Fetch the lan to check if we can register
 
     // Try to find a lan with matching id, the convert it to an object to get rid of mongoose model stuff
-    const foundLan = (await LanModel.findOne({ _id: lanId }).exec());
+    const foundLan = ((req as any).lan as LANAsDocument);
 
     // Perfom check to see if lan is valid
     await validateLan(foundLan || undefined, req, res);
