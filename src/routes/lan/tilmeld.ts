@@ -62,7 +62,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     });
 
     await newLanUser.save();
-    await foundLan?.update({
+    await foundLan?.updateOne({
       $push: { users: newLanUser._id }
     }).exec();
 

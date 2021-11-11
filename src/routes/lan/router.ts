@@ -6,6 +6,7 @@ import { isAuthenticated } from "../../config/guards";
 import { isStaff } from "../../config/passport";
 import { LanModel } from "../../models/lan";
 import { getCreate, postCreate } from "./create";
+import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
 import { getTilmeld, postTilmeld } from "./tilmeld";
 import { getLan } from "./_id";
@@ -22,6 +23,9 @@ LanRouter.route('/list').get(getList);
 LanRouter.route('/:lanId').get(findLan('lanId'), getLan);
 LanRouter.route('/:lanId/tilmeld').get(isAuthenticated, isNotBanned, findLan('lanId'), getTilmeld);
 LanRouter.route('/:lanId/tilmeld').post(isAuthenticated, isNotBanned, findLan('lanId'), postTilmeld);
+
+LanRouter.route('/:lanId/frameld').get(isAuthenticated, isNotBanned, findLan('lanId'), getFrameld);
+LanRouter.route('/:lanId/frameld').post(isAuthenticated, isNotBanned, findLan('lanId'), postFrameld);
 
 // Helper middleware
 function findLan(paramId: string): RequestHandler {
