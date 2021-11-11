@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { isNotBanned } from "../../config/guards";
 import { isAuthenticated, isSuperAdmin } from "../../config/passport";
 import { getCreate, postCreate } from "./create";
 import { getList } from "./list";
@@ -15,5 +16,5 @@ LanRouter.route('/list').get(getList);
 
 // This need to be last to not catch all the other routes
 LanRouter.route('/:lanId').get(getLan);
-LanRouter.route('/:lanId/tilmeld').get(isAuthenticated, getTilmeld); // TODO: check if user is banned
-LanRouter.route('/:lanId/tilmeld').post(isAuthenticated, postTilmeld); // TODO: check if user is banned
+LanRouter.route('/:lanId/tilmeld').get(isAuthenticated, isNotBanned, getTilmeld);
+LanRouter.route('/:lanId/tilmeld').post(isAuthenticated, isNotBanned, postTilmeld);
