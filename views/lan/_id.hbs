@@ -69,7 +69,7 @@
   <div class="row"><p class="title">Starter:</p> {{ formatDate lan.start "long" }}</div>
   <div class="row"><p class="title">Slutter:</p> {{ formatDate lan.end "long" }}</div>
   <div class="row"><p class="title">Pris:</p> {{ lan.price }}</div>
-  <div class="row"><p class="title">Deltagere:</p> Implement deltagere</div>
+  <div class="row"><p class="title">Deltagere:</p> {{ lan.users.length }}</div>
 
   {{#if (isStaff user)}}
     <div class="row"><p class="hidden">blank</p></div>

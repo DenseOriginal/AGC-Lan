@@ -1,4 +1,5 @@
 import { Model, model, Schema } from "mongoose";
+import { IUser } from "./user";
 
 export interface ILAN {
   name: string;
@@ -11,6 +12,8 @@ export interface ILAN {
   registration_open: boolean;
   price: number;
   cover_url: string;
+  users: string | IUser;
+  _id: string;
 }
 
 export type LANAsDocument = ILAN & Document;
@@ -25,9 +28,9 @@ const LANSchema = new Schema({
   public: { type: Boolean, default: false, },
   registration_open: { type: Boolean, default: false },
   price: { type: Number, default: 0 },
-  cover_url: { type: String, required: true }
+  cover_url: { type: String, required: true },
+  users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
   // TODO: Implement seats
-  // TODO: Implement LAN User
 });
 
 /**

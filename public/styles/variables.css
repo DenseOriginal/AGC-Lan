@@ -18,7 +18,9 @@
 
 /* Defaut classes using variables */
 button,
-button.main {
+button.main,
+.button,
+.button.main {
   background-color: var(--info-400);
   outline: none;
   border: none;
@@ -31,13 +33,16 @@ button.main {
 }
 
 button:hover,
-button.main:hover {
+button.main:hover,
+.button:hover,
+.button.main:hover {
   background-color: var(--info-700);
   color: var(--info-contrast-700);
   cursor: pointer;
 }
 
-button.warn {
+button.warn,
+.button.warn {
   background-color: var(--warn-400);
   outline: none;
   border: none;
@@ -45,13 +50,15 @@ button.warn {
   color: var(--warn-contrast-400);
 }
 
-button.warn:hover {
+button.warn:hover,
+.button.warn:hover {
   background-color: var(--warn-700);
   color: var(--warn-contrast-700);
   cursor: pointer;
 }
 
-button.alert {
+button.alert,
+.button.alert {
   background-color: var(--alert-400);
   outline: none;
   border: none;
@@ -59,7 +66,8 @@ button.alert {
   color: var(--alert-contrast-400);
 }
 
-button.alert:hover {
+button.alert:hover,
+.button.alert:hover {
   background-color: var(--alert-700);
   color: var(--alert-contrast-700);
   cursor: pointer;

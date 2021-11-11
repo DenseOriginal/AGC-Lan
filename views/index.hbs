@@ -98,7 +98,7 @@
     aspect-ratio: 2 / 1;
   }
 
-  .floating > .container > .body > button {
+  .floating > .container > .body > a.button {
     margin: 0 8px;
     margin-top: 16px;
   }
@@ -113,7 +113,12 @@
       <p>{{ nextLan.description }}</p>
 
       {{!-- If registration isn't open hide the button --}}
-      <button class="{{#unless nextLan.registration_open}}hidden{{/unless}}" onclick="alert('fix me')">Tilmeld</button>
+      <a
+        class="button {{#unless nextLan.registration_open}}hidden{{/unless}}"
+        href="/lan/{{ nextLan._id }}/tilmeld"
+      >
+        Tilmeld
+      </a>
     </div>
     <div class="footer"></div>
   </div>
