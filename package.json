@@ -5,8 +5,9 @@
   "scripts": {
     "watch": "tsnd --respawn src/server.ts",
     "clean": "rimraf dist/",
+    "serve": "node ./dist/server.js",
     "build": "npm run clean && tsc",
-    "build:serve": "npm run build && node ./dist/server.js"
+    "build:serve": "npm run build && npm run serve"
   },
   "engines": {
     "node": "14.x"
