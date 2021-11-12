@@ -47,7 +47,17 @@ app.engine('hbs', exphbs({
     },
     formatDate(time: Date, format: "long" | "short" = "short") {
       if(format == "long") {
-        return time.toDateString();
+        // Cool date format
+        // Only display the year if it isn't the current year
+        // Then split the string by spaces
+        // Map over each word and capitalize the first letter
+        // The join the array back again using a space
+        return time.toLocaleDateString('da-dk', {
+          weekday: "long",
+          month: "short",
+          day: "2-digit",
+          year: time.getFullYear() != (new Date()).getFullYear() ? "numeric" : undefined,
+        }).split(' ').map(day => day.charAt(0).toUpperCase() + day.substr(1).toLowerCase()).join(' ');
       }
 
       // Format the date with date/month
