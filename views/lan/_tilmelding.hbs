@@ -1,0 +1,7 @@
+<p>Du er tilmeldt {{ tilmelding.lan.name }}, fra
+  <i>{{ formatDate tilmelding.lan.start "long" }}</i> til 
+  <i>{{  formatDate tilmelding.lan.end "long" }}</i>.
+  Du har booket plads {{ tilmelding.seat }}
+</p>
+
+<a href="/lan/{{ tilmelding.lan._id }}/frameld" class="button warn">Frameld</a>

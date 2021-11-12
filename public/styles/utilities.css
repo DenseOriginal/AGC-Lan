@@ -8,6 +8,11 @@
   flex-direction: column;
 }
 
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
 .hidden {
   display: none;
 }

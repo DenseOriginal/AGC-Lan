@@ -10,10 +10,12 @@ import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
 import { getTilmeld, postTilmeld } from "./tilmeld";
 import { getLan } from "./_id";
+import { getShowTilmelding } from "./_tilmelding";
 
 export const LanRouter = Router();
 
 LanRouter.route('/list').get(getList);
+LanRouter.route('/tilmelding/:tilmeldingId').get(isAuthenticated, getShowTilmelding);
 
 // TODO: remove this
 // LanRouter.route('/create').get(isSuperAdmin, getCreate);
