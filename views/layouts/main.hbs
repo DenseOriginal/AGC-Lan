@@ -11,11 +11,6 @@
     <style>
       .page {
         min-height: 100%;
-        background-color: var(--background-50);
-        background-image: var(--background-image);
-        background-position: center; /* Center the image */
-        background-repeat: no-repeat; /* Do not repeat the image */
-        background-size: cover; /* Resize the background image to cover the entire container */
       }
 
       .page > .inner {
@@ -24,9 +19,27 @@
         min-height: 100%;
         height: fit-content;
       }
+
+      body {
+        position: relative;
+      }
+
+      body > .background-image {
+        position: fixed;
+        z-index: -10000;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-50);
+        background-image: var(--background-image);
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+      }
     </style>
   </head>
   <body>
+    <div class="background-image"></div>
+
     {{#unless noHeader}}
     {{> header }}
     {{/unless}}
