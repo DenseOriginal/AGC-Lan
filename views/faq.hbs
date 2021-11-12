@@ -1,0 +1,294 @@
+<style>
+  section {
+    margin-bottom: 64px;
+  }
+
+  section>.subheader {
+    color: var(--muted-text);
+    margin-bottom: 16px;
+  }
+
+  .accordian {
+    margin-bottom: 8px;
+  }
+
+  .accordian>.accordian-header {
+    padding: 16px 32px;
+    width: 100%;
+    background-color: var(--background-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .accordian>.accordian-header:hover {
+    background-color: var(--background-300);
+    cursor: pointer;
+  }
+
+  .accordian>.accordian-content {
+    /* We can't give it a top&bottom padding because that fucks with the height: 0 */
+    padding: 0 32px;
+    background-color: var(--background-50);
+    max-height: 0;
+    transition: var(--normal-transition);
+    overflow: hidden;
+  }
+
+  /* Because we can't give the content container a top&bottom padding, we have to give the first and last child the padding */
+  .accordian>.accordian-content :first-child {
+    padding-top: 16px;
+  }
+
+  .accordian>.accordian-content :last-child {
+    padding-bottom: 16px;
+  }
+
+  section.faq ul>li {
+    margin-left: 16px;
+  }
+</style>
+
+<section class="faq">
+  <h2>FAQ</h2>
+  <p class="subheader">Hvis du har et spørgsmål du ikke kan finde på listen, kan du spørge os på
+    <a href="https://discord.gg/3DJaNFY" target="_blank">Discord</a> eller <a
+      href="https://www.facebook.com/AarhusGymnasiumLAN" target="_blank">Facebook.</a>
+  </p>
+
+  <div class="accordian">
+    <div class="accordian-header"><b class="noselect">Regler</b> <i class="fas fa-chevron-down"></i></div>
+    <div class="accordian-content">
+      <p>Vi har nogle få, men vigtige, regler, som vi gerne vil have at alle overholder af
+        sikkerhedsmæssige årsager, og for
+        at
+        alle kan få en god oplevelse til LAN.</p>
+      <ul>
+        <li><b>Du må ikke komme beruset, eller indtage alkohol</b>, til nogen af LANene. Hvis der er påvirkede mennesker
+          til
+          LAN,
+          kan LAN risikere at blive lukket for evigt.
+        </li>
+        <li><b>Samleje er ikke tilladt til LAN</b>, eller noget andet tidspunkt på skolens ejendom.</li>
+        <li><b>Når du har brugt køkkenet, skal du huske at rydde op</b> og gøre rent de steder hvor du har været, og de
+          ting du har brugt.
+        </li>
+        <li><b>Der må ikke stå tasker eller andet baggage ved bordene, da det spærrer brandvejene.</b> Al baggage skal i
+          stedet
+          stilles op på trappen, eller i andre afmarkerede baggageområder.
+        </li>
+        <li><b>Der må ikke stå drikke- eller spisevarer i nærheden af El-tavlerne (de store strømfordelere)</b>.</li>
+        <li><b>For at undgå kortslutning, må du ikke sætte højspændigs køkkenudstyr (som køleskabe) til strømstikket
+            hvor du
+            sidder.</b>
+          Vi har et dedikeret køkkenområde, der er sat op til at klare højere spænding.
+        </li>
+        <li><b>Der må ikke medbringes netværksudstyr som routere og access-points, og du må ikke hoste hotspots og
+            andet uden tilladelse.</b> Når du ankommer skal du også sikre dig at din computer ikke er sat op til at dele
+          dit netværk igennem lan-kabel. Dette kan nemlig forårsage problemer.
+        </li>
+        <li><b>Husk at rydde op løbende under LAN,</b> og smid dine pantflasker i de afmarkerede pantspande.</li>
+        <li>Vi forbeholder os retten til at fjerne alt upassende data fra en brugers profil.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvad skal jeg tage med til LAN?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Du behøver reelt set ikke at tage noget med til LAN, andet end dit <em>studiekort</em>.</p>
+      <p>Hvis du gerne vil overnatte til LAN, vil vi dog gerne have at du tager <em>dyne eller sovepose og madras</em>
+        med.
+        Bemærk at vi som hovedregel <em>ikke</em> må sove på skolens møbler.
+        Husk også <em>tandbørste og andre toiletsager</em>, samt <em>rent tøj</em>.</p>
+      <p>Ud over dette skal du selvfølgelig have det <em>computer-udstyr</em> med, som du skal bruge. Hvis du ikke har
+        et
+        LAN
+        kabel, er det muligt at låne. Hver person er kun garanteret <em>ét strømstik</em>. Hvis du skal bruge mere, så
+        husk
+        at tage en <em>forlængerledning</em> med!</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvor foregår LAN?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>LAN foregår ved <a href="https://goo.gl/maps/U3QLMv2Phfv" target="_blank">AARHUS TECH Aarhus Gymnasium<br>
+          Dollerupvej 2, 8000, Aarhus C</a></p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvordan betaler jeg til LAN?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Dette gælder både for <em>madbetaling og billetpris</em> (hvis gældende).</p>
+      <p>Hos AG LAN bruger vi MobilePay. Når du skal betale, vil der dukke en QR-kode op ved din bestilling. Hvis du er
+        på
+        mobil,
+        kan du bare trykke på den, og åbne MobilePay igennem den side for at betale. Hvis ikke, skal du på MobilePay
+        appen
+        trykke
+        <b>Betal</b>, derefter trykke på <b>Scan QR-kode</b> og scanne koden for at betale.
+        Du kan også vælge at sende pengene direkte til vores box, <b>box76401</b>. Dog foretrækker vi at du bruger
+        QR-koden.
+      </p>
+
+      <p>Hvis du betaler for en anden person, er det <b>vigtigt</b> at du scanner QR-koden, da vi får et ordrenummer
+        med.
+        På den måde, kan vi godkende den rigtige ordre.</p>
+
+      <p>Hvis du ønsker at betale kontant, skal du give pengene til et medlem af LAN Crew.</p>
+
+      <p>Vi skal dog markere din betaling manuelt, så derfor kan det godt tage et stykke tid før der står at du har
+        betalt.
+      </p>
+
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvornår skal jeg møde op til LAN?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Du kan møde op, og gå, når du har lyst, så længe LAN er i gang. De første turneringer bliver tidligst afholdt
+        klokken 20 om fredagen. Husk at checke hvornår de turneringer, du har meldt dig til, bliver afholdt, så du kan
+        sikre dig at du er til stede på disse tidspunkter.</p>
+      <p>LAN Crew begynder at sætte op nogle timer før LAN begynder, så dem der gerne vil hjælpe til, er velkomne til at
+        komme
+        tidligere. Hvis du ikke har tænkt dig at hjælpe med at sætte op, beder vi dig dog venligst om ikke at komme før
+        LAN starter.</p>
+
+      <p>Hvis du ønsker at hjælpe med at opsætte til flere forskellige LAN, men ikke øsnker at bære ansvaret
+        af at være LAN Crew medlem, kan du blive opsætter. Hvis du ønsker at blive opsætter, skal du tage kontakt til en
+        fra LAN Crew som vil hjælpe dig.</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Er jeg velkommen til LAN??</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Alle der går på en skole som går under Aarhus Gymnasium, er velkomne. Dette vil sige at du er velkommen hvis du
+        går på enten Aarhus Gymnasium Aarhus C, Aarhus Gymnasium Viby, Aarhus Gymnasium Tilst eller Aarhus Gymnasium
+        Skanderborg,
+        er du velkommen til LAN.</p>
+      <p>Hvis du ikke går på en af de skoler må du desværre <em>ikke</em> komme til LAN, da vi ikke må invitere folk
+        udefra.
+      </p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Må jeg deltage i turneringer, selv hvis jeg ikke er til stede til LAN?</b> <i
+        class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Vi har den generelle politik, at det er helt okay at have folk på holdet, som hverken er til stede til LAN
+        eller går på skolen, så længe <em>mindst halvdelen af holdet er fysisk til stede til LAN</em>. Det er
+        gruppemedlemmerne,
+        som er til LAN, der har ansvaret for at give eventuelle turneringspræmier til de resterende medlemmer.
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvad er forskellen på en turnering og et event?</b> <i
+        class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>En turnering er en kompetetiv begivenhed, hvor man konkurrerer mod hinanden for at finde en eller flere
+        vindere.
+      </p>
+      <p>Et event er en fredelig begivenhed, hvor det ikke nødvendigvis er en kompetitiv konkurrence, men mere end
+        begivenhed for hyggens skyld.</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Er der mad til LAN?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Til hvert LAN har vi et småt udvalg af køkkenudstyr til frit brug. Dette vil sige en ovn, mikrobølgeovn,
+        køleskab og elkedel. Ud over dette ligger vi meget tæt på en Føtex og Netto.</p>
+      <p>Hver aften bestiller vi mad fra <em>Byens Burger</em>. Hvornår madbestilling åbner kan ses på tidsplanen på
+        forsiden,
+        hvis den er oppe. Vi henter maden og transporterer den til skolen. Du kan forvente maden cirka 2 timer efter
+        madbestilling åbner. Madbestilling foregår via hjemmesiden.</p>
+
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvor meget bordplads har jeg?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Siden alle personer har et halvt bord, vil der være cirka 60*bredde bord cm<sup>2</sup> til rådighed per person. Vi ved godt, at dette
+        ikke
+        er meget, men det er ikke muligt for os at skaffe større borde. Som hovedregel kan hver person kun reservere én
+        plads
+        - hvis vi ser, at antallet af tilmeldte er særligt lavt, er det dog muligt at vi åbner op for at folk kan
+        reservere
+        en ekstra plads.</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Kan i lave en turnering i &lt;spil&gt;?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Vi lytter altid på hvad dem, der kommer til LAN, har at sige - særligt når det kommer til dette. Det er dog
+        ikke
+        altid
+        der er plads i tidsplanen til alle de spil der bliver foreslået, så hver gang før et LAN, åbner vi en poll
+        angående
+        hvilke spil der ønskes turneringer i. Hvis du gerne vil være med til at bestemme hvilke turneringer vi afholder,
+        skal du melde dig ind i vores Discord og/eller Facebook gruppe, hvor disse polls vil blive lagt ud.</p>
+      <p>Hvis du gerne vil foreslå et spil, som ikke er på vores liste, kan du skrive en besked til os på Discord eller
+        Facebook.</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvordan kontakter jeg LAN Crew?</b> <i class="fas fa-chevron-down"></i></h4>
+    <div class="accordian-content">
+      <p>Vi er mange i LAN Crew, der er mere end villige til at hjælpe, eller give forbedringsforslag og kritik videre.
+        Du kan nå de fleste af os via Discord, hvor alle LAN Crew medlemmers navne er skrevet med rødt. For at finde
+        Discord
+        gruppen kan du klikke på den Discord boks vi har på siden. Hvis du gerne vil kontakte en enkelt person fra Crew,
+        har vi alle skrevet vores Discord username i vores bio på vores profil her på siden. Du kan også finde os på
+        Facebook, i gruppen "AG LAN".</p>
+    </div>
+  </div>
+  <div class="accordian">
+    <h4 class="accordian-header"><b class="noselect">Hvordan bliver jeg et medlem af LAN Crew?</b> <i class="fas fa-chevron-down"></i>
+    </h4>
+    <div class="accordian-content">
+      <p>Vi leder altid efter nye entusiastiske medlemmer, der kan hjælpe med at udfylde hullerne, som de gamle 3.g'ere
+        efterlod.
+        Hvis du gerne vil være en del af LAN Crew, kan du sende en privat besked til en af os på Discord. Vi vil dog
+        helst
+        have,
+        at man har været med til mindst ét LAN før. Det betyder også en del, hvis man hjælper med at sætte op og pakke
+        sammen,
+        da det viser os, at du faktisk er seriøs om at hjælpe til.</p>
+      <p>Som LAN Crew medlem får du lov til at være med til at bestemme hvordan LAN skal foregå, og får gode relationer
+        til
+        mange folk fra andre årgange og klasser, end din egen. Det eneste vi kræver af dig er at du er villig til at
+        hjælpe til.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Get all the accordians, and convert them to an array
+  // So that we can loop over them
+  [...document.getElementsByClassName("accordian")].forEach((elm, idx) => {
+    // Header and content divs
+    const header = elm.children.item(0);
+    const content = elm.children.item(1);
+
+    // Helper for toggling the accordian
+    const toggleAccordian = () => {
+      // This is the icon
+      // We can toggle between to classes, because it starts with only one of them
+      // We can be sure that at any time it only has one of these classes
+      // The icon is stored in the class
+      header.children.item(1).classList.toggle('fa-chevron-down');
+      header.children.item(1).classList.toggle('fa-chevron-up');
+
+      // This let's the conent container animate down
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
+
+    // If the hash is equal to the index of the current accordian, 
+    if(location.hash.slice(1) === idx.toString()) toggleAccordian();
+
+    // Add an eventlistener so that we can react to the header being clicked
+    header.addEventListener('click', toggleAccordian);
+  });
+</script>

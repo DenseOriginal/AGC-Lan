@@ -7,6 +7,7 @@ import { getPolicy } from "./policy";
 import { ProfileRouter } from "./profile/router";
 import { getUser } from "./_userId";
 import { LanRouter } from "./lan/router";
+import { getFaq } from "./faq";
 
 export const RootRouter = Router();
 
@@ -16,6 +17,7 @@ RootRouter.route("/login").get(notAuthenticated, getLogin);
 RootRouter.route("/logout").get((req, res) => { req.logOut(); res.redirect('/'); });
 RootRouter.route("/policy").get(getPolicy);
 RootRouter.route("/user/:id").get(isAuthenticated, getUser);
+RootRouter.route("/faq").get(getFaq);
 
 // Other routers
 RootRouter.use("/api", ApiRouter);
