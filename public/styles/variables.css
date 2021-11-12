@@ -30,6 +30,8 @@ button.main,
   font-weight: 600;
   letter-spacing: 1px;
   border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13.3px;
 }
 
 button:hover,
