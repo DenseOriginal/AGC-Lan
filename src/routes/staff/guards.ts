@@ -22,7 +22,7 @@ export const notYourself: IsFunction = ({ currentAdmin, record }: ActionContext)
 }
 
 export const userIsNotSuperAdmin: IsFunction = ({ record }: ActionContext) => {
-  return !record?.params.is_superadmin;
+  return !(record?.params && (roles[(record?.params.role as string)] > 2))
 }
 
 export const multiple = (...fns: IsFunction[]): IsFunction => {
