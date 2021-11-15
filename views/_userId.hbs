@@ -127,39 +127,6 @@
         <p>Probably implement bio?</p>
       </div>
   </div>
-
-  {{#if user.is_staff}}
-  <div class="card admin">
-    <div class="header">
-      <h4>Admin tools</h4>
-    </div>
-    <div class="buttons">
-      {{!-- If the user is admin and the foundUser isn't an admin, then show the Add/remove staff buttons --}}
-      {{#if (and user.is_admin (not (or foundUser.is_admin foundUser.is_superadmin)))}}
-
-        {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
-        {{#if foundUser.is_staff}}
-          <button onclick="post('/api/remove-staff')" class="alert">Fjern Staff</button>
-        {{else}}
-          <button onclick="post('/api/add-staff')">Tilføj Staff</button>
-        {{/if}}
-      {{/if}}
-
-      {{!-- If the user is superAdmin and the foundUser isn't a superAdmin, the show the Add/remove admin buttons --}}
-      {{#if (and user.is_superadmin (not foundUser.is_superadmin))}}
-
-        {{!-- If the user is already a staff, then show remove staff, otherwise show add staff --}}
-        {{#if foundUser.is_admin}}
-          <button onclick="post('/api/remove-admin')" class="alert">Fjern Admin</button>
-        {{else}}
-          <button onclick="post('/api/add-admin')">Tilføj Admin</button>
-        {{/if}}
-      {{/if}}
-
-      <button class="warn">Ban</button>
-    </div>
-  </div>
-  {{/if}}
 </div>
 
 <script>

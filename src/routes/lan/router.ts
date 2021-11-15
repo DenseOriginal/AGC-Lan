@@ -5,7 +5,6 @@ import { isNotBanned } from "../../config/guards";
 import { isAuthenticated } from "../../config/guards";
 import { isStaff } from "../../config/passport";
 import { LanModel } from "../../models/lan";
-import { getCreate, postCreate } from "./create";
 import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
 import { redirectToCurrentFrameld, redirectToCurrentTilmeld } from "./redirect";
@@ -19,10 +18,6 @@ LanRouter.route('/list').get(getList);
 LanRouter.route('/tilmeld').get(redirectToCurrentTilmeld);
 LanRouter.route('/frameld').get(redirectToCurrentFrameld);
 LanRouter.route('/tilmelding/:tilmeldingId').get(isAuthenticated, getShowTilmelding);
-
-// TODO: remove this
-// LanRouter.route('/create').get(isSuperAdmin, getCreate);
-// LanRouter.route('/create').post(isSuperAdmin, postCreate);
 
 // This need to be last to not catch all the other routes
 LanRouter.route('/:lanId').get(findLan('lanId'), getLan);
