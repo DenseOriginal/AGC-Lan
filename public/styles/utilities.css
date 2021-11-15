@@ -63,7 +63,7 @@ a.button {
   /* margin-top: -32px; */
   padding: 32px 32px 16px 32px;
   margin-bottom: 24px;
-  border-bottom: 1px solid var(--background-400);
+  border-bottom: 1px solid var(--background-300);
 }
 
 .card:not(.not-padding) > :not(h2) {

@@ -76,7 +76,7 @@
 <h1>Info om LAN</h1>
 <br>
 {{!-- Only say the user is tilmeldt if they are --}}
-{{#if tilmelding}} <div class="card basic-shadow flex-space-between tilmeldt">
+{{#if tilmelding}} <div class="card flex-space-between tilmeldt">
   <h3>Du er tilmeldt dette LAN</h3>
   <div class="button-container">
     <a href="/lan/tilmelding/{{ tilmelding._id }}" class="button">Vis mere</a>
@@ -84,7 +84,7 @@
   </div>
 </div> {{/if}}
 
-<div class="card basic-shadow">
+<div class="card">
   <div class="head">
     <h3>Basic information</h3>
   </div>
@@ -103,7 +103,7 @@
 </div>
 
 {{!-- TODO: do something with this --}}
-<div class="card basic-shadow hidden">
+<div class="card hidden">
 </div>
 
 {{/if}}
