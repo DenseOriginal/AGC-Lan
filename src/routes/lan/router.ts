@@ -8,6 +8,7 @@ import { LanModel } from "../../models/lan";
 import { getCreate, postCreate } from "./create";
 import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
+import { redirectToCurrentFrameld, redirectToCurrentTilmeld } from "./redirect";
 import { getTilmeld, postTilmeld } from "./tilmeld";
 import { getLan } from "./_id";
 import { getShowTilmelding } from "./_tilmelding";
@@ -15,6 +16,8 @@ import { getShowTilmelding } from "./_tilmelding";
 export const LanRouter = Router();
 
 LanRouter.route('/list').get(getList);
+LanRouter.route('/tilmeld').get(redirectToCurrentTilmeld);
+LanRouter.route('/frameld').get(redirectToCurrentFrameld);
 LanRouter.route('/tilmelding/:tilmeldingId').get(isAuthenticated, getShowTilmelding);
 
 // TODO: remove this
