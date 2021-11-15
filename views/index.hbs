@@ -1,133 +1,66 @@
-<style>
-  .home {
-    width: 100%;
-    display: grid;
-    place-items: center;
-  }
-
-  .home > h1 {
-    font-size: 3rem;
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-
-  .home > .description {
-    width: min(90%, 550px);
-    margin-bottom: 1rem;
-    text-align: center;
-    color: var(--muted-text);
-  }
-</style>
-
-<div class="home">
-    <h1>LAN - Aarhus Gymnasium</h1>
-    <p class="description">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Accusamus, aliquam, atque, autem blanditiis consequuntur cumque
-        debitis doloremque dolorum eaque eius enim error esse et eveniet
-        explicabo facilis fugiat harum hic id illo impedit in inventore
-        ipsum iure iusto laboriosam laudantium libero magni maxime minima
-        molestias nam natus necessitatibus neque nihil nostrum numquam
-        odio officia omnis optio pariatur perferendis perspiciatis
-        placeat porro quae quam quas quia quibusdam quod ratione rem
-        reprehenderit rerum saepe sapiente sequi similique sint sit
-        suscipit temporibus tenetur totam ullam unde vel vero voluptas
-        voluptate voluptates.
-    </p>
-    <p class="description">Har du nogle spørgsmål kan du tjekke vores <a href="/faq">FAQ</a></p>
+<div class="card">
+  {{#if nextLan.public }}
+  <h2 class="head">Næste LAN: {{ nextLan.name }}</h2>
+  <h4>Dato: <strong>{{ formatDate nextLan.start "long" }}</strong></h4>
+  <p>{{ nextLan.description }}</p>
+  {{#unless nextLan.public}} {{!-- TODO: lan.show_calendar --}}
+  <p>Tidsplanen for næste LAN er ikke klar endnu, men vil blive vist herunder så snart alt er planlagt.</p>
+  {{/unless}}
+  {{else}}
+  <h2 class="head">Ingen LAN planlagt</h2>
+  <p>Der er ingen LAN planlagt på nuværende tidspunkt.</p>
+  {{/if}}
 </div>
-
-{{!-- Floating next lan box --}}
-{{#if nextLan.public}}
-<style>
-  .floating {
-    --padding: max(2.5vw, 8px);
-
-    /* Use some wierd positionning and padding to avoid colliding with the theme switcher z-index */
-    position: fixed;
-    bottom: 0;
-    bottom: var(--padding);
-    right: 0;
-    width: min(calc(275px + var(--padding) * 2), 100%);
-    padding: var(--padding);
-    padding-bottom: 0;
-    z-index: 1;
-  }
-
-  .floating > .container {
-    width: 100%;
-    --border-radius: 6px;
-    border-radius: var(--border-radius);
-    background-color: var(--background-200);
-  }
-
-  .floating > .container > .header > i {
-    cursor: pointer;
-  }
-
-  .floating > .container > .header {
-    display: flex;
-    justify-content: space-between;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-    padding: 16px;
-    padding-bottom: 12px;
-  }
-
-  .floating > .container > .footer {
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    padding-bottom: 8px;
-  }
-
-  .floating > .container > .body > p {
-    color: var(--muted-text);
-    height: 100px;
-    overflow-y: auto;
-  }
-
-  .floating > .container > .body > h3 {
-    margin: 8px 0;
-  }
-
-  .floating > .container > .body > h3,
-  .floating > .container > .body > p {
-    padding: 0 8px;
-  }
-
-  .floating > .container > .body > img {
-    width: 100%;
-    aspect-ratio: 2 / 1;
-  }
-
-  .floating > .container > .body > a.button {
-    margin: 0 8px;
-    margin-top: 16px;
-  }
-</style>
-
-<div class="floating" id="nextLanPopup">
-  <div class="container basic-shadow">
-    <div class="header">Næste LAN <i class="fas fa-times" onclick="closeNextLan()"></i></div>
-    <div class="body flex-column">
-      <img src="{{ nextLan.cover_url }}" alt="Cover picture">
-      <h3>{{ nextLan.name }}</h3>
-      <p>{{ nextLan.description }}</p>
-
-      {{!-- If registration isn't open hide the button --}}
-      <a
-        class="button {{#unless nextLan.registration_open}}hidden{{/unless}}"
-        href="/lan/{{ nextLan._id }}/tilmeld"
-      >
-        Tilmeld
-      </a>
-    </div>
-    <div class="footer"></div>
-  </div>
+{{#if (and nextLan nextLan.public)}}
+<div class="card">
+  <h2 class="head">Tidsplan</h2>
+  <p>Start: {{ formatDate nextLan.start "long" }}</p>
 </div>
-
-<script>
-  function closeNextLan() {
-    document.getElementById('nextLanPopup').remove();
-  }
-</script>
 {{/if}}
+<div class="card">
+  <h2 class="head">Hvad er AG LAN?</h2>
+  <p>AG LAN <span class="acronym">(A<span>arhus</span>G<span>ymnasium</span> L<span>AN</span>) er navnet på det
+    LAN
+    vi holder på Aarhus Gymnasium Aarhus C, af elever, for elever. LAN bliver som regel holdt over en weekend, fra
+    fredag
+    aften til søndag middag, men det er tilladt at komme og gå som man vil, så længe man er tilmeldt.</p>
+
+  <p>Under <a href="/FAQ">Information</a> kan du finde alle de informationer, du har brug for at vide, før du
+    tager til LAN. Dette inkluderer for eksempel tid og sted, pakkeliste, hvordan madbestilling foregår,
+    regler for opholdelse under LAN, og en FAQ.</p>
+  <p>Under <a href="/tilmeld">Tilmelding</a> kan du melde dig til næste LAN, og reservere plads.
+    Vi regner med at alle, der kommer, melder sig til.</p>
+  <p>Under <a href="/tournaments">Turnering</a> kan du melde dig til det kommende LAN's turneringer. Her kan
+    du også se holdenes placering under og efter turneringer, og hvilke præmier de forskellige turneringer har.</p>
+</div>
+<div class="card">
+  <h2 class="head">Regler</h2>
+  <p>Vi har nogle få, men vigtige, regler, som vi gerne vil have at alle overholder af sikkerhedsmæssige årsager, og for
+    at
+    alle kan få en god oplevelse til LAN.</p>
+  <ul>
+    <li><b>Du må ikke komme beruset, eller indtage alkohol</b>, til nogen af LANene. Hvis der er påvirkede mennesker til
+      LAN,
+      kan LAN risikere at blive lukket for evigt.
+    </li>
+    <li><b>Samleje er ikke tilladt til LAN</b>, eller noget andet tidspunkt på skolens ejendom.</li>
+    <li><b>Når du har brugt køkkenet, skal du huske at rydde op</b> og gøre rent de steder hvor du har været, og de
+      ting du har brugt.
+    </li>
+    <li><b>Der må ikke stå tasker eller andet baggage ved bordene, da det spærrer brandvejene.</b> Al baggage skal i
+      stedet
+      stilles op på trappen, eller i andre afmarkerede baggageområder.
+    </li>
+    <li><b>Der må ikke stå drikke- eller spisevarer i nærheden af El-tavlerne (de store strømfordelere)</b>.</li>
+    <li><b>For at undgå kortslutning, må du ikke sætte højspændigs køkkenudstyr (som køleskabe) til strømstikket hvor du
+        sidder.</b>
+      Vi har et dedikeret køkkenområde, der er sat op til at klare højere spænding.
+    </li>
+    <li><b>Der må ikke medbringes netværksudstyr som routere og access-points, og du må ikke hoste hotspots og
+        andet uden tilladelse.</b> Når du ankommer skal du også sikre dig at din computer ikke er sat op til at dele
+      dit netværk igennem lan-kabel. Dette kan nemlig forårsage problemer.
+    </li>
+    <li><b>Husk at rydde op løbende under LAN,</b> og smid dine pantflasker i de afmarkerede pantspande.</li>
+    <li>Vi forbeholder os retten til at fjerne alt upassende data fra en brugers profil.</li>
+  </ul>
+</div>
