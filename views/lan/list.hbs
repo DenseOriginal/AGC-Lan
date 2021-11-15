@@ -144,7 +144,7 @@
   {{#if (and nextLan (or (isStaff user) nextLan.public))}}
   {{!-- Current lan --}}
   <div class="card current">
-    <h3 class="head">{{ nextLanHeader }} LAN</h3>
+    <h2 class="head">{{ nextLanHeader }} LAN</h2>
     <div class="body">
       <div class="left">
         <img
@@ -180,7 +180,7 @@
   {{/if}}
 
   <div class="card previous">
-    <h3 class="head">Tidligere LAN</h3>
+    <h2 class="head">Tidligere LAN</h2>
     {{!-- Ïterate over all the previous lans --}}
     {{#each previousLans}}
     <div class="body">

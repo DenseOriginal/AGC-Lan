@@ -28,16 +28,10 @@
 {{!-- Otherwise just display the normal page --}}
 
 <style>
-  .card {
-    background-color: var(--card-background);
-    padding: 0 0 32px 0;
-    border-radius: 10px;
-    margin-bottom: 32px;
-  }
-
   .card > .row {
     width: 100%;
-    padding: 12px 32px;
+    padding: 12px 32px !important;
+    margin: 0 !important;
     display: flex;
     justify-content: flex-start;
   }
@@ -58,7 +52,7 @@
   }
 
   .card.tilmeldt {
-    padding: 12px 16px;
+    padding: 12px 32px;
     align-items: center;
   }
 
@@ -76,15 +70,15 @@
 <h1>Info om LAN</h1>
 <br>
 {{!-- Only say the user is tilmeldt if they are --}}
-{{#if tilmelding}} <div class="card basic-shadow flex-space-between tilmeldt">
+{{#if tilmelding}} <div class="card not-padding flex-space-between tilmeldt">
   <h3>Du er tilmeldt dette LAN</h3>
   <div class="button-container">
     <a href="/lan/tilmelding/{{ tilmelding._id }}" class="button">Vis mere</a>
-    <a href="/lan/{{ foundLan._id }}/frameld" class="button warn">Frameld</a>
+    <a href="/lan/{{ lan._id }}/frameld" class="button warn">Frameld</a>
   </div>
 </div> {{/if}}
 
-<div class="card basic-shadow">
+<div class="card">
   <div class="head">
     <h3>Basic information</h3>
   </div>
@@ -103,7 +97,7 @@
 </div>
 
 {{!-- TODO: do something with this --}}
-<div class="card basic-shadow hidden">
+<div class="card hidden">
 </div>
 
 {{/if}}

@@ -1,4 +1,9 @@
 <style>
+  /* Hacky fix not aliging to middle */
+  body > .page > .inner {
+    height: 100%;
+  }
+
   .setup {
     width: 100%;
     height: 100%;
@@ -8,9 +13,6 @@
 
   .setup-card {
     padding: 32px;
-    background-color: var(--card-background);
-    border-radius: 10px;
-
     width: min(95%, 550px);
     display: flex;
     justify-content: space-between;
@@ -43,49 +45,6 @@
     align-items: flex-start;
     width: 59%;
   }
-
-  .input>input {
-    margin-bottom: 2px;
-    width: 100%;
-  }
-
-  .input {
-    margin-bottom: 12px;
-    width: 100%;
-  }
-
-  .setup-card>form>button {
-    width: 100%;
-  }
-
-  .input>.error {
-    margin-left: 8px;
-    color: var(--warn-400);
-  }
-
-  .setup-card input {
-    color: var(--background-contrast-200);
-    padding: 12px 16px;
-    padding-left: 8px;
-    border: none;
-    background-color: var(--background-200);
-    border-bottom: var(--background-400) 2px solid;
-    outline: none;
-    border-radius: 3px;
-    font-size: 16px;
-
-    transition: var(--fast-transition);
-  }
-
-  .setup-card input::placeholder {
-    color: var(--muted-text);
-  }
-
-  .setup-card input[type="text"]:active,
-  .setup-card input[type="text"]:focus {
-    border-color: var(--info-400);
-  }
-
   
   @media only screen and (max-width: 630px) {
     .setup-card {
@@ -110,11 +69,19 @@
 </style>
 
 <div class="setup">
-  <div class="setup-card">
+  <div class="setup-card card not-padding">
     <form action="/profile/setup" id="setupForm" method="post">
       {{#each infoToCollect}}
       <div class="input">
-        <input type="text" name="{{ this.name }}" id="{{ this.name }}" value="{{ this.value }}" placeholder="{{ this.placeholder }}" {{{ this.rest }}}>
+        <input
+          type="text"
+          name="{{ this.name }}"
+          id="{{ this.name }}"
+          value="{{ this.value }}"
+          placeholder="{{ this.placeholder }}"
+          autocomplete="off"
+          {{{ this.rest }}}
+        >
 
         {{#if this.error}}
         <p class="error">{{ this.error }}</p>
