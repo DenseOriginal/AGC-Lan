@@ -45,35 +45,41 @@ a.button {
   /* padding: 32px; */
   border-radius: 10px;
   margin-bottom: 32px;
+
+  --padding: 32px;
+}
+
+.card.medium {
+  --padding: 24px
 }
 
 .card:not(.not-padding) > :first-child:not(.head) {
-  padding-top: 32px;
+  padding-top: var(--padding);
 }
 
 .card:not(.not-padding) > :not(.head) {
-  padding: 0 48px;
+  padding: 0 calc(var(--padding) * 1.5);
 }
 
 .card:not(.not-padding) > :last-child {
-  padding-bottom: 32px;
+  padding-bottom: var(--padding);
 }
 
 .card:not(.not-padding) > .head {
   /* margin-top: -32px; */
-  padding: 32px 32px 16px 32px;
+  padding: var(--padding) var(--padding) calc(var(--padding) * 0.5) var(--padding);
   margin-bottom: 24px;
   border-bottom: 1px solid var(--background-300);
 }
 
 .card:not(.not-padding) > :not(h2) {
-    padding: 0 15px;
+    padding: 0 calc(var(--padding) * 0.5);
     line-height: 1.2em;
     margin: 15px 0 15px;
 }
 
 .card > ul {
-    padding: 0 35px;
+    padding: 0 var(--padding);
 }
 
 .card li {
