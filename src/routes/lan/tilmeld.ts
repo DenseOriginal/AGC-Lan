@@ -38,7 +38,7 @@ export const getTilmeld: RequestHandler = async (req, res) => {
 }
 
 export const postTilmeld: RequestHandler = async (req, res) => {
-  // const seat = req.body.seat
+  const seat = req.body.seat || 'none';
 
   const lanId = req.params.lanId;
 
@@ -61,7 +61,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     const newLanUser = new LanUserModel({
       user: userId,
       lan: lanId,
-      seat: 'A1',
+      seat,
     });
 
     await newLanUser.save();
