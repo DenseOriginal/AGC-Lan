@@ -17,12 +17,19 @@ export const getTilmeld: RequestHandler = async (req, res) => {
     // If this is true, a response was sent by the validate function, so we can't do anymore
     if(res.headersSent) return;
 
+    // Check if the user is already registered
+    const tilmelding = await LanUserModel.findOne({
+      user: req.user?._id,
+      lan: foundLan._id,
+    }).exec();
+
     // Otherwise if nothing failed then render the lan to the user
     return res.render("lan/tilmeld", {
       user: req.user,
       title: foundLan.name,
       lan: foundLan.toObject(),
       tables: rangesToTables(foundLan.seats),
+      tilmelding: tilmelding?.toObject(),
       takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
     })
 
@@ -113,18 +120,6 @@ function validateLan(foundLan: ILAN | LANAsDocument | undefined, req: Request, r
       noHeader: true
     });
 
-    // Check if the user is already registered
-    const lanUser = await LanUserModel.findOne({
-      user: req.user?._id,
-      lan: foundLan._id,
-    }).exec();
-
-    if(lanUser) return res.render("lan/tilmeld", {
-      user: req.user,
-      title: foundLan.name,
-      error: 'Du er allerede tilmeldt til dette LAN'
-    });
-    
     resolve();
   });
 }

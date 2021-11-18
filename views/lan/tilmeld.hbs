@@ -163,7 +163,8 @@
     margin-top: 8px;
   }
   
-  #selected_seat > span {
+  #selected_seat > span,
+  #old_seat > span {
     font-weight: bold;
   }
 
@@ -183,8 +184,7 @@
 
 <div class="tilmeld">
   <form action="/lan/{{ lan._id }}/tilmeld" method="post" id="register_form">
-    {{!-- Implement later --}}
-    {{!-- <input type="hidden" id="tilmeldingID" name="tilmeldingID" value="{{ tilmelding._id }}"> --}}
+    <input type="hidden" id="tilmeldingID" name="tilmeldingID" value="{{ tilmelding._id }}">
 
     <div class="card medium">
       <h3 class="head">Tilmelding til {{ lan.name }}</h3>
@@ -224,12 +224,11 @@
               {{#each this}}
                   {{!-- Create a hidden radio button that has the value of the seat id --}}
                   <input
-                    class="seat-radio {{#if (eq tilmelding.seat this)}}selected{{/if}}"
+                    class="seat-radio"
                     type="radio"
                     name="seat"
                     id="{{this}}"
                     value="{{this}}"
-                    {{!-- {{#if (and (inArray this lan.users.seat) (ne tilmelding.seats this))}}disabled{{/if}} --}}
                   >
                   {{!-- Create a label that is displayed as the cell, and that acts for the radio button --}}
                   <label for="{{this}}" class="cell">{{this}}</label>
@@ -274,7 +273,7 @@
       <div class="spacer"></div>
 
       <div>
-        <button type="submit">Tilmeld mig til LAN!</button>
+        <button type="submit">{{#if tilmelding}}Opdater min tilmelding!{{else}}Tilmeld mig til LAN!{{/if}}</button>
       </div>
     </div>
   </form>
@@ -292,10 +291,19 @@
     document.querySelector("#selected_seat > span").innerHTML = seatRadios.value;
   }
 
-  updateCurrentSeat();
-
   // Injected by server
   // This disables all taken seats
-  "{{ takenSeats }}".split(",").forEach((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none)`).disabled = true);
+  "{{ takenSeats }}".split(",")
+    .map((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none):not(#{{ tilmelding.seat }})`))
+    .filter(elm => !!elm)
+    .forEach(elm => elm.disabled = true);
+  
+  const prevSeatLabel = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio+label`);
+  if(prevSeatLabel) prevSeatLabel.classList.add('selected');
+
+  const prevSeatRadio = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio`);
+  if(prevSeatRadio) prevSeatRadio.checked = true;
+
+  updateCurrentSeat();
 </script>
 {{/if}}
