@@ -34,13 +34,257 @@
 </div>
 
 {{else}}
+<style>
+  .tilmeld {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
-<p>Vi er super glade for at du gider at komme til LAN. Før vi kan reservere din plads til dette LAN, vil vi gerne vide
-  hvor du vil sidde henne. Her er et billede over alle pladserne til lan, klike på lige præcis den plads du vil have for
-  at reservere den, hvis du ikke vil have en plads til dine ting, så klik her.</p>
+  .tilmeld>form {
+    width: min(95%, 730px);
+  }
 
-<form action="/lan/{{ lan._id }}/tilmeld" method="post">
-  <button type="submit">Tilmeld</button>
-</form>
+  .card {
+    width: 100%;
+  }
 
+  .card>.spacer {
+    margin-top: 32px;
+    height: 0.1px;
+  }
+
+  .subtext {
+    color: var(--muted-text);
+    font-weight: normal;
+  }
+
+  .seats {
+  }
+
+  .seats .scrolling {
+    width: 100%;
+    overflow-x: auto;
+    padding: 12px !important;
+    border-radius: 8px;
+    background-color: var(--background-200);
+  }
+
+  .seats .container {
+    display: grid;
+    grid-gap: 8px;
+    align-items: center;
+    width: fit-content;
+    padding-right: 16px;
+
+    /* Very hacky way of setting the right amount of columns
+      This loops over all the tables, and finds the higsest amount of seats
+      Then it adds 1 to the max value, to account for the title column
+    */
+    grid-template-columns: repeat(
+      calc(max(
+        {{#each tables}}
+          {{this.length}},
+        {{/each}}
+      0 ) + 1)
+      , auto
+    );
+  }
+
+  .seats .container .cell.title {
+    grid-column-start: 1;
+    margin-right: 12px;
+    display: flex;
+  }
+
+  .seats .container .cell.title strong {
+    margin-left: 8px;
+  }
+
+  .seats .container .cell:not(.title) {
+    padding: 6px 16px;
+    border-radius: 4px;
+    -webkit-box-shadow: var(--shadow-basic); 
+    box-shadow: var(--shadow-basic);
+    border-spacing: 12px;
+    width: 100%;
+    background-color: var(--card-background);
+    transition: var(--fast-transition);
+    border: 2px dashed transparent;
+    position: relative;
+  }
+
+  .seats .container .cell:not(.title):hover {
+    cursor: pointer;
+    border-color: var(--info-400);
+  }
+
+  .seats .container .cell:not(.title).selected {
+    border-color: grey;
+    border-style: solid !important;
+  }
+
+  input[name="seat"].seat-radio {
+    display: none;
+  }
+
+  input[type="radio"].seat-radio:checked+label.cell {
+    border-color: var(--info-400) !important; /* Selection should have priority over hover */
+    border-style: solid !important;
+  }
+
+  input[type="radio"].seat-radio:disabled + label.cell:hover {
+    cursor: not-allowed;
+    border-color: var(--warn-400);
+  }
+
+  input[type="radio"].seat-radio:disabled + label.cell::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+
+    --crosshatchColor: var(--warn-400);
+    --crosshatchSize: 5px;
+
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent var(--crosshatchSize),
+      var(--crosshatchColor) var(--crosshatchSize),
+      var(--crosshatchColor) calc(var(--crosshatchSize) * 2)
+    );
+  }
+
+  .seats #current {
+    margin-top: 8px;
+  }
+  
+  #selected_seat > span {
+    font-weight: bold;
+  }
+
+  .tilmeld .no-seat {
+    grid-column: span 5;
+  }
+
+  .tilmeld .warn {
+    color: var(--warn-500);
+  }
+
+  .tilmeld ul li {
+    list-style-type: '-';
+    padding-left: 12px;
+  }
+</style>
+
+<div class="tilmeld">
+  <form action="/lan/{{ lan._id }}/tilmeld" method="post" id="register_form">
+    {{!-- Implement later --}}
+    {{!-- <input type="hidden" id="tilmeldingID" name="tilmeldingID" value="{{ tilmelding._id }}"> --}}
+
+    <div class="card medium">
+      <h3 class="head">Tilmelding til {{ lan.name }}</h3>
+      <p>Tilmeldingen til næste LAN er nu åbent. Det varer fra {{ formatDate lan.start }} til {{ formatDate lan.end }}.
+        Skynd dig at finde en plads.</p>
+
+      <div class="spacer"></div>
+
+      {{#if (not tilmelding)}}
+      <h4>Du er ikke tilmeldt LAN</h4>
+      {{else if (not tilmelding.seat)}}
+      <h4>Du er tilmeldt LAN, men ingen plads er reseveret
+        <br>
+        <p class="subtext">Klik på en plads, for at reservere den.</p>
+      </h4>
+      {{else}}
+      <h4>Du har reserveret pladsen: <span>{{ tilmelding.seat }}</span>
+        <br>
+        <p class="subtext">Klik på en ny plads, for at skifte dertil.</p>
+      </h4>
+      {{/if}}
+
+      <div class="spacer"></div>
+
+      <div class="seats">
+        <p>Du kan finde en plan over opstillingen til LAN <a href="#">her</a></p>
+
+        <div class="scrolling">
+          <div class="container">
+            {{!-- Loop over each table --}}
+            {{#each tables}}
+
+              {{!-- Tell which table it is --}}
+              <span class="cell title">Bord <strong>{{@key}}</strong></span>
+
+              {{!-- Loop over each seat in the table --}}
+              {{#each this}}
+                  {{!-- Create a hidden radio button that has the value of the seat id --}}
+                  <input class="seat-radio" type="radio" name="seat" id="{{this}}" value="{{this}}">
+                  {{!-- Create a label that is displayed as the cell, and that acts for the radio button --}}
+                  <label for="{{this}}" class="cell">{{this}}</label>
+              {{/each}}
+            {{/each}}
+
+            {{!-- Button for no seat --}}
+            <span class="cell title"></span>
+            <input
+              class="seat-radio"
+              type="radio"
+              name="seat"
+              id="none"
+              value="none"
+              {{#unless tilmelding.seat}}checked{{/unless}}
+            >
+            <label for="none" class="cell no-seat">Jeg ønsker ikke at reservere en plads</label>
+          </div>
+        </div>
+
+        <div id="current">
+          <p class="subtext {{#unless tilmelding.seat}}hidden{{/unless}}" id="old_seat">Din nuværende reserveret plads er: <span>{{ tilmelding.seat }}</span></p>
+          <p class="subtext" id="selected_seat">Du har valgt pladsen: <span>vælg en plads</span></p>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <p>Når du tilmelder dig LAN, accepterer du reglerne for tilmelding og ophold under LAN, som
+        kan læses <a href="/faq#0" target="_blank">her</a>.</p>
+      
+      <p>Du tilmelder dig nu til LAN d. {{ formatDate lan.start }} til {{ formatDate lan.end }}</p>
+      <ul>
+        <li>Tilmeldingen er ikke bindende, vi opfordrer dog til at du afbestiller din reserveret plads, hvis du ikke kommer.</li>
+        <li>Du kan til en hver tid framelde dig LAN, vær dog opmærksom på at din plads vil blive frigivet, og at vi ikke kan garantere at du kan få den tilbage.</li>
+      </ul>
+
+      {{!-- Only display this mesage if theres no seats --}}
+      {{!-- <p class="warn">Der er ikke flere pladser og du kan derfor kun tilmelde dig uden at reservere plads.
+        Klik på "Jeg ønsker ikke at reservere en plads" herover for at gøre dette</p> --}}
+
+      <div class="spacer"></div>
+
+      <div>
+        <button type="submit">Tilmeld mig til LAN!</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.forms["register_form"];
+  const seatRadios = form.elements["seat"];
+
+  for(let idx = 0; idx < seatRadios.length; idx++) {
+    seatRadios[idx].addEventListener('click', updateCurrentSeat);
+  }
+
+  function updateCurrentSeat() {
+    document.querySelector("#selected_seat > span").innerHTML = seatRadios.value;
+  }
+
+  updateCurrentSeat();
+</script>
 {{/if}}

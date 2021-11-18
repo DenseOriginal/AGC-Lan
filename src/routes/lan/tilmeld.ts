@@ -20,7 +20,8 @@ export const getTilmeld: RequestHandler = async (req, res) => {
     return res.render("lan/tilmeld", {
       user: req.user,
       title: (foundLan as ILAN).name, // If we the execution came this far, that must mean foundLan is not undefined
-      lan: foundLan
+      lan: foundLan,
+      tables
     })
 
   } catch (error) {
@@ -125,3 +126,13 @@ function validateLan(foundLan: ILAN | LANAsDocument | undefined, req: Request, r
     resolve();
   });
 }
+
+const ranges = ["X0..16", "Y0..8", "Y8..12"];
+
+const tables: { [idx: string]: string[] } = { };
+
+ranges.forEach(range => {
+  const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
+  const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
+  !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
+});
