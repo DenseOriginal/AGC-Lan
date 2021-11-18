@@ -38,10 +38,12 @@
   .tilmeld {
     width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
-  .tilmeld>form {
+  .tilmeld>form,
+  .tilmeld>div {
     width: min(95%, 730px);
   }
 
@@ -172,7 +174,7 @@
     grid-column: span 5;
   }
 
-  .tilmeld .warn {
+  .tilmeld form .warn {
     color: var(--warn-500);
   }
 
@@ -277,6 +279,17 @@
       </div>
     </div>
   </form>
+
+  {{#if tilmelding}}
+  <div class="frameld card medium">
+    <p>Du kan framelde dig LAN ved at trykke herunder. Bemærk at din plads herefter vil blive
+      frigivet til andre. Hvis du kun ønsker at skifte plads, kan du ændre den herover</p>
+
+    <div class="div">
+      <a href="../frameld" class="button warn">Frameld</a>
+    </div>
+  </div>
+  {{/if}}
 </div>
 
 <script>
@@ -293,16 +306,19 @@
 
   // Injected by server
   // This disables all taken seats
-  "{{ takenSeats }}".split(",")
-    .map((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none):not(#{{ tilmelding.seat }})`))
-    .filter(elm => !!elm)
-    .forEach(elm => elm.disabled = true);
-  
-  const prevSeatLabel = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio+label`);
-  if(prevSeatLabel) prevSeatLabel.classList.add('selected');
+  try {
+    "{{ takenSeats }}".split(",")
+      .map((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none)`))
+      .filter(elm => !!elm)
+      .filter(elm => elm.id != "{{ tilmelding.seat }}")
+      .forEach(elm => elm.disabled = true);
+    
+    const prevSeatLabel = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio+label`);
+    if(prevSeatLabel) prevSeatLabel.classList.add('selected');
 
-  const prevSeatRadio = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio`);
-  if(prevSeatRadio) prevSeatRadio.checked = true;
+    const prevSeatRadio = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio`);
+    if(prevSeatRadio) prevSeatRadio.checked = true;
+  } catch (err) {}
 
   updateCurrentSeat();
 </script>
