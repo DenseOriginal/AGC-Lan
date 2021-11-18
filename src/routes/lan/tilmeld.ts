@@ -45,7 +45,8 @@ export const getTilmeld: RequestHandler = async (req, res) => {
 }
 
 export const postTilmeld: RequestHandler = async (req, res) => {
-  const seat = req.body.seat || 'none';
+  const seat: string = req.body.seat || 'none';
+  const prevTilmeldingID: string | undefined = req.body.tilmeldingID;
 
   const lanId = req.params.lanId;
 
@@ -64,6 +65,18 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     await validateLan(foundLan || undefined, req, res);
     // If this is true, a response was sent by the validate function, so we can't do anymore
     if(res.headersSent) return;
+
+    if(prevTilmeldingID) {
+      if(!isValidObjectId(prevTilmeldingID)) throw new Error('Previuos Tilmelding ID is not a valid key');
+
+      await LanUserModel.updateOne({ _id: prevTilmeldingID }, { seat }).exec();
+      return res.render("lan/tilmeld", {
+        user: req.user,
+        title: 'Opdateret',
+        message: 'Din tilmelding er blevet opdateret',
+        lan: foundLan?.toObject(), // Convert it to an object because mongoose fuckery
+      });
+    }
 
     const newLanUser = new LanUserModel({
       user: userId,
