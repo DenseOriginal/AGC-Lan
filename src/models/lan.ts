@@ -1,5 +1,5 @@
 import { Model, model, Schema, Document } from "mongoose";
-import { IUser } from "./user";
+import { ILANUser } from "./lan-user";
 
 export interface ILAN {
   name: string;
@@ -12,7 +12,8 @@ export interface ILAN {
   registration_open: boolean;
   price: number;
   cover_url: string;
-  users: string | IUser;
+  users: string[] | ILANUser[];
+  seats: string[];
   _id: string;
 }
 
@@ -29,8 +30,8 @@ const LANSchema = new Schema({
   registration_open: { type: Boolean, default: false },
   price: { type: Number, default: 0 },
   cover_url: { type: String, required: true },
-  users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
-  // TODO: Implement seats
+  users: [{ type: Schema.Types.ObjectId, ref: 'LanUser' }],
+  seats: [String],
 });
 
 /**

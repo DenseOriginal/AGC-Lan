@@ -223,7 +223,14 @@
               {{!-- Loop over each seat in the table --}}
               {{#each this}}
                   {{!-- Create a hidden radio button that has the value of the seat id --}}
-                  <input class="seat-radio" type="radio" name="seat" id="{{this}}" value="{{this}}">
+                  <input
+                    class="seat-radio {{#if (eq tilmelding.seat this)}}selected{{/if}}"
+                    type="radio"
+                    name="seat"
+                    id="{{this}}"
+                    value="{{this}}"
+                    {{!-- {{#if (and (inArray this lan.users.seat) (ne tilmelding.seats this))}}disabled{{/if}} --}}
+                  >
                   {{!-- Create a label that is displayed as the cell, and that acts for the radio button --}}
                   <label for="{{this}}" class="cell">{{this}}</label>
               {{/each}}
@@ -286,5 +293,9 @@
   }
 
   updateCurrentSeat();
+
+  // Injected by server
+  // This disables all taken seats
+  "{{ takenSeats }}".split(",").forEach((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none)`).disabled = true);
 </script>
 {{/if}}

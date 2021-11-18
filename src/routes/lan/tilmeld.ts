@@ -2,14 +2,15 @@ import { Request, RequestHandler, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { isStaff } from "../../config/passport";
 import { ILAN, LANAsDocument, LanModel } from "../../models/lan";
-import { LanUserModel } from "../../models/lan-user";
+import { ILANUser, LanUserModel } from "../../models/lan-user";
 
 export const getTilmeld: RequestHandler = async (req, res) => {
   const lanId = req.params.lanId;
 
   try {
     // Try to find a lan with matching id, the convert it to an object to get rid of mongoose model stuff
-    const foundLan = ((req as any).lan as LANAsDocument).toObject();
+    const foundLan = await ((req as any).lan as LANAsDocument)
+      .populate("users", "seat");
 
     // Perfom check to see if lan is valid
     await validateLan(foundLan, req, res);
@@ -19,9 +20,10 @@ export const getTilmeld: RequestHandler = async (req, res) => {
     // Otherwise if nothing failed then render the lan to the user
     return res.render("lan/tilmeld", {
       user: req.user,
-      title: (foundLan as ILAN).name, // If we the execution came this far, that must mean foundLan is not undefined
-      lan: foundLan,
-      tables
+      title: foundLan.name,
+      lan: foundLan.toObject(),
+      tables: rangesToTables(foundLan.seats),
+      takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
     })
 
   } catch (error) {
@@ -127,12 +129,15 @@ function validateLan(foundLan: ILAN | LANAsDocument | undefined, req: Request, r
   });
 }
 
-const ranges = ["X0..16", "Y0..8", "Y8..12"];
+// Explenation in seats.md
+function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
+  const tables: { [idx: string]: string[] } = { };
 
-const tables: { [idx: string]: string[] } = { };
+  ranges.forEach(range => {
+    const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
+    const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
+    !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
+  });
 
-ranges.forEach(range => {
-  const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
-  const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
-  !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
-});
+  return tables;
+}
