@@ -78,7 +78,8 @@ app.use(session({ // Setup session storage in mongoDB, this makes sure users sta
   resave: true,
   saveUninitialized: true,
   store: new MongooseStore({ connection: mongoose }),
-  cookie: { maxAge: 6000000 }
+  rolling: true,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // One month
 }));
 app.use(passport.initialize());
 app.use(passport.session());
