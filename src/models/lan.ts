@@ -15,6 +15,7 @@ export interface ILAN {
   users: string[] | ILANUser[];
   seats: string[];
   _id: string;
+  seat_planning_url: string;
 }
 
 export type LANAsDocument = ILAN & Document;
@@ -32,6 +33,7 @@ const LANSchema = new Schema({
   cover_url: { type: String, required: true },
   users: [{ type: Schema.Types.ObjectId, ref: 'LanUser' }],
   seats: [String],
+  seat_planning_url: { type: String, default: '' }
 });
 
 /**

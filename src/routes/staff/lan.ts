@@ -15,7 +15,8 @@ export const LanResource: ResourceWithOptions = {
       last_updated: { isVisible: { show: true, list: false, filter: false, edit: false } },
       cover_url: { isVisible: { show: true, list: false, filter: false, edit: true } },
       users: { isVisible: { show: true, list: true, filter: false, edit: false } },
-      seats: { isArray: true, isVisible: { show: true, list: false, filter: false, edit: true } }
+      seats: { isArray: true, isVisible: { show: true, list: false, filter: false, edit: true } },
+      seat_planning_url: { isVisible: { show: true, list: false, filter: false, edit: true } },
     },
     actions: {
       list: { isAccessible: isStaff }, // Makes sure the person viewing this is an admin
