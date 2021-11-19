@@ -5,7 +5,7 @@ import morgan from "morgan";
 import { join } from "path";
 // import { BaseRouter } from "./routes/router";
 // import "./passport/index";
-import { connect } from "./database";
+import { connect } from "./config/database";
 import mongoose from "mongoose";
 import exphbs from "express-handlebars";
 import { RootRouter } from "./routes/router";
