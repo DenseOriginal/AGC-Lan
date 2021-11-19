@@ -51,5 +51,9 @@
     </main>
 
     {{> footer }}
+
+    {{!-- This is so that we can offset the footer to account for the height of the bottom fixed navbar
+          It only has height if the screen is under a certian side, see more in partials/header --}}
+    <div id="footer-offset"></div>
   </body>
 </html>
