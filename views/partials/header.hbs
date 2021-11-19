@@ -260,6 +260,10 @@
         <a href="/faq">Information</a>
         <a href="/lan/list">Lan</a>
 
+        {{#if (isStaff user)}}
+          <a href="/staff">Staff</a>
+        {{/if}}
+
         <div class="spacer"></div>
 
         {{#if user}}
