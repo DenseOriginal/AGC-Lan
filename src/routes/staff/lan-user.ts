@@ -1,13 +1,16 @@
 import { ResourceWithOptions } from "admin-bro";
 import { LanUserModel } from "../../models/lan-user";
-import { denyGuard } from "./guards";
+import { isAdmin } from "./guards";
 
 export const LanUserResource: ResourceWithOptions = {
   resource: LanUserModel,
   options: {
+    properties: {
+      _id: { isTitle: true }
+    },
     actions: {
       list: { isAccessible: false },
-      show: { isAccessible: false },
+      show: { isAccessible: isAdmin },
       new: { isAccessible: false },
       edit: { isAccessible: false },
       delete: { isAccessible: false },
