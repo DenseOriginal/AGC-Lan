@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { checkForDiscordRoles } from "../../discord/functions/check-for-roles";
 import { verifyUser } from "../../discord/functions/verify-user";
 import { PartialUserModel } from "../../models/partial-user";
 import { IUser, UserModel } from "../../models/user";
@@ -107,6 +108,7 @@ export const postSetup: RequestHandler = async (req, res) => {
 
     // When the user has been setup verify the user
     verifyUser(newUser.discord_id).catch((e) => console.error('Verify error: ', e));
+    checkForDiscordRoles(newUser).catch((e) => console.error('Check for roles error: ', e));
   } catch (error) {
 
     // TODO: implement better error handling
