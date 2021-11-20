@@ -1,14 +1,14 @@
 import { Intents } from "discord.js";
 import { Client } from "discordx";
 
-const client = new Client({
+export const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MEMBERS,
   ],
   botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
-  silent: false,
+  silent: true,
 });
 
 client.on("ready", async () => {
