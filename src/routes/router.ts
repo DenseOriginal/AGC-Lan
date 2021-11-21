@@ -8,6 +8,7 @@ import { ProfileRouter } from "./profile/router";
 import { getUser } from "./_userId";
 import { LanRouter } from "./lan/router";
 import { getFaq } from "./faq";
+import { getCalendar } from "./calendar";
 
 export const RootRouter = Router();
 
@@ -18,6 +19,7 @@ RootRouter.route("/logout").get((req, res) => { req.logOut(); res.redirect('/');
 RootRouter.route("/policy").get(getPolicy);
 RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 RootRouter.route("/faq").get(getFaq);
+RootRouter.route("/kalender").get(getCalendar);
 
 // Other routers
 RootRouter.use("/api", ApiRouter);
