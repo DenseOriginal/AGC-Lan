@@ -1,5 +1,6 @@
 import { Intents } from "discord.js";
 import { Client } from "discordx";
+import "./listeners/new-user";
 
 export const client = new Client({
   intents: [
