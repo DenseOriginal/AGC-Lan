@@ -1,0 +1,55 @@
+:root {
+  --fc-page-bg-color: var(--background-50);
+  --fc-neutral-bg-color: var(--background-100);
+  --fc-neutral-text-color: var(--primary-text);
+  --fc-border-color: var(--background-500);
+
+  --fc-button-text-color: var(--info-contrast-400);
+  --fc-button-bg-color: var(--info-400);
+  --fc-button-border-color: none;
+  --fc-button-hover-bg-color: var(--info-700);
+  --fc-button-hover-border-color: none;
+  --fc-button-active-bg-color: var(--info-800);
+  --fc-button-active-border-color: none;
+
+  --fc-event-bg-color: #3788d8;
+  --fc-event-border-color: #3788d8;
+  --fc-event-text-color: #fff;
+  --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+
+  --fc-more-link-bg-color: #d0d0d0;
+  --fc-more-link-text-color: inherit;
+
+  --fc-non-business-color: rgba(215, 215, 215, 0.3);
+  --fc-bg-event-color: rgb(143, 223, 130);
+  --fc-bg-event-opacity: 0.3;
+  --fc-highlight-color: rgba(188, 232, 241, 0.3);
+  --fc-today-bg-color: rgba(255, 220, 40, 0.15);
+  --fc-now-indicator-color: red;
+}
+
+.fc .fc-daygrid-day-frame {
+  background-color: var(--background-200);
+}
+
+.fc a {
+  color: unset;
+}
+
+.fc .fc-day-past > .fc-daygrid-day-frame {
+  background-color: var(--background-300);
+}
+
+.fc .fc-day-today {
+  position: relative;
+}
+
+.fc .fc-day-today::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: "";
+  display: block;
+  top: 0;
+  border: 2px solid var(--active);
+}
