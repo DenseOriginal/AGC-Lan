@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import errorHandler from "errorhandler";
 import { app } from "./app";
+import { run } from "./discord/client";
 
 
 
@@ -24,5 +25,8 @@ const server = app.listen(app.get("port"), () => {
     );
     console.log("  Press CTRL-C to stop\n");
 });
+
+// Start discord bot
+run();
 
 export default server;
