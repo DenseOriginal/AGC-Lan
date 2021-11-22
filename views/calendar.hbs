@@ -26,7 +26,12 @@
   const calendarEl = document.getElementById('calendar');
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    locale: 'da'
+    locale: 'da',
+    nowIndicator: true,
+    headerToolbar: { center: 'dayGridMonth,timeGridWeek' }, // buttons for switching between views
+    eventSources: [
+      { url: '/api/calendar/lan', color: '#7bb28e', textColor: 'white' }
+    ]
   });
   calendar.render();
 </script>
