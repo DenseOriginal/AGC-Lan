@@ -66,3 +66,7 @@
   margin-left: auto;
   padding-right: 12px;
 }
+
+.fc .fc-toolbar-title {
+  font-size: 1.5em;
+}
