@@ -127,6 +127,17 @@
       font-size: 26px;
     }
 
+    nav.small a.open-nav label {
+      display: flex;
+      align-items: center;
+    }
+
+    nav.small a.open-nav span {
+      margin-right: 8px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
     nav.small > .container {
       position: fixed;
       z-index: 10;
@@ -182,7 +193,7 @@
       margin-bottom: 16px;
     }
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 610px) {
       nav.small {
         display: flex;
       }
@@ -226,6 +237,7 @@
 
   <nav class="large">
     <a href="/faq">Information</a>
+    <a href="/kalender">Kalender</a>
     <a href="/lan/list">Lan</a>
 
     {{#if (isStaff user)}}
@@ -258,6 +270,7 @@
       <div class="inner">
 
         <a href="/faq">Information</a>
+        <a href="/kalender">Kalender</a>
         <a href="/lan/list">Lan</a>
 
         {{#if (isStaff user)}}
@@ -279,6 +292,9 @@
       </div>
     </div>
 
-    <a class="open-nav"><label for="is-open"><i class="fas fa-bars"></i></label></a>
+    <a class="open-nav"><label for="is-open">
+      <span>Menu</span>
+      <i class="fas fa-bars"></i>
+    </label></a>
   </nav>
 </header>
