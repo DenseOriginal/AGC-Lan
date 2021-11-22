@@ -47,7 +47,16 @@
   <div class="head">
     <h3>Danger zone</h3>
   </div>
-  <div class="row"><button class="warn" onclick="deleteAccount()">Slet konto</button></div>
+  <div class="row">
+    <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()">
+      {{!-- This is filled out by javascript when we agree to delete our account --}}
+      <input type="hidden" id="check_token" name="check_token" value="">
+
+      {{!-- Include the csrf token --}}
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <button class="warn" type="submit">Slet konto</button>
+    </form>
+  </div>
 </div>
 
 <a href="/logout">Log ud</a>
@@ -58,10 +67,11 @@ const email = "{{ user.email }}";
 function deleteAccount() {
   const confirm = prompt(`Indtast din email (${email}) for at bekræfte at din bruger bliver slettet. DETTE KAN IKKE GØRES OM`)
   if(confirm == email) {
-    // TODO: implement deletion
+    document.getElementById('check_token').value = email;
+    return true;
   } else {
-    if(!confirm) return;
     alert('Det du indtastede matcher ikke din email, din bruger vil IKKE blive slettet');
+    return false;
   }
 }
 </script>
