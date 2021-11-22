@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
-import { getLanEventSource } from "./calendar";
+import { getEventEventSource, getLanEventSource } from "./calendar";
 import { callback } from "./callback";
 
 export const ApiRouter = Router();
@@ -11,5 +11,6 @@ ApiRouter.route('/callback').get(passport.authenticate('discord'), callback);
 
 // Calendar routes
 ApiRouter.route('/calendar/lan').get(getLanEventSource);
+ApiRouter.route('/calendar/event').get(getEventEventSource);
 
 // Other api routes
