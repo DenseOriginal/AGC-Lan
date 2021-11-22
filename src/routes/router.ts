@@ -10,6 +10,7 @@ import { LanRouter } from "./lan/router";
 import { getFaq } from "./faq";
 import { getCalendar } from "./calendar";
 import { getAccesDenied } from "./acces-denied";
+import { getDiscord } from "./discord";
 
 export const RootRouter = Router();
 
@@ -22,6 +23,7 @@ RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 RootRouter.route("/faq").get(getFaq);
 RootRouter.route("/kalender").get(getCalendar);
 RootRouter.route("/acces-denied").get(getAccesDenied);
+RootRouter.route("/discord").get(getDiscord);
 
 // Other routers
 RootRouter.use("/api", ApiRouter);

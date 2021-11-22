@@ -1,0 +1,42 @@
+<style>
+  .d-container {
+    width: min(100%, 650px);
+    margin: auto;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 400px;
+  }
+
+  .d-container > * {
+    width: 47%;
+    height: 100%;
+  }
+
+  @media only screen and (max-width: 630px) {
+    .d-container {
+      width: min(100%, 370px);
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: unset;
+      margin-top: unset;
+    }
+
+    .d-container > * {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 32px;
+    }
+  }
+</style>
+
+<div class="d-container">
+  <div class="card medium">
+    <h3 class="header">Join vores discord server</h3>
+    <p>Udover denne hjemmside bruger vi vores Discord server til at sende information ud, og til at kommunikere med jer.
+    </p>
+  </div>
+  <iframe src="https://discord.com/widget?id=243374306501984256&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+</div>
