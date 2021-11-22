@@ -6,6 +6,7 @@ import { LanResource } from "./lan";
 import { Router } from "express";
 import { requestGuardIsStaff } from "../../config/guards";
 import { LanUserResource } from "./lan-user";
+import { EventResource } from "./event";
 
 AdminBro.registerAdapter(mongooseAdminBro);
 const AdminBroOptions: AdminBroOptions = {
@@ -13,6 +14,7 @@ const AdminBroOptions: AdminBroOptions = {
     UserResource,
     LanResource,
     LanUserResource,
+    EventResource
   ],
   rootPath: '/staff',
   logoutPath: '/logout',
