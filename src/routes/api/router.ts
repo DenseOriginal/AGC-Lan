@@ -7,7 +7,9 @@ export const ApiRouter = Router();
 
 // Routes used for discord authentication
 ApiRouter.route('/login').get(passport.authenticate('discord'));
-ApiRouter.route('/callback').get(passport.authenticate('discord'), callback);
+ApiRouter.route('/callback').get(passport.authenticate('discord', {
+  failureRedirect: '/acces-denied'
+}), callback);
 
 // Calendar routes
 ApiRouter.route('/calendar/lan').get(getLanEventSource);
