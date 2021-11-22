@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import { checkForDiscordRoles } from "../../discord/functions/check-for-roles";
+import { isUserInServer } from "../../discord/functions/in-server";
 import { verifyUser } from "../../discord/functions/verify-user";
 import { PartialUserModel } from "../../models/partial-user";
 import { IUser, UserModel } from "../../models/user";
@@ -103,12 +104,14 @@ export const postSetup: RequestHandler = async (req, res) => {
     // Make sure to convert it to a normal object, to remove the mongoose model properties and methods
     req.user = newUser.toObject();
 
-    // Redirect the new use to ther profile page
-    res.redirect('/profile');
-
     // When the user has been setup verify the user
     verifyUser(newUser.discord_id).catch((e) => console.error('Verify error: ', e));
     checkForDiscordRoles(newUser).catch((e) => console.error('Check for roles error: ', e));
+
+    if(!(await isUserInServer(newUser.discord_id))) return res.redirect('/discord');
+
+    // Redirect the new use to ther profile page
+    return res.redirect('/profile');
   } catch (error) {
 
     // TODO: implement better error handling
