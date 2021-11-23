@@ -45,6 +45,12 @@
       gtag('js', new Date());
 
       gtag('config', 'G-4QVNR8ZPW2');
+
+      {{#if user}}
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        'user_id': '{{ user._id }}'
+      });
+      {{/if}}
     </script>
   </head>
   <body>
