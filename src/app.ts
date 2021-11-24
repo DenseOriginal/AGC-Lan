@@ -88,6 +88,13 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// Setup handlebar locals
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+
+  next();
+});
+
 // Setup AdminBro
 setupAdminBro(app);
 
