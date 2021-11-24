@@ -11,6 +11,7 @@ import { getFaq } from "./faq";
 import { getCalendar } from "./calendar";
 import { getAccesDenied } from "./acces-denied";
 import { getDiscord } from "./discord";
+import { TournamentsRouter } from "./tournaments/router";
 
 export const RootRouter = Router();
 
@@ -29,6 +30,7 @@ RootRouter.route("/discord").get(getDiscord);
 RootRouter.use("/api", ApiRouter);
 RootRouter.use("/", ProfileRouter);
 RootRouter.use("/lan", LanRouter);
+RootRouter.use("/turneringer", TournamentsRouter);
 
 // 404 to catch every request not handled by anything else
 RootRouter.use("**", (req, res) => res.status(404).render('404', { title: "404", noHeader: true }));
