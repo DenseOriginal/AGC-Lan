@@ -95,6 +95,7 @@ app.use(bodyParser.urlencoded({
 // Setup handlebar locals
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.NODE_ENV = process.env.NODE_ENV;
 
   next();
 });
