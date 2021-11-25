@@ -15,8 +15,6 @@
 
   --link-color: #1a74eb;
   --active: #7db2ff;
-  --scrollbar-track: var(--background-100);
-  --scrollbar-thumb: var(--background-400);
   --card-background: var(--background-100);
 
   --background-50: #fafafa;
@@ -86,4 +84,12 @@
   --info-contrast-700: var(--light-primary-text);
   --info-contrast-800: var(--light-primary-text);
   --info-contrast-900: var(--light-primary-text);
+}
+
+:root[data-theme="light"] *::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+ 
+:root[data-theme="light"] *::-webkit-scrollbar-thumb {
+  background-color: #bdbdbd;
 }
