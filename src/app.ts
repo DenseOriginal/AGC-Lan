@@ -45,7 +45,11 @@ app.engine('hbs', exphbs({
     or() {
         return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
     },
-    formatDate(time: Date, format: "long" | "short" = "short") {
+    formatDate(time: Date, format: "long" | "short" | "time" = "short") {
+      if(format == "time") {
+        return `${time.getHours()}:${time.getMinutes()}`;
+      }
+
       if(format == "long") {
         // Cool date format
         // Only display the year if it isn't the current year
