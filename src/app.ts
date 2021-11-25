@@ -13,6 +13,7 @@ import bodyParser from "body-parser";
 import { setupAdminBro } from "./routes/staff/admin-bro";
 import { IUser } from "./models/user";
 import { roles } from "./config/passport";
+import favicon from "serve-favicon";
 const MongooseStore = require('mongoose-express-session')(session.Store);
 
 // Create server
@@ -75,6 +76,7 @@ app.engine('hbs', exphbs({
 }));
 app.set("view engine", "hbs");
 
+app.use(favicon(join(__dirname, '..', 'public', 'favicon', 'favicon.ico')))
 app.use(express.static(join(__dirname, '../public')));
 app.use(morgan('dev'));
 app.use(session({ // Setup session storage in mongoDB, this makes sure users stay logged in between session
