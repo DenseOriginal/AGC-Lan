@@ -56,6 +56,16 @@
       align-items: center;
     }
 
+    nav.large .user {
+      width: 140px;
+      overflow: hidden;
+    }
+
+    nav.large .user span {
+      display: block;
+      width: unset;
+    }
+
     .user > .avatar {
       height: 28px;
       width: 28px;
@@ -194,6 +204,12 @@
     }
 
     @media only screen and (max-width: 610px) {
+      nav.large #lan {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width: 560px) {
       nav.small {
         display: flex;
       }
@@ -238,7 +254,7 @@
   <nav class="large">
     <a href="/faq">Information</a>
     <a href="/kalender">Kalender</a>
-    <a href="/lan/list">Lan</a>
+    <a href="/lan/list" id="lan">Lan</a>
 
     {{#if (isStaff user)}}
     <a href="/staff">Staff</a>
@@ -249,7 +265,7 @@
     <div class="dropdown-container">
       <a class="user" href="/profile">
         <img class="avatar" height="28" src="{{ user.picture_url }}" alt="Profile image">
-        <p>{{ user.username }}</p>
+        <p><span>{{ user.username }}</span></p>
       </a>
 
       <div class="dropdown">
