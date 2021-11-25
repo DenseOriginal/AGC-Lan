@@ -12,7 +12,7 @@
     border-top: 3px solid {{ user.accent_color }};
   }
 
-  .card > .row {
+  .card .row {
     width: 100%;
     padding: 12px 32px !important;
     margin: 0 !important;
@@ -20,27 +20,80 @@
     justify-content: flex-start;
   }
 
-  .card > .row > .title {
+  .card .row > .title {
     min-width: 150px !important;
     color: var(--muted-text);
   } 
 
-  .card > .row:nth-child(odd) {
+  .card .row:nth-child(odd) {
     background-color: var(--background-200);
+  }
+
+  .edit-button {
+    display: flex;
+    align-items: center;
+  }
+
+  .edit-logo {
+    margin-left: 8px;
+    font-size: 14px;
+  }
+
+  form#editProfile input {
+    background-color: transparent;
+    border: none;
+    border-bottom: var(--background-400) 2px solid;
+    border-radius: 3px;
+    outline: none;
+    font-size: 1rem;
+    padding-bottom: 2px;
+    padding-left: 4px;
+  }
+
+  form#editProfile input:focus,
+  form#editProfile input:active {
+    border-color: var(--active);
+  }
+
+  form#editProfile input:disabled {
+    border: none;
+    color: unset;
+  }
+
+  form#editProfile {
+    padding: 0;
+  }
+
+  #edit-button-row button {
+    margin-right: 12px;
+  }
+
+  #edit-button-row {
+    display: none;
+    margin-top: 12px !important;
+    padding: 0 !important;
+    padding-left: 32px !important;
   }
 </style>
 
 <h1>Din profil</h1>
 <br>
-<div class="card">
-  <div class="head">
+<div class="card profile">
+  <div class="head flex-space-between">
     <h3>Personlig information</h3>
+    <a class="edit-button" href="#edit" onclick="editProfile()">Edit <i class="far fa-edit edit-logo"></i></a>
   </div>
-  <div class="row"><p class="title">Fornavn:</p> {{ user.first_name }}</div>
-  <div class="row"><p class="title">Efternavn:</p> {{ user.last_name }}</div>
-  <div class="row"><p class="title">Klasse:</p> {{ user.class }}</div>
-  <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
-  <div class="row"><p class="title">Brugernavn:</p> {{ user.username }}</div>
+  <form action="/profile" method="POST" id="editProfile">
+    <div class="row"><p class="title">Fornavn:</p> <input type="text" name="first_name" disabled value="{{ user.first_name }}"></div>
+    <div class="row"><p class="title">Efternavn:</p> <input type="text" name="last_name" disabled value="{{ user.last_name }}"></div>
+    <div class="row"><p class="title">Klasse:</p> <input type="text" name="class" disabled value="{{ user.class }}" list="classes"></div>
+    <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
+    <div class="row"><p class="title">Brugernavn:</p> <input type="text" name="username" disabled value="{{ user.username }}"></div>
+    <div class="row" id="edit-button-row">
+      <button type="reset" class="warn" onclick="stopEditing()">Annuller</button>
+      <button type="submit">Opdater</button>
+    </div>
+  </form>
 </div>
 
 <div class="card">
@@ -74,4 +127,54 @@ function deleteAccount() {
     return false;
   }
 }
+
+{{#if removeEditHash}}
+// Very jank way of removing the hash from the url
+// Check routes/profile/profile for more info
+window.location.hash = "";
+{{/if}}
+
+if(window.location.hash == "#edit") editProfile();
+function editProfile() {
+  const inputs = document.querySelectorAll("form#editProfile input:disabled");
+  document.getElementById('edit-button-row').style.display = "block"
+
+  for(const input of inputs) {
+    input.disabled = false;
+  }
+}
+
+function stopEditing() {
+  window.location.hash = "";
+  const inputs = document.querySelectorAll("form#editProfile input");
+  document.getElementById('edit-button-row').style.display = "none"
+
+  for(const input of inputs) {
+    input.disabled = true;
+  }
+}
+
+// Generate all classes for the three current years, including grundforløb
+const thisYear = new Date().getFullYear().toString().slice(2);
+const classChars = ['A', 'B', 'C', 'D', 'E', 'J', 'P', 'R']
+
+const grundforløb = Array.from({ length: 8 }, (_, idx) => `${thisYear}HTXCG${idx + 1}`);
+const stamklasser = Array.from({ length: 3 }, (_, idx) => {
+  const year = thisYear - idx;
+  return classChars.map(char => `${year}HTXC${char}`);
+});
+
+// Prepend the grundforløb array to the stamklasser array
+stamklasser.unshift(grundforløb);
+
+// Append the two STX classses that go to the school
+// It's only two classes, so why bother adding it to the algorithm
+stamklasser.push(["20STXCC", "20STXCX"]);
+
+// Flatten the array [[1], [2], [3]]   >>>   [1, 2, 3]
+const flattenedAray = [].concat(...stamklasser);
+
+document.getElementById('editProfile').insertAdjacentHTML('beforeend', `<datalist id="classes">
+  ${flattenedAray.map(cur => `<option value="${cur}">`).join("")}
+</datalist>`);
 </script>
