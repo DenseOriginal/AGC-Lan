@@ -6,13 +6,12 @@ export interface ITournament {
   title: string;
   description: string;
   start: Date;
-  end: Date;
   created_at: Date;
   public: boolean;
-  hasStarted: boolean;
+  has_started: boolean;
   users: string[] | UserAsDocument[];
   lan: string | LANAsDocument;
-  teamSize: number;
+  team_size: number;
   show_calendar: boolean;
   _id: string;
 }
@@ -23,13 +22,12 @@ const Tournament = new Schema({
   title: { type: String, required: true },
   description: { type: String, default: '', required: false },
   start: { type: Date, required: true },
-  end: { type: Date, required: true },
   created_at: { type: Date, default: new Date, immutable: true },
-  public: { type: Boolean, required: true },
-  hasStarted: { type: Boolean, required: true },
-  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  public: { type: Boolean, default: false },
+  has_started: { type: Boolean, default: false },
+  users: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
   lan: { type: Schema.Types.ObjectId, ref: 'Lans', required: true },
-  teamSize: { type: Number, required: true },
+  team_size: { type: Number, required: true },
   show_calendar: { type: Boolean, default: true }
 });
 
