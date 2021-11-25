@@ -1,0 +1,61 @@
+<style>
+  .turney {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .turney>.main {
+    flex-grow: 1;
+  }
+
+  .turney>.extra-info {
+    color: var(--muted-text);
+    flex: 1 0 auto;
+    margin-left: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .turney>.extra-info>.container>div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .turney>.extra-info>.container>div>i {
+    width: 20px;
+    text-align: start;
+  }
+</style>
+
+<div class="turneys card medium">
+  <h2 class="head">Turneringer</h2>
+  {{#each tournaments}}
+  <div class="turney">
+    <div class="main">
+      <div class="title">
+        <h3>{{ this.title }}</h3>
+      </div>
+      <p>{{ this.description }}</p>
+    </div>
+    <div class="extra-info">
+      <div class="container">
+        <div class="date" title="Dato">
+          <i class="far fa-calendar-alt"></i>
+          <span>{{ formatDate this.start }}</span>
+        </div>
+        <div class="time" title="Tid">
+          <i class="far fa-clock"></i>
+          <span>{{ formatDate this.start "time" }}</span>
+        </div>
+        <div class="deltagere" title="Deltagere">
+          <i class="fas fa-user"></i>
+          <span>{{ this.users.length }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
