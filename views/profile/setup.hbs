@@ -115,6 +115,10 @@
   // Prepend the grundforløb array to the stamklasser array
   stamklasser.unshift(grundforløb);
 
+  // Append the two STX classses that go to the school
+  // It's only two classes, so why bother adding it to the algorithm
+  stamklasser.push(["20STXCC", "20STXCX"]);
+
   // Flatten the array [[1], [2], [3]]   >>>   [1, 2, 3]
   const flattenedAray = [].concat(...stamklasser);
 
