@@ -37,6 +37,7 @@
       }
     </style>
 
+    {{#if (eq NODE_ENV "production")}}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QVNR8ZPW2"></script>
     <script>
@@ -52,6 +53,9 @@
       });
       {{/if}}
     </script>
+    {{else}}
+    <!-- GTAG manager will be injected here in production -->
+    {{/if}}
   </head>
   <body>
     <div class="background-image"></div>
