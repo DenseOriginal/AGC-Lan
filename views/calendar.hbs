@@ -1,7 +1,8 @@
 <style>
   #calendar {
     padding: 32px;
-    width: clamp(570px, 100%, 800px);
+    /* Change to 99.5% to show the box-shadow */
+    width: clamp(570px, 99.5%, 800px);
     margin: auto;
   }
 
@@ -11,6 +12,21 @@
     place-items: center;
     overflow: auto;
     padding: 2px 0;
+  }
+
+  @media only screen and (max-width: 570px) {
+    .fc-header-toolbar.fc-toolbar {
+      flex-wrap: wrap-reverse;
+      justify-content: flex-start !important;
+    }
+
+    .fc-toolbar-chunk:nth-of-type(1) {
+      width: 100%;
+    }
+
+    .fc-toolbar-chunk:nth-of-type(2) {
+      margin-left: 0 !important;
+    }
   }
 </style>
 
