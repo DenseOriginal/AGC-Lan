@@ -61,6 +61,14 @@
     padding: 8px;
     padding-bottom: 12px;
     height: fit-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #Czmw .m-message .m-message-inside i:hover {
+    cursor: pointer;
   }
 
   @keyframes Czmw-timeout {
@@ -98,6 +106,7 @@
         style="--timeout: {{this.timeout}}ms">
         <div class="m-message-inside">
           <span>{{this.message}}</span>
+          <i class="fas fa-times"></i>
         </div>
         <div class="timeout" style="--timeout: {{this.timeout}}ms"></div>
       </div>
@@ -111,9 +120,14 @@
     const messages = [...document.querySelectorAll('#Czmw .m-message')];
     for(const message of messages) {
       const timeout = +message.dataset.timeout;
-      setTimeout(() => {
+      const wait = setTimeout(() => {
         message.remove();
       }, timeout + 250);
+
+      message.querySelector('i').addEventListener('click', () => {
+        message.remove();
+        clearTimeout(wait);
+      });
     }
   })()
 </script>
