@@ -2,7 +2,7 @@
 
 ## How to setup environment
 
-1. Install node14 and npm 6
+1. Install node16 and npm 8
 
 2. Clone this repo
   `git clone https://github.com/DenseOriginal/AGC-Lan.git`
