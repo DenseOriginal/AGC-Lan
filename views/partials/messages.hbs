@@ -1,0 +1,102 @@
+<style>
+  #Czmw.m-floating {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 12px;
+    touch-action: none;
+    pointer-events: none;
+    width: min(450px, 100%);
+    z-index: 1;
+  }
+
+  #Czmw .m-messages {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #Czmw .m-message.level-info {
+    --background-color: var(--info-500);
+    --color: var(--info-contrast-500);
+  }
+
+  #Czmw .m-message.level-alert {
+    --background-color: var(--alert-500);
+    --color: var(--alert-contrast-500);
+  }
+
+  #Czmw .m-message.level-warn {
+    --background-color: var(--warn-500);
+    --color: var(--warn-contrast-500);
+  }
+
+  #Czmw .m-message {
+    width: 100%;
+    margin-top: 16px;
+    background-color: var(--background-color);
+    color: var(--color);
+    position: relative;
+    overflow: hidden;
+    height: fit-content;
+    max-height: 150px;
+    animation: Czmw-squish 250ms linear;
+    animation-delay: var(--timeout);
+    animation-fill-mode: forwards;
+  }
+
+  #Czmw .m-message .timeout {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--color);
+    animation: Czmw-timeout var(--timeout) linear;
+  }
+
+  #Czmw .m-message .m-message-inside {
+    padding: 8px;
+    padding-bottom: 12px;
+    height: fit-content;
+  }
+
+  @keyframes Czmw-timeout {
+    from { width: 100%; }
+    to { width: 0%; }
+  }
+
+  @keyframes Czmw-squish {
+    to { max-height: 0px; }
+  }
+</style>
+
+{{!-- Random id to avoid styling some other content --}}
+<div class="m-floating" id="Czmw">
+  <div class="m-messages">
+    {{#each messages}}
+      <div 
+        class="m-message level-{{this.level}}"
+        data-timeout="{{this.timeout}}"
+        style="--timeout: {{this.timeout}}ms">
+        <div class="m-message-inside">
+          <span>{{this.message}}</span>
+        </div>
+        <div class="timeout" style="--timeout: {{this.timeout}}ms"></div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<script>
+  // Run the message function as an IFEE to avoid creating global variables
+  (function() {
+    const messages = [...document.querySelectorAll('#Czmw .m-message')];
+    for(const message of messages) {
+      const timeout = +message.dataset.timeout;
+      setTimeout(() => {
+        message.remove();
+      }, timeout + 250);
+    }
+  })()
+</script>
