@@ -43,6 +43,8 @@
     animation: Czmw-squish 250ms linear;
     animation-delay: var(--timeout);
     animation-fill-mode: forwards;
+    pointer-events: all;
+    touch-action: auto;
   }
 
   #Czmw .m-message .timeout {
@@ -68,6 +70,21 @@
 
   @keyframes Czmw-squish {
     to { max-height: 0px; }
+  }
+
+  @media only screen and (max-width: 560px) {
+    #Czmw.m-floating {
+      top: 0;
+    }
+
+    #Czmw .m-messages {
+      justify-content: flex-start;
+    }
+
+    #Czmw .m-message {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
   }
 </style>
 
