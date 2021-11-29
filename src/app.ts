@@ -101,7 +101,11 @@ app.use((req, res, next) => {
 
   // Inject the send message function
   res.locals.messages = [];
-  res.sendMessage = (level: "info" | "alert" | "warn", message: string, timeout = 8000) => res.locals.messages.push({ level, message, timeout });
+  res.sendMessage = (level: "info" | "alert" | "warn", message: string, timeout = 8000) => res.locals.messages.push({
+    level,
+    message,
+    timeout: timeout < 1 ? 99999999999 : timeout
+  });
 
   next();
 });
