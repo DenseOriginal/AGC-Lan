@@ -99,6 +99,10 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.NODE_ENV = process.env.NODE_ENV;
 
+  // Inject the send message function
+  res.locals.messages = [];
+  res.sendMessage = (level: "info" | "alert" | "warn", message: string, timeout = 8000) => res.locals.messages.push({ level, message, timeout });
+
   next();
 });
 
