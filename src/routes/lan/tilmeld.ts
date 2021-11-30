@@ -3,6 +3,7 @@ import { isValidObjectId } from "mongoose";
 import { isStaff } from "../../config/passport";
 import { ILAN, LANAsDocument, LanModel } from "../../models/lan";
 import { ILANUser, LanUserModel } from "../../models/lan-user";
+import { getShowTilmelding } from "./_tilmelding";
 
 export const getTilmeld: RequestHandler = async (req, res) => {
   const lanId = req.params.lanId;
@@ -72,12 +73,13 @@ export const postTilmeld: RequestHandler = async (req, res) => {
       if(!isValidObjectId(prevTilmeldingID)) throw new Error('Previuos Tilmelding ID is not a valid key');
 
       await LanUserModel.updateOne({ _id: prevTilmeldingID }, { seat }).exec();
-      return res.render("lan/tilmeld", {
-        user: req.user,
-        title: 'Opdateret',
-        message: 'Din tilmelding er blevet opdateret',
-        lan: foundLan?.toObject(), // Convert it to an object because mongoose fuckery
-      });
+      res.sendMessage('info', 'Din tilmelding er blevet opdateret');
+      // Update the params, because the getShowTilmelding gets the tilmeldingID from the params
+      req.params.tilmeldingId = prevTilmeldingID;
+      // Call the next handler, this is to avoid the need to redirect because if we redirect, we lose all the context from this request
+      // Simple pass the req and res to the new handler, we know that the new handler doesn's call next
+      // This could also be moved into the routes file, 
+      return getShowTilmelding(req, res, () => {});
     }
 
     const newLanUser = new LanUserModel({
@@ -92,12 +94,14 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     }).exec();
 
     // If everything worked out, tell the user
-    return res.render("lan/tilmeld", {
-      user: req.user,
-      title: 'Tilmeldt',
-      message: 'Tillykke du er nu tilmeldt LAN',
-      lan: foundLan?.toObject(), // Convert it to an object because mongoose fuckery
-    });
+    res.sendMessage('info', 'Tillykke du er nu tilmeldt LAN');
+    // Update the params, because the getShowTilmelding gets the tilmeldingID from the params
+    req.params.tilmeldingId = newLanUser.id;
+    // Call the next handler, this is to avoid the need to redirect because if we redirect, we lose all the context from this request
+    // Simple pass the req and res to the new handler, we know that the new handler doesn's call next
+    // This could also be moved into the routes file, 
+    return getShowTilmelding(req, res, () => {});
+
   } catch (error) {
     console.error(error);
     return res.render("lan/tilmeld", {
