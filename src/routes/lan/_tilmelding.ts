@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { isValidObjectId } from "mongoose";
-import { LanUserModel } from "../../models/lan-user";
+import { ILAN } from "../../models/lan";
+import { ILANUser, LanUserModel } from "../../models/lan-user";
 
 export const getShowTilmelding: RequestHandler = async (req, res) => {
   const tilmeldingId = req.params.tilmeldingId;
@@ -13,7 +14,14 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
   });
 
   try {
-    const tilmelding = await LanUserModel.findById(tilmeldingId).populate('lan').exec();
+    // When we try to find the tilmelding
+    // Populate the lan field
+    // And the deep populate users on the lan property
+    const tilmelding = await LanUserModel.findById(tilmeldingId).populate({
+      path: 'lan',
+      populate: { path: 'users' }
+    }).exec();
+    
 
     // If we can't find any tilmeling, then throw an error
     // Or the lan doesn't exist
@@ -23,11 +31,19 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
     if(tilmelding.user.toString() != req.user?._id) throw new Error('The logged in user doesn\'t own this tilmelding');
     if(typeof tilmelding.lan == "string") throw new Error('Tilmelding for invalid lan');
 
-    return res.render('lan/_tilmelding', {
-      title: 'Tilmelding',
+    // We need to convert it an object before we acces lan, because otherwise
+    // Handlebars will deny acces to acces any properties on it
+    const foundLan = tilmelding.toObject().lan as ILAN;
+
+    return res.render("lan/tilmeld", {
       user: req.user,
-      tilmelding: tilmelding.toObject()
-    });
+      title: foundLan.name,
+      lan: foundLan,
+      tables: rangesToTables(foundLan.seats),
+      tilmelding: tilmelding.toObject(),
+      // Map the tilmeldt users down to an array of just the seats, because we don't need the rest
+      takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
+    })
   } catch (error) {
     console.error(error);
     return res.render('error', {
@@ -36,4 +52,17 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
       error: "Der er sket en uventet fejl, prøv igen senere"
     });
   }
+}
+
+// Explenation in seats.md
+function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
+  const tables: { [idx: string]: string[] } = { };
+
+  ranges.forEach(range => {
+    const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
+    const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
+    !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
+  });
+
+  return tables;
 }

@@ -23,13 +23,15 @@ export const getTilmeld: RequestHandler = async (req, res) => {
       lan: foundLan._id,
     }).exec();
 
+    if(tilmelding) return res.redirect(`/lan/tilmelding/${tilmelding._id}`);
+
     // Otherwise if nothing failed then render the lan to the user
     return res.render("lan/tilmeld", {
       user: req.user,
       title: foundLan.name,
       lan: foundLan.toObject(),
       tables: rangesToTables(foundLan.seats),
-      tilmelding: tilmelding?.toObject(),
+      tilmelding: undefined,
       takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
     })
 
