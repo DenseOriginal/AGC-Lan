@@ -1,8 +1,9 @@
 import { randomBytes } from "crypto";
 import { RequestHandler } from "express";
+import { LanUserModel } from "../../models/lan-user";
 import { UserModel } from "../../models/user";
 
-export const getProfile: RequestHandler = (req, res) => {
+export const getProfile: RequestHandler = async (req, res) => {
   // Generate a csrf token, which is just a random string
   // This is used to make sure that it's the user that wanted to delete their account
   // And that they weren't tricked somehow
@@ -11,8 +12,19 @@ export const getProfile: RequestHandler = (req, res) => {
   // Save the token in the session
   (req as any).session['csrf_token'] = csrfToken;
 
+  // Get the users tilmeldinger
+  // Also get the lan that those tilmeldinger contain
+  const tilmeldinger = await LanUserModel.find({
+    user: req.user?._id
+  }).sort({ _id: -1 }).limit(10).populate('lan').exec();
+
   // Send something to the user
-  res.status(200).render('profile/profile', { user: req.user, title: "Profile", csrfToken });
+  res.status(200).render('profile/profile', {
+    user: req.user,
+    title: "Profile",
+    tilmeldinger: tilmeldinger.map(cur => cur.toObject()),
+    csrfToken
+  });
 };
 
 // Regex to validate a klass

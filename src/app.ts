@@ -72,6 +72,7 @@ app.engine('hbs', exphbs({
     isStaff: (user: IUser | undefined) => user && (roles[user.role as string] > 0),
     isAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 1),
     isSuperAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 2),
+    isFuture: (date: Date) => date > new Date()
 }
 }));
 app.set("view engine", "hbs");
