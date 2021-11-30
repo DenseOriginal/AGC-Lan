@@ -1,5 +1,5 @@
 {{!-- Display the error if an error is present --}}
-{{#if (or error message)}}
+{{#if error}}
 <style>
   .banner {
     width: 100%;
@@ -21,16 +21,10 @@
     background-color: var(--warn-400);
     color: var(--warn-contrast-400);
   }
-
-  .message {
-    background-color: var(--info-400);
-    color: var(--info-contrast-400);
-  }
 </style>
 
 <div class="banner">
-  {{#if error}}<span class="error">{{ error }}</span>
-  {{else}}<span class="message">{{ message }}</span>{{/if}}
+  <span class="error">{{ error }}</span>
 </div>
 
 {{else}}
