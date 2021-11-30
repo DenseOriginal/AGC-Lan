@@ -62,12 +62,24 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     // Fetch the lan to check if we can register
 
     // Try to find a lan with matching id, the convert it to an object to get rid of mongoose model stuff
-    const foundLan = ((req as any).lan as LANAsDocument);
+    // We also need to get the occupied seats, this is to that we can check if a seat is already taken
+    const foundLan = await ((req as any).lan as LANAsDocument).populate('users');
+    const users = foundLan.users as ILANUser[];
 
     // Perfom check to see if lan is valid
     await validateLan(foundLan || undefined, req, res);
     // If this is true, a response was sent by the validate function, so we can't do anymore
     if(res.headersSent) return;
+
+    // Check if the seat is already reserved
+    // We can check this, by seeing if any element in the array has the same seat as the seat sent from th client
+    // But users can also update their tilmelding withour updating their seat
+    // So we need to make sure that any already reserver seat, is reserved by someone other than the current user
+    if(users.find(cur => (cur.seat == seat && cur.user != req.user?._id.toString()))) return res.render("lan/tilmeld", {
+      user: req.user,
+      title: 'Fejl',
+      error: 'Dette sæde er allerede reserveret'
+    });
 
     if(prevTilmeldingID && !isValidObjectId(prevTilmeldingID)) throw new Error('Previuos Tilmelding ID is not a valid key');
     // If a prevTelmeldinID is set, get that
