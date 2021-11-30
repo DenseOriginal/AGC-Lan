@@ -69,13 +69,24 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     // If this is true, a response was sent by the validate function, so we can't do anymore
     if(res.headersSent) return;
 
-    if(prevTilmeldingID) {
-      if(!isValidObjectId(prevTilmeldingID)) throw new Error('Previuos Tilmelding ID is not a valid key');
+    if(prevTilmeldingID && !isValidObjectId(prevTilmeldingID)) throw new Error('Previuos Tilmelding ID is not a valid key');
+    // If a prevTelmeldinID is set, get that
+    // Otherwise try to find one already registered by the user
+    const prevTilmelding = prevTilmeldingID ? 
+      await LanUserModel.findById(prevTilmeldingID).exec() :
+      await LanUserModel.findOne({ user: req.user?._id }).exec();
+  
+    // If prevTilmeldingID is true but we didn't find any tilmelding
+    // Something is proparly wrong, and it most likely means the user changed the hidden id field
+    if(prevTilmeldingID && !prevTilmelding) throw new Error('Couldn\'t find any tilmelding matching provided ID');
 
-      await LanUserModel.updateOne({ _id: prevTilmeldingID }, { seat }).exec();
+    if(prevTilmelding) {
+      if(prevTilmelding.user.toString() != req.user?._id.toString()) throw new Error('Tilmelding user doesn\'t match the logged in user!');
+
+      await prevTilmelding.updateOne({ seat }).exec();
       res.sendMessage('info', 'Din tilmelding er blevet opdateret');
       // Update the params, because the getShowTilmelding gets the tilmeldingID from the params
-      req.params.tilmeldingId = prevTilmeldingID;
+      req.params.tilmeldingId = prevTilmelding.id;
       // Call the next handler, this is to avoid the need to redirect because if we redirect, we lose all the context from this request
       // Simple pass the req and res to the new handler, we know that the new handler doesn's call next
       // This could also be moved into the routes file, 
