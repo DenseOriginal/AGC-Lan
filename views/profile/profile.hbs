@@ -74,6 +74,22 @@
     padding: 0 !important;
     padding-left: 32px !important;
   }
+
+  .card.tilmeldinger .row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .card.tilmeldinger .row a {
+    display: flex;
+    align-items: center;
+  }
+
+  .card.tilmeldinger .row a i {
+    margin-left: 8px;
+    font-size: 14px;
+  }
 </style>
 
 <h1>Din profil</h1>
@@ -103,7 +119,10 @@
   </div>
   {{#each tilmeldinger}}
     {{#if (isFuture this.lan.start)}}
-      <div class="row"><p>Du er tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p></div>
+      <div class="row">
+        <p>Du er tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p>
+        <a href="/lan/tilmelding/{{ this._id }}">Vis <i class="far fa-eye"></i></a>
+      </div>
     {{else}}
       <div class="row"><p>Du var tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p></div>
     {{/if}}
