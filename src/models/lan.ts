@@ -26,7 +26,7 @@ const LANSchema = new Schema({
   start: { type: Date, required: true },
   end: { type: Date, required: true },
   created_at: { type: Date, default: new Date, immutable: true },
-  last_updated: { type: Date, default: new Date, required: true },
+  last_updated: { type: Date, default: new Date, required: false },
   public: { type: Boolean, default: false, },
   registration_open: { type: Boolean, default: false },
   price: { type: Number, default: 0 },
