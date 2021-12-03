@@ -9,5 +9,5 @@ export async function getNextLan() {
 
 // Convert the getNextlan() function to return an object, to get rid of mongoose stuff
 export async function getNextLanAsObject() {
-  return (await getNextLan()).toObject();
+  return (await getNextLan())?.toObject();
 }
