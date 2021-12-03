@@ -16,7 +16,7 @@ const devEnvironment: EnvironmentVars = {
 
 const prodEnvironment: EnvironmentVars = {
   guildId: "243374306501984256",
-  verifiedRoleId: "",
+  verifiedRoleId: "916296303426801664",
   staffRoleId: "243374978907504641",
   adminRoleId: "683420225894613139",
   superAdminRoleId: "252739867082096640",
