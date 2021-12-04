@@ -60,7 +60,8 @@ passport.use(new Strategy({
         is_email_verified: primaryEmail?.verified,
         username: profile.username,
         refresh_token: refreshToken,
-        picture_url: primaryPhoto?.value,
+        // If th user doesn't have a profile picture, give them the default discord pfp
+        picture_url: primaryPhoto?.value || "https://cdn.discordapp.com/embed/avatars/3.png",
         discord_id: profile.id,
         accent_color: (profile._json as any).banner_color || `hsla(${~~(360 * Math.random())},70%,70%,0.8)`,
       });
