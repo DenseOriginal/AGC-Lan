@@ -1,14 +1,14 @@
-# Website for AGC-Lan
+# Website for AG-Lan
 
 ## How to setup environment
 
 1. Install node16 and npm 8
 
 2. Clone this repo
-  `git clone https://github.com/DenseOriginal/AGC-Lan.git`
+  `git clone https://github.com/DenseOriginal/AG-Lan.git`
 
 3. Open terminal/cmd and cd into cloned directory
-  `cd AGC-lan`
+  `cd AG-lan`
 
 4. Install dependincies
   use `npm install`

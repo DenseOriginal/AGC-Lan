@@ -21,7 +21,7 @@ const AdminBroOptions: AdminBroOptions = {
   rootPath: '/staff',
   logoutPath: '/logout',
   branding: {
-    companyName: 'AGC Lan',
+    companyName: 'AG Lan',
     softwareBrothers: true, // Just because why not
     favicon: '/favicon/favicon.ico',
     logo: ''
