@@ -5,7 +5,7 @@ import morgan from "morgan";
 import { join } from "path";
 // import { BaseRouter } from "./routes/router";
 // import "./passport/index";
-import { connect } from "./config/database";
+import { connect, sessionStore } from "./config/database";
 import mongoose from "mongoose";
 import exphbs from "express-handlebars";
 import { RootRouter } from "./routes/router";
@@ -14,7 +14,6 @@ import { setupAdminBro } from "./routes/staff/admin-bro";
 import { IUser } from "./models/user";
 import { roles } from "./config/passport";
 import favicon from "serve-favicon";
-const MongooseStore = require('mongoose-express-session')(session.Store);
 
 // Create server
 export const app = express();
@@ -84,7 +83,7 @@ app.use(session({ // Setup session storage in mongoDB, this makes sure users sta
   secret: process.env.SESSION_SECRET as string,
   resave: true,
   saveUninitialized: true,
-  store: new MongooseStore({ connection: mongoose }),
+  store: sessionStore,
   rolling: true,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // One month
 }));

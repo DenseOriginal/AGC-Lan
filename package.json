@@ -22,6 +22,7 @@
     "@types/morgan": "^1.9.3",
     "admin-bro": "^4.0.1",
     "body-parser": "^1.19.0",
+    "connect-mongodb-session": "^3.1.1",
     "discord.js": "^13.3.1",
     "discordx": "^9.0.1",
     "dotenv": "^10.0.0",
@@ -32,7 +33,6 @@
     "express-session": "^1.17.2",
     "hbs": "^4.1.2",
     "mongoose": "^6.0.11",
-    "mongoose-express-session": "0.0.5",
     "morgan": "^1.10.0",
     "passport": "^0.5.0",
     "reflect-metadata": "^0.1.13",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.1",
+    "@types/connect-mongodb-session": "^2.4.2",
     "@types/errorhandler": "^1.5.0",
     "@types/express": "^4.17.13",
     "@types/express-handlebars": "^5.3.1",
