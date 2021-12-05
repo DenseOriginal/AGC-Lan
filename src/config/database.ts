@@ -1,5 +1,3 @@
-import ConnectMongoDBSession from "connect-mongodb-session";
-import session from "express-session";
 import mongoose from "mongoose";
 
 // Exit application on error
@@ -21,17 +19,3 @@ export const connect = () => {
   });
   return mongoose.connection;
 };
-
-const MongoDBStore = ConnectMongoDBSession(session);
-export const sessionStore = new MongoDBStore({
-  uri: process.env.MONGO_URI as string,
-  collection: 'sessions'
-});
-
-// Catch errors
-sessionStore.on('error', function(err) {
-  // eslint-disable-next-line no-console
-  console.error(`MongoDB session connection error: ${err}`);
-  // eslint-disable-next-line no-process-exit
-  process.exit(-1);
-});
