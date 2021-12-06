@@ -16,7 +16,7 @@ const infoToCollect = [
 // 20HTXCR : Pass
 // 2HTXCR : Fail
 // 20CR : Fail
-const classRegex = /\d\dHTX\w{1,4}/;
+const classRegex = /(\d\dHTX\w{1,4})|(LÆRER)/;
 
 // On get send the setup page
 // The info we want to collect is dynamicly rendered in the handlebars file

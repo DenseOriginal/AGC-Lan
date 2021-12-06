@@ -31,7 +31,7 @@ export const getProfile: RequestHandler = async (req, res) => {
 // 20HTXCR : Pass
 // 2HTXCR : Fail
 // 20CR : Fail
-const classRegex = /\d\dHTX\w{1,4}/;
+const classRegex = /(\d\dHTX\w{1,4})|(LÆRER)/;
 
 export const postProfile: RequestHandler = async (req, res) => {
   // Get the posted date from the client
