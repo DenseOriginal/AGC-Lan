@@ -162,12 +162,6 @@ function deleteAccount() {
   }
 }
 
-{{#if removeEditHash}}
-// Very jank way of removing the hash from the url
-// Check routes/profile/profile for more info
-window.location.hash = "";
-{{/if}}
-
 if(window.location.hash == "#edit") editProfile();
 function editProfile() {
   const inputs = document.querySelectorAll("form#editProfile input:disabled");

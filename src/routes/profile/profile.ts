@@ -18,11 +18,6 @@ export const getProfile: RequestHandler = async (req, res) => {
     user: req.user?._id
   }).sort({ _id: -1 }).limit(10).populate('lan').exec();
 
-  // Janky way of removing the #edit from the profile url, because the hash is stored client side
-  // We have no way of removing it, so instead just pass a variable to the handlebars template
-  // An tell it to render javascript that removes the hash if this is set to true...
-  // res.locals.removeEditHash = true;
-
   // Send something to the user
   res.status(200).render('profile/profile', {
     user: req.user,
