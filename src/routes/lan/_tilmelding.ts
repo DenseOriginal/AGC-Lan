@@ -35,6 +35,9 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
     // Handlebars will deny acces to acces any properties on it
     const foundLan = tilmelding.toObject().lan as ILAN;
 
+    if(req.query.type == "update") res.sendMessage('info', 'Din tilmelding er blevet opdateret');
+    if(req.query.type == "new") res.sendMessage('info', 'Tillykke du er nu tilmeldt LAN');
+
     return res.render("lan/tilmeld", {
       user: req.user,
       title: foundLan.name,

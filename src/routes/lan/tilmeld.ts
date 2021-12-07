@@ -96,13 +96,8 @@ export const postTilmeld: RequestHandler = async (req, res) => {
       if(prevTilmelding.user.toString() != req.user?._id.toString()) throw new Error('Tilmelding user doesn\'t match the logged in user!');
 
       await prevTilmelding.updateOne({ seat }).exec();
-      res.sendMessage('info', 'Din tilmelding er blevet opdateret');
-      // Update the params, because the getShowTilmelding gets the tilmeldingID from the params
-      req.params.tilmeldingId = prevTilmelding.id;
-      // Call the next handler, this is to avoid the need to redirect because if we redirect, we lose all the context from this request
-      // Simple pass the req and res to the new handler, we know that the new handler doesn's call next
-      // This could also be moved into the routes file, 
-      return getShowTilmelding(req, res, () => {});
+
+      return res.redirect(`/lan/tilmelding/${prevTilmelding.id}?type=update`);
     }
 
     const newLanUser = new LanUserModel({
@@ -116,15 +111,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
       $push: { users: newLanUser._id }
     }).exec();
 
-    // If everything worked out, tell the user
-    res.sendMessage('info', 'Tillykke du er nu tilmeldt LAN');
-    // Update the params, because the getShowTilmelding gets the tilmeldingID from the params
-    req.params.tilmeldingId = newLanUser.id;
-    // Call the next handler, this is to avoid the need to redirect because if we redirect, we lose all the context from this request
-    // Simple pass the req and res to the new handler, we know that the new handler doesn's call next
-    // This could also be moved into the routes file, 
-    return getShowTilmelding(req, res, () => {});
-
+    return res.redirect(`/lan/tilmelding/${newLanUser.id}?type=new`);
   } catch (error) {
     console.error(error);
     return res.render("lan/tilmeld", {
