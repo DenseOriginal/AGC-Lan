@@ -18,6 +18,11 @@ export const getProfile: RequestHandler = async (req, res) => {
     user: req.user?._id
   }).sort({ _id: -1 }).limit(10).populate('lan').exec();
 
+  // Janky way of removing the #edit from the profile url, because the hash is stored client side
+  // We have no way of removing it, so instead just pass a variable to the handlebars template
+  // An tell it to render javascript that removes the hash if this is set to true...
+  // res.locals.removeEditHash = true;
+
   // Send something to the user
   res.status(200).render('profile/profile', {
     user: req.user,
@@ -57,12 +62,5 @@ export const postProfile: RequestHandler = async (req, res) => {
     }
   }
 
-  // Janky way of removing the #edit from the profile url, because the hash is stored client side
-  // We have no way of removing it, so instead just pass a variable to the handlebars template
-  // An tell it to render javascript that removes the hash if this is set to true...
-  res.locals.removeEditHash = true;
-  
-  // We can't just redirect to the /profile so just pass the req and res objetc to the function
-  // This is also very janky but locals don't persist through redirects, and using session is way overkill
-  getProfile(req, res, () => {});
+  return res.redirect('/profile');
 }
