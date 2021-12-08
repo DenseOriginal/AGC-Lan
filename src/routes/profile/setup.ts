@@ -9,7 +9,7 @@ import { IUser, UserModel } from "../../models/user";
 const infoToCollect = [
   { name: "firstname", placeholder: "Fornavn", value: "", error: "" },
   { name: "lastname", placeholder: "Efternavn", value: "", error: "" },
-  { name: "class", placeholder: "Klasse (f. eks. 20HTXCR)", value: "", error: "", rest: 'list="classes" autocomplete="off"' },
+  { name: "class", placeholder: "Stam klasse (f. eks. 20HTXCR)", value: "", error: "", rest: 'list="classes" autocomplete="off"' },
 ];
 
 // Regex to validate a klass

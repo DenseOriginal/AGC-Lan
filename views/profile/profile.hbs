@@ -102,7 +102,7 @@
   <form action="/profile" method="POST" id="editProfile">
     <div class="row"><p class="title">Fornavn:</p> <input type="text" name="first_name" disabled value="{{ user.first_name }}"></div>
     <div class="row"><p class="title">Efternavn:</p> <input type="text" name="last_name" disabled value="{{ user.last_name }}"></div>
-    <div class="row"><p class="title">Klasse:</p> <input type="text" name="class" disabled value="{{ user.class }}" list="classes"></div>
+    <div class="row"><p class="title">Stam klasse:</p> <input type="text" name="class" disabled value="{{ user.class }}" list="classes"></div>
     <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
     <div class="row"><p class="title">Brugernavn:</p> <input type="text" name="username" disabled value="{{ user.username }}"></div>
     <div class="row" id="edit-button-row">
