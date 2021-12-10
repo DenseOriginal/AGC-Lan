@@ -1,6 +1,7 @@
 function createClassPicker(parentElementId) {
   // Generate all classes for the three current years, including grundforløb
-  const thisYear = new Date().getFullYear().toString().slice(2);
+  // But first offset the year by half a year, this is because new classes start in summer, and not at new year
+  const thisYear = new Date(Date.now() - 1.578e+10).getFullYear().toString().slice(2);
   const classChars = ['A', 'B', 'C', 'D', 'E', 'J', 'P', 'R']
 
   const grundforløb = Array.from({ length: 8 }, (_, idx) => `${thisYear}HTXCG${idx + 1}`);
