@@ -2,6 +2,7 @@ import { randomBytes } from "crypto";
 import { RequestHandler } from "express";
 import { LanUserModel } from "../../models/lan-user";
 import { UserModel } from "../../models/user";
+import { isValidClass } from "./setup";
 
 export const getProfile: RequestHandler = async (req, res) => {
   // Generate a csrf token, which is just a random string
@@ -27,12 +28,6 @@ export const getProfile: RequestHandler = async (req, res) => {
   });
 };
 
-// Regex to validate a klass
-// 20HTXCR : Pass
-// 2HTXCR : Fail
-// 20CR : Fail
-const classRegex = /(\d\d(HTX|STX)\w{1,4})|(LÆRER)/;
-
 export const postProfile: RequestHandler = async (req, res) => {
   // Get the posted date from the client
   const { first_name, last_name, class: klasse, username } = req.body as { [index: string]: string | undefined };
@@ -42,7 +37,7 @@ export const postProfile: RequestHandler = async (req, res) => {
   // Therefore we can just do one if statement
   // And if the failes, just do a silent error (This is bad)
   // TODO: Better errorhandling
-  if(classRegex.test((klasse || "").toUpperCase())) {
+  if(isValidClass((klasse || "").toUpperCase())) {
     try {
       const newUser = await UserModel.findByIdAndUpdate(req.user?._id, {
         first_name: first_name,
