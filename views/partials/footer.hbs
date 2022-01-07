@@ -38,7 +38,7 @@
     }
   </style>
   <div class="container-footer">
-    <span class="copyright noselect red-gradient">Copyright &copy; 2021 AGLan</span>
+    <span class="copyright noselect red-gradient">Copyright &copy; <span id="copyright-year">2022</span> AGLan</span>
     <div class="rest">
       {{!-- Theme toggle --}}
       <i class="far fa-sun"></i>
@@ -71,6 +71,11 @@
 
   // Flip the switch, if the theme is dark then check the switch
   document.querySelector('.switch.color-switch > input').checked = theme == 'dark';
+</script>
+
+{{!-- Script for copyright year --}}
+<script>
+  document.getElementById('copyright-year').innerText = new Date().getFullYear();
 </script>
 
 {{!-- Styles for toogle switch --}}
