@@ -34,6 +34,40 @@
 3. To build and serve
   Use `npm run build:serve` to build then serve, this command simply issues the other to commands
 
+## Folder structure
+
+```bash
+.
+├───.adminbro             # Folder for adminbro stuff
+├───dist                  # Compiled output, ignored in git
+├───public                # Static resources
+│   ├───favicon
+│   ├───images
+│   │   └───logo
+│   ├───scripts
+│   └───styles
+│       └───themes
+├───src                   # Folder container the actual code
+│   ├───config              # Different files to configure libraries
+│   ├───discord             # Folder for the discord bot
+│   │   ├───functions         # Discord helper functions
+│   │   └───listeners         # Listeners for discord
+│   ├───models              # Mongoose models
+│   └───routes              # Folder container routing handlers
+│       ├───api               # /api
+│       ├───lan               # /lan
+│       ├───profile           # /profile
+│       ├───staff             # Config for adminbro
+│       └───tournaments       # /tournaments
+└───views                 # Handlebar templates
+    ├───admin-bro           # Folder containing jsx for adminbro
+    ├───lan                 # Lan templates
+    ├───layouts             # Page layouts
+    ├───partials            # Partials that can be reused
+    ├───profile             # Profile templates
+    └───tournament          # Tournament templates
+```
+
 ## Common reasons why something failed
 
 1. Your firewall doesn't allow acces to mongoDB
