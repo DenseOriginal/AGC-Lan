@@ -17,6 +17,8 @@ import MongoStore from "connect-mongo";
 export const app = express();
 
 // Connect to mongoDB
+// Even tho the variable isn't used, the `connect` function is still called
+// So remove this
 const connection = connect();
 
 // Express config
