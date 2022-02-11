@@ -86,7 +86,7 @@ app.use(session({ // Setup session storage in mongoDB, this makes sure users sta
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI as string }),
   rolling: true,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // One month
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 } // One week
 }));
 app.use(passport.initialize());
 app.use(passport.session());
