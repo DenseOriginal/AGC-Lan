@@ -8,9 +8,13 @@ import { IUser, UserModel } from "../models/user";
 // This is so that we can deserialize to both a user and partialUser
 passport.serializeUser((user: IUser, done) => {
   done(null, user.discord_id);
+  console.log('Serialize');
+  
 });
 
 passport.deserializeUser(async (id: string, done) => {
+  console.log('Deserialize');
+
   try {
     // If we find a user then return that as an object
     const user = await UserModel.findOne({ "discord_id": id }).exec();
@@ -71,11 +75,17 @@ passport.use(new Strategy({
       // If we succesfully created a partial user, then return that
       return cb(null, newPartial.toObject());
     } else {
+      const primaryPhoto = profile.photos?.find(photo => photo.primary) || profile.photos?.[0];
+
       // Otherwise if a user was found
       // Then update the last_login with now, and the refresh_token
+      // And the refresh the data pulled from discord, as the user might have changed their profile
       await user.updateOne({
         last_login: new Date,
         refresh_token: refreshToken,
+        username: profile.username,
+        picture_url: primaryPhoto?.value || "https://cdn.discordapp.com/embed/avatars/3.png",
+        accent_color: (profile._json as any).banner_color || `hsla(${~~(360 * Math.random())},70%,70%,0.8)`,
       }).exec();
 
       // And then return the user
