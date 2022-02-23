@@ -8,13 +8,9 @@ import { IUser, UserModel } from "../models/user";
 // This is so that we can deserialize to both a user and partialUser
 passport.serializeUser((user: IUser, done) => {
   done(null, user.discord_id);
-  console.log('Serialize');
-  
 });
 
 passport.deserializeUser(async (id: string, done) => {
-  console.log('Deserialize');
-
   try {
     // If we find a user then return that as an object
     const user = await UserModel.findOne({ "discord_id": id }).exec();
