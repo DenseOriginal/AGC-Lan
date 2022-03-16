@@ -3,6 +3,14 @@
   <h2 class="head">Næste LAN: {{ nextLan.name }}</h2>
   <h4>Dato: <strong>{{ formatDate nextLan.start "long" }}</strong></h4>
   <p>{{ nextLan.description }}</p>
+
+  {{#if nextLan.registration_open}}
+    <div>
+      {{!-- We need a container div here, otherwise padding will fuck shit up --}}
+      <a href="/lan/tilmeld" class="button">Tilmeld dig allerede nu</a>
+    </div>
+  {{/if}}
+
   {{#unless nextLan.public}} {{!-- TODO: lan.show_calendar --}}
   <p>Tidsplanen for næste LAN er ikke klar endnu, men vil blive vist herunder så snart alt er planlagt.</p>
   {{/unless}}
