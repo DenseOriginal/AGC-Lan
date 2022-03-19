@@ -10,6 +10,7 @@ export interface ILAN {
   updated_at: Date;
   public: boolean;
   registration_open: boolean;
+  registration_opens_at: Date;
   price: number;
   cover_url: string;
   users: string[] | ILANUser[];
@@ -29,6 +30,7 @@ const LANSchema = new Schema({
   last_updated: { type: Date, default: new Date, required: false },
   public: { type: Boolean, default: false, },
   registration_open: { type: Boolean, default: false },
+  registration_opens_at: { type: Date, required: false },
   price: { type: Number, default: 0 },
   cover_url: { type: String, required: true },
   users: [{ type: Schema.Types.ObjectId, ref: 'LanUser' }],
