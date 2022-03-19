@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { isValidObjectId } from "mongoose";
 import { ILAN } from "../../models/lan";
 import { ILANUser, LanUserModel } from "../../models/lan-user";
+import { rangesToTables } from "./tilmeld";
 
 export const getShowTilmelding: RequestHandler = async (req, res) => {
   const tilmeldingId = req.params.tilmeldingId;
@@ -55,17 +56,4 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
       error: "Der er sket en uventet fejl, prøv igen senere"
     });
   }
-}
-
-// Explenation in seats.md
-function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
-  const tables: { [idx: string]: string[] } = { };
-
-  ranges.forEach(range => {
-    const [table, start, end] = range.match(/(^[a-zA-Z]{1,3})|\d+/g) || ["?", "0", "1"];
-    const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
-    !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
-  });
-
-  return tables;
 }

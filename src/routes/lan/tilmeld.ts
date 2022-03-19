@@ -154,7 +154,7 @@ function validateLan(foundLan: ILAN | LANAsDocument | undefined, req: Request, r
 }
 
 // Explenation in seats.md
-function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
+export function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
   const tables: { [idx: string]: string[] } = { };
 
   ranges.forEach(range => {
