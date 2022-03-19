@@ -75,7 +75,8 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     // We can check this, by seeing if any element in the array has the same seat as the seat sent from th client
     // But users can also update their tilmelding withour updating their seat
     // So we need to make sure that any already reserver seat, is reserved by someone other than the current user
-    if(users.find(cur => (cur.seat == seat && cur.user != req.user?._id.toString()))) return res.render("lan/tilmeld", {
+    // We also need to check that the seat isn't "none", because multiple users should be allowed to not have a seat
+    if(users.find(cur => (cur.seat == seat && cur.seat != 'none' && cur.user != req.user?._id.toString()))) return res.render("lan/tilmeld", {
       user: req.user,
       title: 'Fejl',
       error: 'Dette sæde er allerede reserveret'
