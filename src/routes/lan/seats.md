@@ -55,7 +55,7 @@ function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
     // Destructure the range using a regex
     // This can be done because regex match returns an array of all parts that match the regex
     // If undefined was returned, use a dummy array instead
-    const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
+    const [table, start, end] = range.match(/(^[a-zA-Z]{1,3})|\d+/g) || ["?", "0", "1"];
 
     // Now that we know the start and end, create a new array with the corrent length
     // Then we pass in a mapping function that creates the seat id

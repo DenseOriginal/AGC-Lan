@@ -158,7 +158,7 @@ function rangesToTables(ranges: string[]): { [idx: string]: string[] } {
   const tables: { [idx: string]: string[] } = { };
 
   ranges.forEach(range => {
-    const [table, start, end] = range.match(/(^.{1})|\d+/g) || ["?", "0", "1"];
+    const [table, start, end] = range.match(/(^[a-zA-Z]{1,3})|\d+/g) || ["?", "0", "1"];
     const seats = Array.from({ length: (+end - +start) }, (_, idx) => table + (+start + idx + 1));
     !!tables[table] ? tables[table].push(...seats) : tables[table] = seats;
   });
