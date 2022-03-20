@@ -71,6 +71,8 @@
 
   // TODO: Maybe actually do se users can mark the text, instead of it just dissapering
   // At the moment i'm too lazy to do it...
+  const padding = 16;
+
   calendar.on('eventMouseEnter', (event) => {
     const description = event.event.extendedProps.description;
     if(!description) return;
@@ -78,8 +80,8 @@
     const { pageX, pageY } = event.jsEvent;
     tooltipEl.innerHTML = `<p>${description}</p>`;
 
-    const x = Math.min(window.innerWidth - tooltipEl.offsetWidth, pageX);
-    const y = Math.min(window.innerHeight - tooltipEl.offsetHeight, pageY);
+    const x = Math.min(window.innerWidth - tooltipEl.offsetWidth - padding, pageX);
+    const y = Math.min(window.innerHeight - tooltipEl.offsetHeight - padding, pageY);
     tooltipEl.style.top = `${y}px`;
     tooltipEl.style.left = `${x}px`;
   });
