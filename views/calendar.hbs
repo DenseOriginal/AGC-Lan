@@ -28,10 +28,26 @@
       margin-left: 0 !important;
     }
   }
+
+  #tooltip {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    z-index: 9999;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    max-width: 400px;
+    word-break: break-word;
+    hyphens: auto;
+  }
 </style>
 
 <div class="c-container">
   <div id="calendar" class="card not-padding"></div>
+</div>
+
+<div id="tooltip" class="card not-padding">
+  <p>Test</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
@@ -39,6 +55,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
 <link rel="stylesheet" href="styles/fc-variables.css">
 <script>
+  const tooltipEl = document.getElementById('tooltip');
   const calendarEl = document.getElementById('calendar');
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
@@ -51,4 +68,24 @@
     ]
   });
   calendar.render();
+
+  // TODO: Maybe actually do se users can mark the text, instead of it just dissapering
+  // At the moment i'm too lazy to do it...
+  calendar.on('eventMouseEnter', (event) => {
+    const description = event.event.extendedProps.description;
+    if(!description) return;
+
+    const { pageX, pageY } = event.jsEvent;
+    tooltipEl.innerHTML = `<p>${description}</p>`;
+
+    const x = Math.min(window.innerWidth - tooltipEl.offsetWidth, pageX);
+    const y = Math.min(window.innerHeight - tooltipEl.offsetHeight, pageY);
+    tooltipEl.style.top = `${y}px`;
+    tooltipEl.style.left = `${x}px`;
+  });
+
+  calendar.on('eventMouseLeave', (event) => {
+    tooltipEl.style.top = '-99999px';
+    tooltipEl.style.left = '-99999px';
+  });
 </script>
