@@ -87,7 +87,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
     // Otherwise try to find one already registered by the user
     const prevTilmelding = prevTilmeldingID ? 
       await LanUserModel.findById(prevTilmeldingID).exec() :
-      await LanUserModel.findOne({ user: req.user?._id }).exec();
+      await LanUserModel.findOne({ user: req.user?._id, lan: lanId }).exec();
   
     // If prevTilmeldingID is true but we didn't find any tilmelding
     // Something is proparly wrong, and it most likely means the user changed the hidden id field
