@@ -17,7 +17,7 @@ const Event = new Schema({
   start: { type: Date, required: true },
   end: { type: Date, required: true },
   created_at: { type: Date, default: new Date, immutable: true },
-  public: { type: Boolean, required: true },
+  public: { type: Boolean, required: false },
 });
 
 /**
