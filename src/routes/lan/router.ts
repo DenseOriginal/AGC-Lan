@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { RequestHandler } from "express-serve-static-core";
 import { isValidObjectId } from "mongoose";
-import { isNotBanned } from "../../config/guards";
+import { isNotBanned, requestGuardIsAdmin } from "../../config/guards";
 import { isAuthenticated } from "../../config/guards";
-import { isStaff } from "../../config/passport";
+import { isAdmin, isStaff } from "../../config/passport";
 import { LanModel } from "../../models/lan";
 import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
 import { redirectToCurrentFrameld, redirectToCurrentTilmeld } from "./redirect";
+import { getRegisteredUsers } from "./registered-users";
 import { getTilmeld, postTilmeld } from "./tilmeld";
 import { getLan } from "./_id";
 import { getShowTilmelding } from "./_tilmelding";
@@ -26,6 +27,8 @@ LanRouter.route('/:lanId/tilmeld').post(isAuthenticated, isNotBanned, findLan('l
 
 LanRouter.route('/:lanId/frameld').get(isAuthenticated, isNotBanned, findLan('lanId'), getFrameld);
 LanRouter.route('/:lanId/frameld').post(isAuthenticated, isNotBanned, findLan('lanId'), postFrameld);
+
+LanRouter.route('/:lanId/get-users').get(requestGuardIsAdmin, getRegisteredUsers);
 
 // Helper middleware
 function findLan(paramId: string): RequestHandler {
