@@ -20,6 +20,7 @@ export const getLan: RequestHandler = async (req, res) => {
       title: foundLan.name,
       lan: foundLan,
       tilmelding: lanUser?.toObject(),
+      canRegister: foundLan.registration_open && foundLan.end > new Date(),
     })
 
   } catch (error) {
