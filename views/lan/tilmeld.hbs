@@ -97,10 +97,14 @@
     border-radius: 4px;
     top: 5px;
     transition: var(--fast-transition);
+    pointer-events: none;
+    touch-action: none;
   }
 
   .seats .container .cell:hover > .seat-tooltip {
     opacity: 1;
+    pointer-events: all;
+    touch-action: all;
   }
 
   .seats .container .cell.title {
@@ -323,7 +327,7 @@
       .forEach(obj => {
         const elm = document.querySelector(`input[name="seat"]#${obj.seat}.seat-radio:not(#none)`);
         if(!elm) return;
-        if(elm.id == "{{ tilmelding.seat }}") return;
+        {{!-- if(elm.id == "{{ tilmelding.seat }}") return; --}}
 
         elm.disabled = true;
         const tooltip = `
