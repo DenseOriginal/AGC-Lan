@@ -58,7 +58,7 @@ passport.use(new Strategy({
       const newPartial = new PartialUserModel({
         email: primaryEmail?.value,
         is_email_verified: primaryEmail?.verified,
-        username: profile.username,
+        username: profile.username + '#' + profile._json.discriminator,
         refresh_token: refreshToken,
         // If th user doesn't have a profile picture, give them the default discord pfp
         picture_url: primaryPhoto?.value || "https://cdn.discordapp.com/embed/avatars/3.png",
@@ -79,7 +79,7 @@ passport.use(new Strategy({
       await user.updateOne({
         last_login: new Date,
         refresh_token: refreshToken,
-        username: profile.username,
+        username: profile.username + '#' + profile._json.discriminator,
         picture_url: primaryPhoto?.value || "https://cdn.discordapp.com/embed/avatars/3.png",
         accent_color: (profile._json as any).banner_color || `hsla(${~~(360 * Math.random())},70%,70%,0.8)`,
       }).exec();
