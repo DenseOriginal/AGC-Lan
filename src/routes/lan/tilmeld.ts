@@ -3,6 +3,7 @@ import { isValidObjectId } from "mongoose";
 import { isStaff } from "../../config/passport";
 import { ILAN, LANAsDocument, LanModel } from "../../models/lan";
 import { ILANUser, LanUserModel } from "../../models/lan-user";
+import { IUser } from "../../models/user";
 import { getShowTilmelding } from "./_tilmelding";
 
 export const getTilmeld: RequestHandler = async (req, res) => {
@@ -26,6 +27,14 @@ export const getTilmeld: RequestHandler = async (req, res) => {
 
     if(tilmelding) return res.redirect(`/lan/tilmelding/${tilmelding._id}`);
 
+    const takenSeatsRaw = await LanUserModel.find({ lan: foundLan._id }).populate('user').exec();
+    const takenSeats = takenSeatsRaw.map((document) => document.toObject())
+      .map(tilmelding => ({
+        seat: tilmelding.seat,
+        name: (tilmelding.user as IUser).first_name + ' ' + (tilmelding.user as IUser).last_name,
+        discord: (tilmelding.user as IUser).username,
+      }));
+
     // Otherwise if nothing failed then render the lan to the user
     return res.render("lan/tilmeld", {
       user: req.user,
@@ -33,7 +42,7 @@ export const getTilmeld: RequestHandler = async (req, res) => {
       lan: foundLan.toObject(),
       tables: rangesToTables(foundLan.seats),
       tilmelding: undefined,
-      takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
+      takenSeats: JSON.stringify(takenSeats),
     })
 
   } catch (error) {

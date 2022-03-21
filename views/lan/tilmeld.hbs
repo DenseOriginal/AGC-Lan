@@ -87,6 +87,22 @@
     );
   }
 
+  .seat-tooltip {
+    position: absolute;
+    opacity: 0;
+    z-index: 999;
+    width: 120px;
+    padding: 4px 8px;
+    text-align: left;
+    border-radius: 4px;
+    top: 5px;
+    transition: var(--fast-transition);
+  }
+
+  .seats .container .cell:hover > .seat-tooltip {
+    opacity: 1;
+  }
+
   .seats .container .cell.title {
     grid-column-start: 1;
     margin-right: 12px;
@@ -303,18 +319,33 @@
   // Injected by server
   // This disables all taken seats
   try {
-    "{{ takenSeats }}".split(",")
-      .map((seat) => document.querySelector(`input[name="seat"]#${seat}.seat-radio:not(#none)`))
-      .filter(elm => !!elm)
-      .filter(elm => elm.id != "{{ tilmelding.seat }}")
-      .forEach(elm => elm.disabled = true);
+    JSON.parse("{{ takenSeats }}".replaceAll('&quot;', '"'))
+      .forEach(obj => {
+        const elm = document.querySelector(`input[name="seat"]#${obj.seat}.seat-radio:not(#none)`);
+        if(!elm) return;
+        if(elm.id == "{{ tilmelding.seat }}") return;
+
+        elm.disabled = true;
+        const tooltip = `
+          <div class="card not-padding seat-tooltip">
+            <h4>Reserveret af</h4>
+            <p>${obj.name}</p>
+            <p>${obj.discord}</p>
+          </div>
+        `
+
+        const label = document.querySelector(`label[for="${obj.seat}"]:not(#none)`);
+        label.innerHTML = obj.seat + tooltip;
+      });
     
     const prevSeatLabel = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio+label`);
     if(prevSeatLabel) prevSeatLabel.classList.add('selected');
 
     const prevSeatRadio = document.querySelector(`input[name="seat"]#{{ tilmelding.seat }}.seat-radio`);
     if(prevSeatRadio) prevSeatRadio.checked = true;
-  } catch (err) {}
+  } catch (err) {
+    console.log(err)
+  }
 
   updateCurrentSeat();
 </script>

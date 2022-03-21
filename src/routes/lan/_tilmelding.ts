@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { isValidObjectId } from "mongoose";
 import { ILAN } from "../../models/lan";
 import { ILANUser, LanUserModel } from "../../models/lan-user";
+import { IUser } from "../../models/user";
 import { rangesToTables } from "./tilmeld";
 
 export const getShowTilmelding: RequestHandler = async (req, res) => {
@@ -39,6 +40,14 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
     if(req.query.type == "update") res.sendMessage('info', 'Din tilmelding er blevet opdateret');
     if(req.query.type == "new") res.sendMessage('info', 'Tillykke du er nu tilmeldt LAN');
 
+    const takenSeatsRaw = await LanUserModel.find({ lan: foundLan._id }).populate('user').exec();
+    const takenSeats = takenSeatsRaw.map((document) => document.toObject())
+      .map(tilmelding => ({
+        seat: tilmelding.seat,
+        name: (tilmelding.user as IUser).first_name + ' ' + (tilmelding.user as IUser).last_name,
+        discord: (tilmelding.user as IUser).username,
+      }));
+
     return res.render("lan/tilmeld", {
       user: req.user,
       title: foundLan.name,
@@ -46,7 +55,7 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
       tables: rangesToTables(foundLan.seats),
       tilmelding: tilmelding.toObject(),
       // Map the tilmeldt users down to an array of just the seats, because we don't need the rest
-      takenSeats: typeof foundLan.users == "string" ? [] : foundLan.users.map(user => (user as ILANUser).seat),
+      takenSeats: JSON.stringify(takenSeats),
     })
   } catch (error) {
     console.error(error);
