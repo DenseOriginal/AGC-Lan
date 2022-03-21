@@ -265,7 +265,7 @@
     <div class="dropdown-container">
       <a class="user" href="/profile">
         <img class="avatar" height="28" src="{{ user.picture_url }}" alt="Profile image">
-        <p><span>{{ user.username }}</span></p>
+        <p><span>{{ removeDiscriminator user.username }}</span></p>
       </a>
 
       <div class="dropdown">
