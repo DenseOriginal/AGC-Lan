@@ -72,7 +72,7 @@ app.engine('hbs', exphbs({
     isAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 1),
     isSuperAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 2),
     isFuture: (date: Date) => date > new Date(),
-    removeDiscriminator: (str: string) => str.slice(0, -5),
+    removeDiscriminator: (str: string) => /#\d{4}$/.test(str) ? str.slice(0, -5) : str,
 }
 }));
 app.set("view engine", "hbs");
