@@ -112,11 +112,12 @@ export const postSetup: RequestHandler = async (req, res) => {
     // Make sure to convert it to a normal object, to remove the mongoose model properties and methods
     req.user = newUser.toObject();
 
+    // Check if the user is in the server, before we try and verify the user
+    if(!(await isUserInServer(newUser.discord_id))) return res.redirect('/discord');
+
     // When the user has been setup verify the user
     verifyUser(newUser.discord_id).catch((e) => console.error('Verify error: ', e));
     checkForDiscordRoles(newUser).catch((e) => console.error('Check for roles error: ', e));
-
-    if(!(await isUserInServer(newUser.discord_id))) return res.redirect('/discord');
 
     // Redirect the new use to ther profile page
     return res.redirect('/profile');
