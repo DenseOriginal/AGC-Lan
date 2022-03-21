@@ -327,7 +327,7 @@
       .forEach(obj => {
         const elm = document.querySelector(`input[name="seat"]#${obj.seat}.seat-radio:not(#none)`);
         if(!elm) return;
-        {{!-- if(elm.id == "{{ tilmelding.seat }}") return; --}}
+        if(elm.id == "{{ tilmelding.seat }}") return;
 
         elm.disabled = true;
         const tooltip = `
