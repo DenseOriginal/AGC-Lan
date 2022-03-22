@@ -1,5 +1,4 @@
-import { Intents } from "discord.js";
-import { Client } from "discordx";
+import { Intents, Client } from "discord.js";
 import "./listeners/new-user";
 
 export const client = new Client({
@@ -8,15 +7,10 @@ export const client = new Client({
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MEMBERS,
   ],
-  silent: true,
 });
 
 client.on("ready", async () => {
   console.log(">> Bot started");
-
-  // to create/update/delete discord application commands
-  await client.initApplicationCommands();
-  await client.initApplicationPermissions();
 });
 
 export async function run() {
