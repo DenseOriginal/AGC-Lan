@@ -24,7 +24,7 @@ export const whoIsCommand: IDiscordCommand = {
           .setTitle(`Whois - ${user.username}#${user.discriminator}`)
           .addField('Navn', userDoc.first_name + ' ' + userDoc.last_name, true)
           .addField('Klasse', userDoc.class, true)
-          .setColor('#59ff59')
+          .setColor('#52da52')
       ],
     });
   }
