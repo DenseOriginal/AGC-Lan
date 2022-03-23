@@ -6,11 +6,13 @@ import { environment } from "./environment";
 import { whoIsCommand } from "./commands/whois";
 import chalk from 'chalk';
 import { BetterCommandBuilder } from "./helpers/command.class";
+import { getSeatCommand } from "./commands/getseat";
 
 const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN as string || "");
 
 const commands = [
-  whoIsCommand
+  whoIsCommand,
+  getSeatCommand
 ];
 const commandCollection = new Collection<string, BetterCommandBuilder>();
 
