@@ -1,5 +1,6 @@
 import { Intents, Client } from "discord.js";
 import { handleInteractions, setupSlashCommands } from "./commands";
+import chalk from 'chalk';
 
 export const client = new Client({
   intents: [
@@ -13,7 +14,7 @@ export const client = new Client({
 import "./listeners/new-user";
 
 client.on("ready", async () => {
-  console.log(">> Bot started");
+  console.log(`[${chalk.bold.greenBright('BOT')}] started`);
 });
 
 export async function run() {

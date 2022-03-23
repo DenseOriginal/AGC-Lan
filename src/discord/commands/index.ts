@@ -5,6 +5,7 @@ import { Interaction } from "discord.js";
 import { environment } from "../environment";
 import { IDiscordCommand } from "../interfaces";
 import { whoIsCommand } from "./whois";
+import chalk from 'chalk';
 
 const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN as string || "");
 
@@ -21,7 +22,7 @@ export async function setupSlashCommands() {
 			{ body: commands.map(cmd => cmd.data.toJSON()) },
 		);
 
-		console.log('Successfully reloaded application (/) commands.');
+		console.log(`[${chalk.bold.greenBright('BOT')}] Successfully reloaded application (/) commands`);
 	} catch (error) {
 		console.error(error);
 	}
