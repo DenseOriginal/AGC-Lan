@@ -73,6 +73,7 @@ export async function handleInteractions(interaction: Interaction) {
   try {
     await command.action(interaction);
   } catch (error) {
+		console.error(`[${chalk.bold.red('BOT')}] Error while trying to run slash command '${interaction.commandName}'`);
     console.error(error);
     await interaction.reply({ content: 'Der er sket en fejl!', ephemeral: true });
   }
