@@ -2,9 +2,9 @@ import Collection from "@discordjs/collection";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { Interaction } from "discord.js";
-import { environment } from "../environment";
-import { IDiscordCommand } from "../interfaces";
-import { whoIsCommand } from "./whois";
+import { environment } from "./environment";
+import { IDiscordCommand } from "./interfaces";
+import { whoIsCommand } from "./commands/whois";
 import chalk from 'chalk';
 
 const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN as string || "");
