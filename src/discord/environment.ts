@@ -5,6 +5,7 @@ interface EnvironmentVars {
   staffRoleId: string;
   adminRoleId: string;
   superAdminRoleId: string;
+  everyoneRoleId: string;
 }; 
 
 const devEnvironment: EnvironmentVars = {
@@ -14,6 +15,7 @@ const devEnvironment: EnvironmentVars = {
   staffRoleId: "911716242929356800",
   adminRoleId: "911716338655957022",
   superAdminRoleId: "911716410160459776",
+  everyoneRoleId: "778709596163407895",
 };
 
 const prodEnvironment: EnvironmentVars = {
@@ -23,6 +25,7 @@ const prodEnvironment: EnvironmentVars = {
   staffRoleId: "243374978907504641",
   adminRoleId: "683420225894613139",
   superAdminRoleId: "252739867082096640",
+  everyoneRoleId: "243374306501984256",
 }
 
 export const environment = process.env.NODE_ENV === "production" ? prodEnvironment : devEnvironment;

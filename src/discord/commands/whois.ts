@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, MessageEmbed, User } from "discord.js";
 import { UserModel } from "../../models/user";
+import { environment } from "../environment";
 import { IDiscordCommand } from "../interfaces";
 
 export const whoIsCommand: IDiscordCommand = {
@@ -10,7 +11,8 @@ export const whoIsCommand: IDiscordCommand = {
       .setName('bruger')
       .setDescription('Brugeren til at finde information om')
       .setRequired(true))
-    .setDescription('Henter navn for en bruger'),
+    .setDescription('Henter navn for en bruger')
+    .setDefaultPermission(false),
   async execute(interaction: CommandInteraction) {
     const user = interaction.options.getUser('bruger', true);
     const discordId = user.id;
@@ -27,5 +29,10 @@ export const whoIsCommand: IDiscordCommand = {
           .setColor('#52da52')
       ],
     });
-  }
+  },
+  permissions: [
+    // Type 1 = ROLE
+    { id: environment.adminRoleId, type: 1, permission: true },
+    { id: environment.superAdminRoleId, type: 1, permission: true },
+  ]
 }

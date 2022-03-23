@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction } from "discord.js";
+import { ApplicationCommandPermissionData, CommandInteraction } from "discord.js";
 
 export interface IDiscordCommand {
   data: SlashCommandBuilder,
-  execute(interaction: CommandInteraction): void
+  execute(interaction: CommandInteraction): void,
+  permissions?: ApplicationCommandPermissionData[]
 }
