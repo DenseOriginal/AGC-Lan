@@ -1,5 +1,5 @@
 import { Intents, Client } from "discord.js";
-import "./listeners/new-user";
+import { handleInteractions, setupSlashCommands } from "./commands";
 
 export const client = new Client({
   intents: [
@@ -9,10 +9,16 @@ export const client = new Client({
   ],
 });
 
+// Setup listeners
+import "./listeners/new-user";
+
 client.on("ready", async () => {
   console.log(">> Bot started");
 });
 
 export async function run() {
   client.login(process.env.BOT_TOKEN as string || "");
+  setupSlashCommands();
 }
+
+client.on('interactionCreate', handleInteractions);

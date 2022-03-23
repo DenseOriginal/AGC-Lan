@@ -1,4 +1,5 @@
 interface EnvironmentVars {
+  clientId: string;
   guildId: string;
   verifiedRoleId: string;
   staffRoleId: string;
@@ -7,6 +8,7 @@ interface EnvironmentVars {
 }; 
 
 const devEnvironment: EnvironmentVars = {
+  clientId: "808050665527967805",
   guildId: "778709596163407895",
   verifiedRoleId: "911571420302180372",
   staffRoleId: "911716242929356800",
@@ -15,6 +17,7 @@ const devEnvironment: EnvironmentVars = {
 };
 
 const prodEnvironment: EnvironmentVars = {
+  clientId: "905507754830098442",
   guildId: "243374306501984256",
   verifiedRoleId: "916296303426801664",
   staffRoleId: "243374978907504641",
