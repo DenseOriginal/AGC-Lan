@@ -3,23 +3,23 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { Interaction } from "discord.js";
 import { environment } from "./environment";
-import { IDiscordCommand } from "./interfaces";
 import { whoIsCommand } from "./commands/whois";
 import chalk from 'chalk';
+import { BetterCommandBuilder } from "./helpers/command.class";
 
 const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN as string || "");
 
 const commands = [
   whoIsCommand
 ];
-const commandCollection = new Collection<string, IDiscordCommand>();
+const commandCollection = new Collection<string, BetterCommandBuilder>();
 
 export async function setupSlashCommands() {
   try {
     // discordjs broken, so use raw api
 		await rest.put(
 			Routes.applicationGuildCommands(environment.clientId, environment.guildId),
-			{ body: commands.map(cmd => cmd.data.toJSON()) },
+			{ body: commands.map(cmd => cmd.toJSON()) },
 		);
 
 		console.log(`[${chalk.bold.greenBright('BOT')}] Successfully reloaded application (/) commands`);
@@ -29,7 +29,7 @@ export async function setupSlashCommands() {
 
   // Save every command in a a collection, so that we can find it later using a name
   commands.forEach(cmd => {
-    commandCollection.set(cmd.data.name, cmd);
+    commandCollection.set(cmd.name, cmd);
   });
 
   // Setup permissions
@@ -69,7 +69,7 @@ export async function handleInteractions(interaction: Interaction) {
   
   // Try to execute, and send an error
   try {
-    await command.execute(interaction);
+    await command.action(interaction);
   } catch (error) {
     console.error(error);
     await interaction.reply({ content: 'Der er sket en fejl!', ephemeral: true });

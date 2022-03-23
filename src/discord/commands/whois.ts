@@ -1,19 +1,19 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageEmbed, User } from "discord.js";
+import { CommandInteraction, MessageEmbed } from "discord.js";
 import { UserModel } from "../../models/user";
 import { environment } from "../environment";
-import { IDiscordCommand } from "../interfaces";
+import { BetterCommandBuilder } from "../helpers/command.class";
 
-export const whoIsCommand: IDiscordCommand = {
-  data: new SlashCommandBuilder()
-    .setName('whois')
-    .addUserOption(option => option
-      .setName('bruger')
-      .setDescription('Brugeren til at finde information om')
-      .setRequired(true))
-    .setDescription('Henter navn for en bruger')
-    .setDefaultPermission(false),
-  async execute(interaction: CommandInteraction) {
+export const whoIsCommand = new BetterCommandBuilder()
+  .setName('whois')
+  .addUserOption(option => option
+    .setName('bruger')
+    .setDescription('Brugeren til at finde information om')
+    .setRequired(true))
+  .setDescription('Henter navn for en bruger')
+  .setDefaultPermission(false)
+  .addPermission({ id: environment.adminRoleId, type: 1, permission: true })
+  .addPermission({ id: environment.superAdminRoleId, type: 1, permission: true })
+  .setAction(async (interaction: CommandInteraction) => {
     // Get the mentioned user
     const user = interaction.options.getUser('bruger', true);
     const discordId = user.id;
@@ -35,10 +35,4 @@ export const whoIsCommand: IDiscordCommand = {
           .setColor('#52da52')
       ],
     });
-  },
-  permissions: [
-    // Type 1 = ROLE
-    { id: environment.adminRoleId, type: 1, permission: true },
-    { id: environment.superAdminRoleId, type: 1, permission: true },
-  ]
-}
+  });
