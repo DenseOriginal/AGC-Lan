@@ -15,8 +15,7 @@ const commandCollection = new Collection<string, IDiscordCommand>();
 
 export async function setupSlashCommands() {
   try {
-		console.log('Started refreshing application (/) commands.');
-
+    // discordjs broken, so use raw api
 		await rest.put(
 			Routes.applicationGuildCommands(environment.clientId, environment.guildId),
 			{ body: commands.map(cmd => cmd.data.toJSON()) },
@@ -27,6 +26,7 @@ export async function setupSlashCommands() {
 		console.error(error);
 	}
 
+  // Save every command in a a collection, so that we can find it later using a name
   commands.forEach(cmd => {
     commandCollection.set(cmd.data.name, cmd);
   });
@@ -39,8 +39,11 @@ export async function setupSlashCommands() {
   // We can also infer our own type, but we only need the id and name
   const commandsFromAPI = await rest.get(Routes.applicationGuildCommands(environment.clientId, environment.guildId)) as { id: string, name: string }[];
 
+  // Loop through all fetched commands, and set permissions
   for (const { id, name } of commandsFromAPI) {
+    // Get the command from the collection
     const command = commandCollection.get(name);
+
     if(!command) continue; // If the command doesn't exist, then continue
     if(!command.permissions) continue; // If the command doesn't have ane restrictions, then continue
 
@@ -54,12 +57,16 @@ export async function setupSlashCommands() {
 }
 
 export async function handleInteractions(interaction: Interaction) {
+  // If this interaction isn't a slash command, then exit
   if(!interaction.isCommand()) return;
   
+  // Get the command
   const command = commandCollection.get(interaction.commandName);
   
+  // if the command doesn't exist, the return
   if (!command) return;
   
+  // Try to execute, and send an error
   try {
     await command.execute(interaction);
   } catch (error) {
