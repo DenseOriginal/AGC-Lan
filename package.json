@@ -24,6 +24,7 @@
     "@types/morgan": "^1.9.3",
     "admin-bro": "^4.0.1",
     "body-parser": "^1.19.0",
+    "chalk": "^4.0.0",
     "connect-mongo": "^4.6.0",
     "connect-mongodb-session": "^3.1.1",
     "discord-api-types": "^0.29.0",
