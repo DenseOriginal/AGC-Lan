@@ -13,6 +13,7 @@ export const getSeatCommand = new BetterCommandBuilder()
     .setDescription('Brugeren til at finde information om')
     .setRequired(true))
     .setDefaultPermission(false)
+  .addPermission({ id: environment.staffRoleId, type: 1, permission: true })
   .addPermission({ id: environment.adminRoleId, type: 1, permission: true })
   .addPermission({ id: environment.superAdminRoleId, type: 1, permission: true })
   .setAction(async (interaction) => {
