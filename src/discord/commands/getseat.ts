@@ -29,8 +29,6 @@ export const getSeatCommand = new BetterCommandBuilder()
     if(!userDoc) return interaction.reply({ ephemeral: true, embeds: [ new MessageEmbed().setTitle('Brugeren er ikke registeret på hjemmesiden').setColor('#ff5959') ] })
 
     // Try to find the tilmeldt user
-    console.log({ lan: nextLan.id, user: userDoc.id });
-    
     const lanUser = await LanUserModel.findOne({ lan: nextLan.id, user: userDoc.id }).exec();
     if(!lanUser) return interaction.reply({ ephemeral: true, embeds: [ new MessageEmbed().setTitle('Denne bruger har ikke reserveret en plads').setColor('#ff5959') ] })
 
