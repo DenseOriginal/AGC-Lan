@@ -16,8 +16,13 @@
 <meta name="theme-color" content="#ffffff">
 
 <!-- Primary Meta Tags -->
-<title>AG Lan</title>
-<meta name="title" content="AG Lan">
+{{#if title}}
+  <title>{{title}} - AG Lan</title>
+  <meta name="title" content="{{title}} - AG Lan">
+{{else}}
+  <title>AG Lan</title>
+  <meta name="title" content="AG Lan">
+{{/if}}
 <meta name="description" content="Siden for LAN på Aarhus Gymnasium. Her kan se information og tilmelde dig til LAN og turneringer.">
 
 <!-- Open Graph / Facebook -->
