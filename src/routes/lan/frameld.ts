@@ -14,7 +14,7 @@ export const getFrameld: RequestHandler = async (req, res) => {
   // Otherwise if nothing failed then render the lan to the user
   return res.render("lan/frameld", {
     user: req.user,
-    title: (foundLan as ILAN).name, // If we the execution came this far, that must mean foundLan is not undefined
+    title: 'Frameld ' + (foundLan as ILAN).name, // If we the execution came this far, that must mean foundLan is not undefined
     lan: foundLan
   });
 }
@@ -44,7 +44,7 @@ export const postFrameld: RequestHandler = async (req, res) => {
     // Otherwise if nothing failed then tell the user
     return res.render("lan/frameld", {
       user: req.user,
-      title: (foundLan as ILAN).name, // If the execution came this far, that must mean foundLan is not undefined
+      title: 'Frameld ' + (foundLan as ILAN).name, // If the execution came this far, that must mean foundLan is not undefined
       lan: foundLan,
       message: 'Du er nu blevet frameldt fra LAN'
     });

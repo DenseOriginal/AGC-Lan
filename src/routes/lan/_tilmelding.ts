@@ -50,7 +50,7 @@ export const getShowTilmelding: RequestHandler = async (req, res) => {
 
     return res.render("lan/tilmeld", {
       user: req.user,
-      title: foundLan.name,
+      title: 'Tilmelding ' + foundLan.name,
       lan: foundLan,
       tables: rangesToTables(foundLan.seats),
       tilmelding: tilmelding.toObject(),

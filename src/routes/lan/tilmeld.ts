@@ -38,7 +38,7 @@ export const getTilmeld: RequestHandler = async (req, res) => {
     // Otherwise if nothing failed then render the lan to the user
     return res.render("lan/tilmeld", {
       user: req.user,
-      title: foundLan.name,
+      title: 'Tilmelding ' + foundLan.name,
       lan: foundLan.toObject(),
       tables: rangesToTables(foundLan.seats),
       tilmelding: undefined,
