@@ -292,7 +292,9 @@
       <div class="spacer"></div>
 
       <div>
-        <button type="submit">{{#if tilmelding}}Opdater min tilmelding!{{else}}Tilmeld mig til LAN!{{/if}}</button>
+        <button type="submit" onclick="gtag('event', 'tilmeld', { event_category: 'Lan', event_label: '{{ lan.name }}' }), transport_type: 'beacon'}"}>
+          {{#if tilmelding}}Opdater min tilmelding!{{else}}Tilmeld mig til LAN!{{/if}}
+        </button>
       </div>
     </div>
   </form>
@@ -303,7 +305,7 @@
       frigivet til andre. Hvis du kun ønsker at skifte plads, kan du ændre den herover</p>
 
     <div class="div">
-      <a href="../frameld" class="button warn">Frameld</a>
+      <a href="../frameld" class="button warn" onclick="gtag('event', 'frameld', { event_category: 'Lan', event_label: '{{ lan.name }}' }), transport_type: 'beacon'}">Frameld</a>
     </div>
   </div>
   {{/if}}

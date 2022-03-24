@@ -107,7 +107,7 @@
     <div class="row"><p class="title">Brugernavn:</p> <input type="text" name="username" disabled value="{{ user.username }}"></div>
     <div class="row" id="edit-button-row">
       <button type="reset" class="warn" onclick="stopEditing()">Annuller</button>
-      <button type="submit">Opdater</button>
+      <button type="submit" onclick="gtag('event', 'updare_profile', { event_category: 'Profile', transport_type: 'beacon'}">Opdater</button>
     </div>
   </form>
 </div>
@@ -156,6 +156,7 @@ function deleteAccount() {
   const confirm = prompt(`Indtast din email (${email}) for at bekræfte at din bruger bliver slettet. DETTE KAN IKKE GØRES OM`)
   if(confirm == email) {
     document.getElementById('check_token').value = email;
+    gtag('event', 'delete_profile', { event_category: 'Profile', transport_type: 'beacon'})
     return true;
   } else {
     alert('Det du indtastede matcher ikke din email, din bruger vil IKKE blive slettet');
