@@ -1,8 +1,33 @@
 import { RequestHandler } from "express";
+import { LANAsDocument } from "../../models/lan";
 import { LanUserModel } from "../../models/lan-user";
 import { IUser } from "../../models/user";
 
 export const getRegisteredUsers: RequestHandler = async (req, res) => {
+  const lanId: string = req.params.lanId;
+
+  const foundLan = ((req as any).lan as LANAsDocument).toObject();
+
+  const registeredUsers = await LanUserModel.find({ lan: lanId }).populate('user').exec();
+  const data = registeredUsers.map(doc => doc.toObject())
+    .map(user => ({
+      tilmeldindId: user._id,
+      userId: (user.user as IUser)._id,
+      name: (user.user as IUser).first_name + ' ' + (user.user as IUser).last_name,
+      username: (user.user as IUser).username,
+      seat: user.seat,
+      registered_at: user.registered_at,
+    }));
+
+  res.render('lan/user-table', {
+    user: req.user,
+    title: 'Tilmeldte brugere',
+    lan: foundLan,
+    data
+  })
+}
+
+export const getRegisteredUsersRaw: RequestHandler = async (req, res) => {
   const lanId: string = req.params.lanId;
   
   // Set the neccesary headers

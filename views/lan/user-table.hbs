@@ -1,0 +1,52 @@
+<style>
+  .table-container {
+    overflow: auto;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: var(--primary-text);
+    width: 1200px;
+  }
+
+  td, th {
+    border: 1px solid var(--background-400);
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr {
+    background-color: var(--background-200);
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--background-300);
+  }
+</style>
+
+<h2>Tilmeldte brugere til {{ lan.name }}</h2>
+<br>
+<div class="table-container">
+  <table>
+    <tr>
+      <th>Tilmeldings ID</th>
+      <th>Bruger ID</th>
+      <th>Navn</th>
+      <th>Brugernavn</th>
+      <th>Reservered Plads</th>
+      <th>Tidspunkt</th>
+    </tr>
+    {{#each data}}
+    <tr>
+      <td>{{this.tilmeldindId}}</td>
+      <td>{{this.userId}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.username}}</td>
+      <td>{{this.seat}}</td>
+      <td>{{formatDate this.registered_at "long"}} {{formatDate this.registered_at "time"}}</td>
+    </tr>
+    {{/each}}
+  </table>
+</div>

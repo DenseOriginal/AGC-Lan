@@ -8,7 +8,7 @@ import { LanModel } from "../../models/lan";
 import { getFrameld, postFrameld } from "./frameld";
 import { getList } from "./list";
 import { redirectToCurrentFrameld, redirectToCurrentTilmeld } from "./redirect";
-import { getRegisteredUsers } from "./registered-users";
+import { getRegisteredUsers, getRegisteredUsersRaw } from "./registered-users";
 import { getTilmeld, postTilmeld } from "./tilmeld";
 import { getLan } from "./_id";
 import { getShowTilmelding } from "./_tilmelding";
@@ -28,7 +28,8 @@ LanRouter.route('/:lanId/tilmeld').post(isAuthenticated, isNotBanned, findLan('l
 LanRouter.route('/:lanId/frameld').get(isAuthenticated, isNotBanned, findLan('lanId'), getFrameld);
 LanRouter.route('/:lanId/frameld').post(isAuthenticated, isNotBanned, findLan('lanId'), postFrameld);
 
-LanRouter.route('/:lanId/get-users').get(requestGuardIsAdmin, getRegisteredUsers);
+LanRouter.route('/:lanId/get-users').get(requestGuardIsAdmin, findLan('lanId'), getRegisteredUsers);
+LanRouter.route('/:lanId/get-users.csv').get(requestGuardIsAdmin, getRegisteredUsersRaw);
 
 // Helper middleware
 function findLan(paramId: string): RequestHandler {
