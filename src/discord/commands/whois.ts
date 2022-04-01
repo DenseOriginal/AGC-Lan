@@ -2,6 +2,7 @@ import { CommandInteraction, MessageEmbed } from "discord.js";
 import { UserModel } from "../../models/user";
 import { environment } from "../environment";
 import { BetterCommandBuilder } from "../helpers/command.class";
+import { allowAdmin, allowSuperAdmin } from "../helpers/permissions";
 
 export const whoIsCommand = new BetterCommandBuilder()
   .setName('whois')
@@ -11,8 +12,8 @@ export const whoIsCommand = new BetterCommandBuilder()
     .setRequired(true))
   .setDescription('Henter navn for en bruger')
   .setDefaultPermission(false)
-  .addPermission({ id: environment.adminRoleId, type: 1, permission: true })
-  .addPermission({ id: environment.superAdminRoleId, type: 1, permission: true })
+  .addPermission(allowAdmin)
+  .addPermission(allowSuperAdmin)
   .setAction(async (interaction: CommandInteraction) => {
     // Get the mentioned user
     const user = interaction.options.getUser('bruger', true);

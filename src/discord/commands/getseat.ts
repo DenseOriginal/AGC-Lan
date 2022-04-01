@@ -4,6 +4,7 @@ import { UserModel } from "../../models/user";
 import { getNextLan, getNextLanAsObject } from "../../routes/lan/helper";
 import { environment } from "../environment";
 import { BetterCommandBuilder } from "../helpers/command.class";
+import { allowAdmin, allowStaff, allowSuperAdmin } from "../helpers/permissions";
 
 export const getSeatCommand = new BetterCommandBuilder()
   .setName('getseat')
@@ -13,9 +14,9 @@ export const getSeatCommand = new BetterCommandBuilder()
     .setDescription('Brugeren til at finde information om')
     .setRequired(true))
     .setDefaultPermission(false)
-  .addPermission({ id: environment.staffRoleId, type: 1, permission: true })
-  .addPermission({ id: environment.adminRoleId, type: 1, permission: true })
-  .addPermission({ id: environment.superAdminRoleId, type: 1, permission: true })
+  .addPermission(allowStaff)
+  .addPermission(allowAdmin)
+  .addPermission(allowSuperAdmin)
   .setAction(async (interaction) => {
     // Get the mentioned user
     const user = interaction.options.getUser('bruger', true);
