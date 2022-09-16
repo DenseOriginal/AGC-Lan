@@ -1,6 +1,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { isStaff } from "../../config/passport";
+import { sendTilmeldingsMessage } from "../../discord/functions/send-tilmeldings-message";
 import { ILAN, LANAsDocument, LanModel } from "../../models/lan";
 import { ILANUser, LanUserModel } from "../../models/lan-user";
 import { IUser } from "../../models/user";
@@ -121,6 +122,7 @@ export const postTilmeld: RequestHandler = async (req, res) => {
       $push: { users: newLanUser._id }
     }).exec();
 
+    sendTilmeldingsMessage(foundLan, newLanUser.id, (req.user as IUser).discord_id);
     return res.redirect(`/lan/tilmelding/${newLanUser.id}?type=new`);
   } catch (error) {
     console.error(error);
