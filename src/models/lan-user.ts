@@ -15,7 +15,9 @@ const LanUser = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'Users' },
   lan: { type: Schema.Types.ObjectId, ref: 'Lans' },
   seat: { type: String, required: true },
-  registered_at: { type: Date, default: new Date() }
+  registered_at: { type: Date, default: new Date() },
+  has_paid: { type: Boolean, default: false },
+  payment_validator: { type: Schema.Types.ObjectId, ref: 'Users', default: undefined },
 });
 
 /**

@@ -1,6 +1,6 @@
 import QrCodePopup from "@jimengio/qrcode-popup/lib/qrcode-popup";
 import "react";
-import { ContainerStyles, GridCenter, PanelStyles, TextAlignCenter, ViewStyles } from "./styles";
+import { ContainerStyles, GridCenter, PaidStyles, PanelStyles, TextAlignCenter, ViewStyles } from "./styles";
 import { getLanUser } from "./web";
 
 class ScanTicket extends React.Component {
@@ -38,7 +38,11 @@ class ScanTicket extends React.Component {
               <br />
 
               <p>Lan: { lanUser?.lan.name }</p>
-              <p>Pris: { lanUser?.lan.price }</p>
+              <p>Pris: { lanUser?.lan.price } DKK</p>
+
+              <br />
+
+              <p>Status: <PaidStatus hasPaid={lanUser?.has_paid} /></p>
             </div>}
           </div>
 
@@ -54,3 +58,9 @@ class ScanTicket extends React.Component {
 }
 
 export default ScanTicket
+
+function PaidStatus({ hasPaid }) {
+  return hasPaid ?
+    <span style={PaidStyles(hasPaid)}>Betalt</span> :
+    <span style={PaidStyles(hasPaid)}>Mangler betaling</span>
+}

@@ -30,3 +30,11 @@ export const PanelStyles = {
   borderRadius: '5px',
   boxSizing: 'border-box'
 }
+
+export const PaidStyles = (hasPaid) => ({
+  padding: '1px 2px',
+  borderRadius: '4px',
+  color: 'white',
+  textTransform: 'uppercase',
+  backgroundColor: hasPaid ? '#32a852' : '#f54242'
+})
