@@ -12,3 +12,21 @@ export const getLanUser: RequestHandler = async (req, res) => {
   return res.json(lanUser);
   
 }
+
+export const setLanUserPaidStatus: RequestHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user?._id as string;
+    const { hasPaid } = req.body;    
+    
+    await LanUserModel.findByIdAndUpdate(id, {
+      has_paid: hasPaid,
+      payment_validator: userId,
+    }).exec();
+  
+    return res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ error: 'Something went wrong' });
+  }
+}

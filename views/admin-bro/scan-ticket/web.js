@@ -15,8 +15,16 @@ export function request(ajax) {
 }
 
 export function getLanUser(id) {
-  return requestJson({
-    url: `/api/getLanUser/${id}`,
-    method: 'GET'
-  })
+	return requestJson({
+		url: `/api/getLanUser/${id}`,
+		method: 'GET'
+	})
+}
+
+export function setLanUserPaidStatus(id, hasPaid) {
+	return requestJson({
+		url: `/api/setLanUserPaidStatus/${id}`,
+		body: { hasPaid },
+		method: 'PUT'
+	})
 }

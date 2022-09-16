@@ -3,7 +3,7 @@ import passport from "passport";
 import { requestGuardIsStaff } from "../../config/guards";
 import { getEventEventSource, getLanEventSource } from "./calendar";
 import { callback } from "./callback";
-import { getLanUser } from "./lan-user";
+import { getLanUser, setLanUserPaidStatus } from "./lan-user";
 
 export const ApiRouter = Router();
 
@@ -18,4 +18,5 @@ ApiRouter.route('/calendar/lan').get(getLanEventSource);
 ApiRouter.route('/calendar/event').get(getEventEventSource);
 
 // Other api routes
-ApiRouter.route('/getLanUser/:id').get(requestGuardIsStaff, getLanUser)
+ApiRouter.route('/getLanUser/:id').get(requestGuardIsStaff, getLanUser);
+ApiRouter.route('/setLanUserPaidStatus/:id').put(requestGuardIsStaff, setLanUserPaidStatus);

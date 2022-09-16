@@ -1,3 +1,9 @@
+const Colors = {
+  red: '#f54242',
+  green: '#32a852',
+  blue: '#4287f5'
+}
+
 export const ViewStyles = {
   width: '100%',
   height: '100%',
@@ -7,7 +13,7 @@ export const ViewStyles = {
 
 export const ContainerStyles = {
   width: 'clamp(0px, 100%, 30rem)',
-  padding: '3%',
+  padding: 'clamp(0px, 3%, 1rem)',
   boxSizing: 'border-box'
 }
 
@@ -32,9 +38,35 @@ export const PanelStyles = {
 }
 
 export const PaidStyles = (hasPaid) => ({
-  padding: '1px 2px',
+  padding: '1px 4px',
   borderRadius: '4px',
   color: 'white',
   textTransform: 'uppercase',
-  backgroundColor: hasPaid ? '#32a852' : '#f54242'
+  backgroundColor: hasPaid ? Colors.green : Colors.red
 })
+
+export const ButtonStyles = (color) => ({
+  padding: '8px 12px',
+  color: 'white',
+  backgroundColor: Colors[color],
+  borderRadius: '8px',
+  border: 'none',
+  outLine: 'none',
+  fontSize: '1rem'
+})
+
+export const ButtonContainer = {
+  display: 'grid',
+  gap: '4px',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(9rem, 1fr))'
+}
+
+export const StrongStyles = {
+  fontSize: '1rem',
+  fontWeight: '600'
+}
+
+export const ErrorStyles = {
+  color: Colors.red,
+  fontFamily: `Consolas,"courier new"`,
+}

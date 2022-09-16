@@ -1,20 +1,39 @@
 import QrCodePopup from "@jimengio/qrcode-popup/lib/qrcode-popup";
 import "react";
-import { ContainerStyles, GridCenter, PaidStyles, PanelStyles, TextAlignCenter, ViewStyles } from "./styles";
-import { getLanUser } from "./web";
+import { ButtonContainer, ButtonStyles, ContainerStyles, ErrorStyles, GridCenter, PaidStyles, PanelStyles, StrongStyles, TextAlignCenter, ViewStyles } from "./styles";
+import { getLanUser, setLanUserPaidStatus } from "./web";
 
 class ScanTicket extends React.Component {
   state = {
     code: undefined,
     lanUser: undefined,
     loading: false,
+    error: ''
   };
 
   onScan = async (code) => {
-    this.updateState({ code, loading: true });
-    const lanUser = await getLanUser(code);
-    console.log(lanUser);
-    this.updateState({ lanUser, loading: false });
+    try {
+      this.updateState({ code, loading: true });
+      const lanUser = await getLanUser(code);
+      console.log(lanUser);
+      this.updateState({ lanUser, loading: false });
+    } catch (error) {
+      this.updateState({ error })
+    }
+  }
+
+  markAsPaid = async () => {
+    try {
+      const lanUser = this.state.lanUser;
+      const res = await setLanUserPaidStatus(lanUser._id, true);
+      if (res.success) {
+        this.updateState({
+          lanUser: { ...lanUser, has_paid: true }
+        });
+      }
+    } catch (error) {
+      this.updateState({ error })
+    }
   }
 
   updateState(partial) {
@@ -22,7 +41,7 @@ class ScanTicket extends React.Component {
   }
 
   render() {
-    const { code, lanUser, loading } = this.state;
+    const { code, lanUser, loading, error } = this.state;
 
     return (
       <div className="view" style={ViewStyles}>
@@ -30,26 +49,38 @@ class ScanTicket extends React.Component {
           <div style={PanelStyles}>
             {!code && <p style={TextAlignCenter}>Start ved at scanne en tilmelding</p>}
             {loading && <p style={TextAlignCenter}>Henter data</p>}
-            {lanUser && <div>
+            {lanUser && !loading && <div>
+              <strong style={StrongStyles}>Bruger oplysninger</strong>
               <p>Navn: { lanUser?.user.first_name }</p>
               <p>Klasse: { lanUser?.user.class }</p>
               <p>Brugernavn: { lanUser?.user.username }</p>
               
               <br />
 
+              <strong style={StrongStyles}>Lan oplysninger</strong>
               <p>Lan: { lanUser?.lan.name }</p>
               <p>Pris: { lanUser?.lan.price } DKK</p>
 
+              <br />
               <br />
 
               <p>Status: <PaidStatus hasPaid={lanUser?.has_paid} /></p>
             </div>}
           </div>
 
+          {lanUser && <div style={{ ...PanelStyles, ...ButtonContainer }}>
+            {!lanUser.has_paid && <Button onClick={this.markAsPaid}>Marker som betalt</Button>}
+          </div>}
+
           <div style={PanelStyles}>
             <QrCodePopup
               onDetect={this.onScan}
             />
+          </div>
+
+          <div>
+            {error && <p style={{ ...ErrorStyles, ...StrongStyles }}>Der er sket en fejl, prøv igen senere</p>}
+            <p style={{ ...ErrorStyles, ...StrongStyles }}>{error.toString()}</p>
           </div>
         </div>
       </div>
@@ -63,4 +94,8 @@ function PaidStatus({ hasPaid }) {
   return hasPaid ?
     <span style={PaidStyles(hasPaid)}>Betalt</span> :
     <span style={PaidStyles(hasPaid)}>Mangler betaling</span>
+}
+
+function Button({ color, children, ...rest }) {
+  return <button style={ButtonStyles(color || 'blue')} {...rest}>{children}</button>
 }
