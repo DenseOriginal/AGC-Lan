@@ -5,7 +5,7 @@ export function requestJson(ajax) {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(ajax.body)
-	})
+	}).then(r => r.json())
 }
 
 export function request(ajax) {
