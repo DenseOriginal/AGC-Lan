@@ -27,7 +27,7 @@ const AdminBroOptions: AdminBroOptions = {
     logo: ''
   },
   pages: {
-    'Scan ticket': {
+    ticketScan: {
       component: AdminBro.bundle('../../../views/admin-bro/scan-ticket/index'),
     }
   },
