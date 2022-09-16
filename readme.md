@@ -23,6 +23,8 @@
   SESSION_SECRET is just a random string
   And MONGO_URI can be from a self hosted mongodDB or an atlas cluster
 
+7. Verify that `/src/discord/environment.ts` uses the correct channel and role ids
+
 ## How to build and run
 
 1. Building the app
