@@ -24,11 +24,14 @@ class ScanTicket extends React.Component {
 
   markAsPaid = async () => {
     try {
+      this.updateState({ loading: true });
+
       const lanUser = this.state.lanUser;
       const res = await setLanUserPaidStatus(lanUser._id, true);
       if (res.success) {
         this.updateState({
-          lanUser: { ...lanUser, has_paid: true }
+          lanUser: { ...lanUser, has_paid: true },
+          loading: false
         });
       }
     } catch (error) {
@@ -43,6 +46,8 @@ class ScanTicket extends React.Component {
   render() {
     const { code, lanUser, loading, error } = this.state;
 
+    const seat = lanUser?.seat == 'none' ? 'Ingen plads valgt' : lanUser?.seat;
+
     return (
       <div className="view" style={ViewStyles}>
         <div style={{...ContainerStyles, ...GridCenter}}>
@@ -54,6 +59,7 @@ class ScanTicket extends React.Component {
               <p>Navn: { lanUser?.user.first_name }</p>
               <p>Klasse: { lanUser?.user.class }</p>
               <p>Brugernavn: { lanUser?.user.username }</p>
+              <p>Plads: { seat }</p>
               
               <br />
 
