@@ -26,6 +26,11 @@ const AdminBroOptions: AdminBroOptions = {
     favicon: '/favicon/favicon.ico',
     logo: ''
   },
+  pages: {
+    'Scan ticket': {
+      component: AdminBro.bundle('../../../views/admin-bro/scan-ticket/index'),
+    }
+  },
   dashboard: {
     // The import needs to be outside of src to prevent typescript from compiling it
     // And fucking with the export type.
