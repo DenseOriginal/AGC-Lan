@@ -15,7 +15,6 @@ class ScanTicket extends React.Component {
     try {
       this.updateState({ code, loading: true });
       const lanUser = await getLanUser(code);
-      console.log(lanUser);
       this.updateState({ lanUser, loading: false });
     } catch (error) {
       this.updateState({ error })
