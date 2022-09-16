@@ -13,7 +13,8 @@ export async function sendTilmeldingsMessage(
   try {
     const user = await client.users.fetch(discordUserId);
     const embed = new MessageEmbed()
-      .setDescription(`:tada: Du er nu tilmeldt til **${lan.name}**, vi glæder os til at se dig`)
+      .setTitle(`:tada: Du er nu tilmeldt til **${lan.name}**, vi glæder os til at se dig`)
+      .setDescription('Herunder finder du en QR kode, som du skal vise ved indgangen')
       .setImage(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=6&data=${tilmeldingId}`)
       .setColor('#52da52');
 
