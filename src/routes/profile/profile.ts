@@ -23,7 +23,9 @@ export const getProfile: RequestHandler = async (req, res) => {
   res.status(200).render('profile/profile', {
     user: req.user,
     title: "Profile",
-    tilmeldinger: tilmeldinger.map(cur => cur.toObject()),
+    tilmeldinger: tilmeldinger
+      .map(cur => cur.toObject())
+      .filter(cur => cur.lan),
     csrfToken
   });
 };
