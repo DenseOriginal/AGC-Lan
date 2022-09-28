@@ -1,3 +1,5 @@
+/// <reference path="types.d.ts" />
+
 import express, { Request, RequestHandler, Response } from "express";
 import session from "express-session";
 import passport from "passport";
@@ -12,6 +14,8 @@ import { IUser } from "./models/user";
 import { roles } from "./config/passport";
 import favicon from "serve-favicon";
 import MongoStore from "connect-mongo";
+import { readFileSync } from "fs";
+import { ApiRouter } from "./routes/api/router";
 
 // Create server
 export const app = express();
@@ -23,59 +27,6 @@ const connection = connect();
 
 // Express config
 app.set('port', process.env.PORT || 3000);
-app.set("views", join(__dirname, "../views"));
-
-
-app.engine('hbs', exphbs({
-  extname: 'hbs',
-  defaultLayout: 'main',
-  helpers: {
-    // Diffrent helpers, to extend the functionality of handlebars
-    // Hbs doesn't nativly support conditional operators, so we implement our own
-    eq: (v1: any, v2: any) => v1 === v2,
-    ne: (v1: any, v2: any) => v1 !== v2,
-    lt: (v1: any, v2: any) => v1 < v2,
-    gt: (v1: any, v2: any) => v1 > v2,
-    lte: (v1: any, v2: any) => v1 <= v2,
-    gte: (v1: any, v2: any) => v1 >= v2,
-    not: (v1: any) => !v1,
-    and() {
-        return Array.prototype.every.call(arguments, Boolean);
-    },
-    or() {
-        return Array.prototype.slice.call(arguments, 0, -1).some(Boolean);
-    },
-    formatDate(time: Date, format: "long" | "short" | "time" = "short") {
-      if(format == "time") {
-        return `${time.getHours()}:${time.getMinutes()}`;
-      }
-
-      if(format == "long") {
-        // Cool date format
-        // Only display the year if it isn't the current year
-        // Then split the string by spaces
-        // Map over each word and capitalize the first letter
-        // The join the array back again using a space
-        return time.toLocaleDateString('da-dk', {
-          weekday: "long",
-          month: "short",
-          day: "2-digit",
-          year: time.getFullYear() != (new Date()).getFullYear() ? "numeric" : undefined,
-        }).split(' ').map(day => day.charAt(0).toUpperCase() + day.substr(1).toLowerCase()).join(' ');
-      }
-
-      // Format the date with date/month
-      // Then if we don't have the same year, then also display the year
-      return `${time.getDate()}/${time.getMonth() + 1}${time.getFullYear() != (new Date()).getFullYear() ? '/' + time.getFullYear() : ''}`
-    },
-    isStaff: (user: IUser | undefined) => user && (roles[user.role as string] > 0),
-    isAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 1),
-    isSuperAdmin: (user: IUser | undefined) => user && (roles[user.role as string] > 2),
-    isFuture: (date: Date) => date > new Date(),
-    removeDiscriminator: (str: string) => /#\d{4}$/.test(str) ? str.slice(0, -5) : str,
-}
-}));
-app.set("view engine", "hbs");
 
 app.use(favicon(join(__dirname, '..', 'public', 'favicon', 'favicon.ico')))
 app.use(express.static(join(__dirname, '../public')));
@@ -96,24 +47,23 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Setup handlebar locals
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  res.locals.NODE_ENV = process.env.NODE_ENV;
-
-  // Inject the send message function
-  res.locals.messages = [];
-  res.sendMessage = (level: "info" | "alert" | "warn", message: string, timeout = 8000) => res.locals.messages.push({
-    level,
-    message,
-    timeout: timeout < 1 ? 99999999999 : timeout
-  });
-
-  next();
-});
-
 // Setup AdminBro
 setupAdminBro(app);
+
+app.use(express.static(join(__dirname, '../dist/client')));
+
+app.use('/api', ApiRouter);
+
+app.get('*', (req, res) => {
+  console.log('Heeereee');
+  
+  const html = readFileSync(join(__dirname, '..', 'dist', 'client', 'index.html'), 'utf8');
+  const injectedHtml = html.replace('// <!-- __INJECT SCRIPT HERE__ -->', `
+    window.user = ${JSON.stringify(req.user)};
+  `);
+
+  res.send(injectedHtml);
+});
 
 // Import and use the RootRouter
 app.use(RootRouter);
