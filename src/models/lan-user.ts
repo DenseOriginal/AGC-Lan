@@ -39,4 +39,4 @@ const LanUser = new Schema({
   */
  LanUser.statics = {};
  
- export const LanUserModel: Model<ILANUser> = model('LanUser', LanUser);
+ export const LanUserModel: Model<ILANUser> = model<ILANUser>('LanUser', LanUser);

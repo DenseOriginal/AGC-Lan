@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "admin-bro";
+import { ResourceWithOptions } from "adminjs";
 import { EventModel } from "../../models/event";
 import { isAdmin, isSuperAdmin, isStaff } from "./guards";
 

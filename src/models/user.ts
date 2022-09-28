@@ -73,4 +73,4 @@ const UserSchema = new Schema({
   */
  UserSchema.statics = {};
  
- export const UserModel: Model<IUser> = model('Users', UserSchema);
+ export const UserModel: Model<IUser> = model<IUser>('Users', UserSchema);

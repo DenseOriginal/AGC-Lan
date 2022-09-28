@@ -39,4 +39,4 @@ const Event = new Schema({
   */
  Event.statics = {};
  
- export const EventModel: Model<IEvent> = model('Event', Event);
+ export const EventModel: Model<IEvent> = model<IEvent>('Event', Event);

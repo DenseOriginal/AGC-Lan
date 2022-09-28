@@ -50,4 +50,4 @@ const Tournament = new Schema({
   */
  Tournament.statics = {};
  
- export const TournamentModel: Model<ITournament> = model('Tournament', Tournament);
+ export const TournamentModel: Model<ITournament> = model<ITournament>('Tournament', Tournament);

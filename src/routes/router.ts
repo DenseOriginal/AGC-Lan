@@ -18,7 +18,7 @@ export const RootRouter = Router();
 // Routes at the root level
 RootRouter.route("/").get(getIndex);
 RootRouter.route("/login").get(notAuthenticated, getLogin);
-RootRouter.route("/logout").get((req, res) => { req.logOut(); res.redirect('/'); });
+RootRouter.route("/logout").get((req, res) => { req.logOut(() => res.redirect('/')); });
 RootRouter.route("/policy").get(getPolicy);
 RootRouter.route("/user/:id").get(isAuthenticated, getUser);
 RootRouter.route("/faq").get(getFaq);
