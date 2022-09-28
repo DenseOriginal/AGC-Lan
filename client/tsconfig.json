@@ -14,8 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.client.node.json" }]
+  "include": [
+    "./main.tsx",
+    "./global.d.ts",
+    "./vite-end.d.ts"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

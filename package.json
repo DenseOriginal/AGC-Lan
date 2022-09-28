@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev:server": "tsnd --respawn src/server.ts --project tsconfig.server.json",
-    "dev:client": "vite build --watch --mode development",
+    "dev:client": "vite build --watch --mode development --config ./client/vite.config.ts",
     "build:server": "npm run clean:server && tsc --project tsconfig.server.json",
     "build:client": "npm run clean:client && tsc --project tsconfig.client.json && vite build",
     "clean:server": "rimraf dist/server/",

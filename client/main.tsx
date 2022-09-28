@@ -1,5 +1,3 @@
-/// <reference path="vite-env.d.ts" />
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
@@ -8,6 +6,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { HomePage } from './pages/home';
+import "./styles/reset.scss";
 
 const LoginPage = LazyRoute(() => import("./pages/login"));
 

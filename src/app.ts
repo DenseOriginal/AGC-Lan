@@ -50,13 +50,11 @@ app.use(bodyParser.urlencoded({
 // Setup AdminBro
 setupAdminBro(app);
 
-app.use(express.static(join(__dirname, '../dist/client')));
+app.use('/assets', express.static(join(__dirname, '../dist/client/assets')));
 
 app.use('/api', ApiRouter);
 
 app.get('*', (req, res) => {
-  console.log('Heeereee');
-  
   const html = readFileSync(join(__dirname, '..', 'dist', 'client', 'index.html'), 'utf8');
   const injectedHtml = html.replace('// <!-- __INJECT SCRIPT HERE__ -->', `
     window.user = ${JSON.stringify(req.user)};
