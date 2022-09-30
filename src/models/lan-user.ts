@@ -7,6 +7,8 @@ export interface ILANUser {
   lan: ILAN | string;
   seat: string;
   registered_at: Date;
+  has_paid: boolean;
+  payment_validator: IUser | string;
 }
 
 export type LANUserAsDocument = ILANUser & Document;

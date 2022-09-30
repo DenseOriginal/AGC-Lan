@@ -17,6 +17,7 @@ export const getRegisteredUsers: RequestHandler = async (req, res) => {
       username: (user.user as IUser).username,
       seat: user.seat,
       registered_at: user.registered_at,
+      has_paid: user.has_paid || false,
     }));
 
   res.render('lan/user-table', {
@@ -35,9 +36,9 @@ export const getRegisteredUsersRaw: RequestHandler = async (req, res) => {
   res.attachment(`tilmeldte-${lanId}.csv`);
 
   const registeredUsers = await LanUserModel.find({ lan: lanId }).populate('user').exec();
-  const csvHeaders = 'id,user_id,name,username,seat,registered_at';
+  const csvHeaders = 'id,user_id,name,username,seat,registered_at,has_paid';
   const csvData = registeredUsers.map(doc => doc.toObject())
-    .map(user => `${user._id},${(user.user as IUser)._id},${(user.user as IUser).first_name + ' ' + (user.user as IUser).last_name},${(user.user as IUser).username},${user.seat},${user.registered_at}`);
+    .map(user => `${user._id},${(user.user as IUser)._id},${(user.user as IUser).first_name + ' ' + (user.user as IUser).last_name},${(user.user as IUser).username},${user.seat},${user.registered_at},${user.has_paid || false}`);
   
   return res.send(
     csvHeaders + '\n' +
