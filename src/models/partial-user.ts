@@ -71,4 +71,4 @@ const PartialUserSchema = new Schema({
   */
  PartialUserSchema.statics = {};
  
- export const PartialUserModel: Model<IPartialUser> = model<IPartialUser>('PartialUsers', PartialUserSchema);
+ export const PartialUserModel: Model<IPartialUser> = model('PartialUsers', PartialUserSchema);

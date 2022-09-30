@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "adminjs";
+import { ResourceWithOptions } from "admin-bro";
 import { LanModel } from "../../models/lan";
 import { denyGuard, isAdmin, isStaff, isSuperAdmin } from "./guards";
 

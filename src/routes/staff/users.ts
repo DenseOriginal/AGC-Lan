@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "adminjs";
+import { ResourceWithOptions } from "admin-bro";
 import { UserModel } from "../../models/user";
 import { denyGuard, isSuperAdmin, multiple, notYourself, userIsNotSuperAdmin } from "./guards";
 

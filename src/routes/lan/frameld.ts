@@ -4,7 +4,7 @@ import { ILAN, LANAsDocument, LanModel } from "../../models/lan";
 import { LanUserModel } from "../../models/lan-user";
 
 export const getFrameld: RequestHandler = async (req, res) => {
-  const foundLan = ((req as any).lan as LANAsDocument).toObject<ILAN>();
+  const foundLan = ((req as any).lan as LANAsDocument).toObject();
 
   // Perfom check to see if lan is valid
   await validateLan(foundLan, req, res);

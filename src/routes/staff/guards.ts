@@ -1,4 +1,4 @@
-import { ActionContext, IsFunction } from "adminjs";
+import { ActionContext, IsFunction } from "admin-bro";
 import { roles } from "../../config/passport";
 
 // Admin bro guards

@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "adminjs";
+import { ResourceWithOptions } from "admin-bro";
 import { TournamentModel } from "../../models/tournament";
 import { isAdmin, isSuperAdmin, isStaff } from "./guards";
 

@@ -17,11 +17,10 @@ export const getDelete: RequestHandler = async (req, res) => {
 
     // If the account was succesfully deleted, then logout the user
     // To remove the session
-    req.logout(() => {
-      // Notify the user
-      return res.send('Account deleted');
-    });
+    req.logout();
 
+    // Notify the user
+    return res.send('Account deleted');
   } catch (error) {
     // If an error happened, log the error
     console.error(error);

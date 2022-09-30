@@ -1,6 +1,6 @@
-import AdminJS, { AdminJSOptions } from "adminjs"
-import mongooseAdminBro from "@adminjs/mongoose";
-import expressAdminBro from "@adminjs/express";
+import AdminBro, { AdminBroOptions } from "admin-bro"
+import mongooseAdminBro from "@admin-bro/mongoose";
+import expressAdminBro from "@admin-bro/express";
 import { UserResource } from "./users";
 import { LanResource } from "./lan";
 import { Router } from "express";
@@ -9,8 +9,8 @@ import { LanUserResource } from "./lan-user";
 import { EventResource } from "./event";
 import { TournamentResource } from "./tournament";
 
-AdminJS.registerAdapter(mongooseAdminBro);
-const AdminBroOptions: AdminJSOptions = {
+AdminBro.registerAdapter(mongooseAdminBro);
+const AdminBroOptions: AdminBroOptions = {
   resources: [
     UserResource,
     LanResource,
@@ -22,13 +22,13 @@ const AdminBroOptions: AdminJSOptions = {
   logoutPath: '/logout',
   branding: {
     companyName: 'Staff - AG Lan',
-    withMadeWithLove: true, // Just because why not
+    softwareBrothers: true, // Just because why not
     favicon: '/favicon/favicon.ico',
     logo: ''
   },
   pages: {
     ticketScan: {
-      component: AdminJS.bundle('../../../views/admin-bro/scan-ticket/index'),
+      component: AdminBro.bundle('../../../views/admin-bro/scan-ticket/index'),
     }
   },
   dashboard: {
@@ -37,11 +37,11 @@ const AdminBroOptions: AdminJSOptions = {
     // Before: export default Dashboard;
     // After: exports.default = Dashboard;
     // AdminBro doesn't like this new syntax, so it dies...
-    component: AdminJS.bundle('../../../views/admin-bro/custom-dashboard')
+    component: AdminBro.bundle('../../../views/admin-bro/custom-dashboard')
   }
 }
 
-const adminBro = new AdminJS(AdminBroOptions);
+const adminBro = new AdminBro(AdminBroOptions);
 const preRouter = Router(); // Create a router that the adminBro router should be based on
 preRouter.use(requestGuardIsStaff); // Protext the dashboard with isStaff guard
 preRouter.use((req, res, next) => {
