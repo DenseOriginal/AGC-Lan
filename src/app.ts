@@ -1,3 +1,5 @@
+/// <reference path="./types.d.ts" />
+
 import express, { Request, RequestHandler, Response } from "express";
 import session from "express-session";
 import passport from "passport";

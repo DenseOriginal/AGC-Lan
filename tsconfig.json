@@ -99,9 +99,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "files": [
-    "src/types.d.ts"
-  ],
   "ts-node": {
     "files": true
   },
