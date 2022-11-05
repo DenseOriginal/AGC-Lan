@@ -49,3 +49,5 @@ export interface PartialUser {
 	accent_color: string;
 	_id: string;
 }
+
+export type AnyUser = User | PartialUser;

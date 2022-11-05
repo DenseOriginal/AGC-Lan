@@ -1,4 +1,7 @@
+import { createJWT } from "$lib/helper/jwt";
+import { createPartialUser, getDiscordUserFromTokens, getUserAsLogin, profileExists } from "$lib/helper/user";
 import { error } from "@sveltejs/kit";
+import type { User } from "src/types/user";
 import type { RequestHandler } from "./$types";
 
 const DISCORD_CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
@@ -39,15 +42,24 @@ export const GET: RequestHandler = async ({ url }) => {
 		})
 	}
 
+	const { discordUser, refreshToken } = await getDiscordUserFromTokens(response.refresh_token, response.access_token);
+	
+	if (!discordUser) throw error(400, 'No discord user found');
+
+	const hasProfile = await profileExists(discordUser.id);
+
+	const user = hasProfile ? 
+		await getUserAsLogin(discordUser, refreshToken) :
+		await createPartialUser(discordUser, refreshToken);
+
+	if (hasProfile && !user) throw error(400, 'No user found');
+
 	// redirect user to front page with cookies set
-	const access_token_expires_in = new Date(Date.now() + response.expires_in); // 10 minutes
-	const refresh_token_expires_in = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+	const jwtExpireIn = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); // 10 days
+	const userJwt = createJWT(user as User, response.access_token, response.expires_in);
 	return new Response(null, {
 		headers: {
-			'set-cookie': [
-				`disco_access_token=${response.access_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${access_token_expires_in}}`,
-				`disco_refresh_token=${response.refresh_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${refresh_token_expires_in}`,
-			].join(', '),
+			'set-cookie': `aglan_jwt=${userJwt}; Path=/; HttpOnly; SameSite=Strict; Expires=${jwtExpireIn}}`,
 			Location: '/?reload=true'
 		},
 		status: 302
