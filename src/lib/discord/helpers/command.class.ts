@@ -9,9 +9,4 @@ export class BetterCommandBuilder extends SlashCommandBuilder {
     this.action = action;
     return this;
   }
-
-  addPermission(permission: ApplicationCommandPermissionData): this {
-    this.permissions.push(permission);
-    return this;
-  }
 }

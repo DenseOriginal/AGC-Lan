@@ -1,5 +1,4 @@
 import { BetterCommandBuilder } from "../helpers/command.class";
-import { allowAdmin, allowSuperAdmin } from "../helpers/permissions";
 
 export const sayCommand = new BetterCommandBuilder()
   .setName('say')
@@ -9,8 +8,6 @@ export const sayCommand = new BetterCommandBuilder()
     .setDescription('Beskeden botton skal sige')
     .setRequired(true))
   .setDefaultMemberPermissions('0')
-  .addPermission(allowAdmin)
-  .addPermission(allowSuperAdmin)
   .setAction((interaction) => {
     const message = interaction.options.getString('besked');
     if(!message) return;
