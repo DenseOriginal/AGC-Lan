@@ -3,18 +3,17 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import type { Interaction } from "discord.js";
 import { environment } from "./environment";
-// import { whoIsCommand } from "./commands/whois";
+import { whoIsCommand } from "./commands/whois";
 import type { BetterCommandBuilder } from "./helpers/command.class";
-// import { getSeatCommand } from "./commands/getseat";
+import { getSeatCommand } from "./commands/getseat";
 import { sayCommand } from "./commands/say";
 import { botError, botInfo, botLog, botWarn } from "./helpers/log";
-import { client } from "./client";
 
 const rest = new REST({ version: '9' }).setToken(import.meta.env.VITE_BOT_TOKEN || "");
 
 const commands = [
-	//   whoIsCommand,
-	//   getSeatCommand,
+	whoIsCommand,
+	getSeatCommand,
 	sayCommand
 ];
 const commandCollection = new Collection<string, BetterCommandBuilder>();
@@ -47,7 +46,7 @@ export async function handleInteractions(interaction: Interaction) {
 
 	// if the command doesn't exist, the return
 	if (!command) return;
-	
+
 	botInfo(`${interaction.user.tag} (${interaction.user.id}) used command '${interaction.commandName}'`);
 
 	// Try to execute, and send an error
