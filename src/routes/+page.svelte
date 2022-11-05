@@ -1,5 +1,8 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
 	import Card from "$lib/components/card.svelte";
+
+	if (browser && location.search.includes('reload=true')) location.href = '/';
 </script>
 
 <Card>

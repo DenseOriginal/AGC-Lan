@@ -48,7 +48,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				`disco_access_token=${response.access_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${access_token_expires_in}}`,
 				`disco_refresh_token=${response.refresh_token}; Path=/; HttpOnly; SameSite=Strict; Expires=${refresh_token_expires_in}`,
 			].join(', '),
-			Location: '/'
+			Location: '/?reload=true'
 		},
 		status: 302
 	})
