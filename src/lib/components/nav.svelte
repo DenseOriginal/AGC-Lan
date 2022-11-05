@@ -1,17 +1,13 @@
 <script lang="ts">
 	import type { PageData } from ".svelte-kit/types/src/routes/$types";
-	import type { User } from "src/types/user";
+	import type { PartialUser, User } from "src/types/user";
 
-	export let user: User | undefined;
+	export let user: (User | PartialUser) | undefined;
 	let smallNavOpen = false;
 
 	function isUser(user: any): user is User {
 		return !!user;
 	}
-
-	const imgUrl = user?.avatar
-		? `https://cdn.discordapp.com/avatars/${user?.id}/${user?.avatar}.png`
-		: "https://cdn.discordapp.com/embed/avatars/3.png";
 </script>
 
 <header>
@@ -42,10 +38,10 @@
 					<img
 						class="avatar"
 						height="28"
-						src={imgUrl}
+						src={user.picture_url}
 						alt="Profile"
 					/>
-					<p><span>{user.username}</span></p>
+					<p><span>{user.username.split('#')[0]}</span></p>
 				</a>
 
 				<div class="dropdown">
@@ -79,10 +75,10 @@
 						<img
 							class="avatar"
 							height="28"
-							src={imgUrl}
+							src={user.picture_url}
 							alt="Profile"
 						/>
-						<p>{user.username}</p>
+						<p>{user.username.split('#')[0]}</p>
 					</a>
 				{:else}
 					<a class="user" on:click={() => smallNavOpen = false} href="/login">Login</a>
