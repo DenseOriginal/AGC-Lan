@@ -1,4 +1,4 @@
-import { DiscordAPIError } from "discord.js";
+import type { DiscordAPIError } from "discord.js";
 import { client } from "../client";
 import { environment } from "../environment";
 

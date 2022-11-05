@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import { ILAN } from "../../models/lan";
+import type { ILAN } from "../../models/lan";
 import { client } from "../client";
 
 export async function sendTilmeldingsMessage(

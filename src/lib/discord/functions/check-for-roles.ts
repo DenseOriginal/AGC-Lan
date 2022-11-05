@@ -1,4 +1,4 @@
-import { UserAsDocument } from "../../models/user";
+import type { UserAsDocument } from "../../models/user";
 import { client } from "../client";
 import { environment } from "../environment";
 
