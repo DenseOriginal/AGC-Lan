@@ -12,8 +12,7 @@ export const client = new Client({
 });
 
 // Setup listeners
-// import "./listeners/new-user";
-botError('---------------- Remember to activate the listeners ----------------');
+import "./listeners/new-user";
 
 client.on("ready", async () => {
 	botLog(`Ready!`);

@@ -1,4 +1,4 @@
-import { GuildMember } from "discord.js";
+import type { GuildMember } from "discord.js";
 import { UserModel } from "../../models/user";
 import { client } from "../client";
 import { environment } from "../environment";
