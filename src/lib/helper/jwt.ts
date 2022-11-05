@@ -6,14 +6,12 @@ export interface JWT {
 	discordId: string;
 	accessToken: string;
 	accessTokenExpiresAt: string;
-	refreshToken: string;
 }
 
 export function createJWT(user: AnyUser, accessToken: string, expiresIn: number): string {
 	return jwt.sign({
 		id: user._id,
 		discordId: user.discord_id,
-		refreshToken: user.refresh_token,
 		accessToken,
 		accessTokenExpiresAt: new Date(Date.now() + expiresIn),
 	}, import.meta.env.VITE_SESSION_SECRET, { expiresIn: '10d' });

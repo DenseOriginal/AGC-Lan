@@ -1,5 +1,5 @@
 import { createJWT } from "$lib/helper/jwt";
-import { createPartialUser, getDiscordUserFromTokens, getUserAsLogin, profileExists } from "$lib/helper/user";
+import { createPartialUser, getDiscordUserWithToken, updateUserWithDiscordData, profileExists, updateDiscordRefreshToken } from "$lib/helper/user";
 import { error } from "@sveltejs/kit";
 import type { User } from "src/types/user";
 import type { RequestHandler } from "./$types";
@@ -31,9 +31,9 @@ export const GET: RequestHandler = async ({ url }) => {
 		body: new URLSearchParams(dataObject),
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	});
-
+	
 	const response = await request.json();
-
+	
 	// redirect to front page in case of error
 	if (response.error) {
 		return new Response(null, {
@@ -42,15 +42,18 @@ export const GET: RequestHandler = async ({ url }) => {
 		})
 	}
 
-	const { discordUser, refreshToken } = await getDiscordUserFromTokens(response.refresh_token, response.access_token);
+	const discordUser = await getDiscordUserWithToken(response.access_token);
 	
 	if (!discordUser) throw error(400, 'No discord user found');
 
 	const hasProfile = await profileExists(discordUser.id);
 
-	const user = hasProfile ? 
-		await getUserAsLogin(discordUser, refreshToken) :
-		await createPartialUser(discordUser, refreshToken);
+	const [user] = await Promise.all([
+		hasProfile ? 
+			updateUserWithDiscordData(discordUser) :
+			createPartialUser(discordUser),
+		updateDiscordRefreshToken('discord_id', discordUser.id, response.refresh_token)
+	])
 
 	if (hasProfile && !user) throw error(400, 'No user found');
 

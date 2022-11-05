@@ -5,45 +5,16 @@ import { PartialUserModel } from "$lib/models/partial-user";
 import { error } from "@sveltejs/kit";
 
 const DISCORD_API_URL = 'https://discordapp.com/api';
-const HOST = import.meta.env.VITE_HOST;
 
-export async function getDiscordUserFromTokens(
-	refreshToken: string | undefined,
-	accessToken: string | undefined
-) {
-	// if only refresh token is found, then access token has expired. perform a refresh on it.
-	if (refreshToken && !accessToken) {
-		const {
-			refreshToken: newRefreshToken,
-			accessToken: newAccessToken
-		} = await refreshAccessToken(refreshToken);
-		
-		const request = await fetch(`${DISCORD_API_URL}/users/@me`, {
-			headers: { 'Authorization': `Bearer ${newAccessToken}` }
-		});
+export async function getDiscordUserWithToken(accessToken: string) {
+	const request = await fetch(`${DISCORD_API_URL}/users/@me`, {
+		headers: { 'Authorization': `Bearer ${accessToken}` }
+	});
 
-		// returns a discord user if JWT was valid
-		const response = await request.json() as DiscordAPIUser;
+	// returns a discord user if JWT was valid
+	const response = await request.json() as DiscordAPIUser;
 
-		if (response.id) {
-			return { discordUser: response, refreshToken: newRefreshToken };
-		}
-	}
-
-	if (accessToken) {		
-		const request = await fetch(`${DISCORD_API_URL}/users/@me`, {
-			headers: { 'Authorization': `Bearer ${accessToken}` }
-		});
-
-		// returns a discord user if JWT was valid
-		const response = await request.json() as DiscordAPIUser;
-
-		if (response.id) {
-			return { discordUser: response, refreshToken: refreshToken };
-		}
-	}
-
-	return { discordUser: undefined, refreshToken: undefined };
+	return response.id ? response : undefined;
 }
 
 export async function profileExists(discordId: string) {
@@ -51,7 +22,7 @@ export async function profileExists(discordId: string) {
 	return user !== null;
 }
 
-export async function getUserAsLogin(discordUser: DiscordAPIUser, refreshToken: string) {
+export async function updateUserWithDiscordData(discordUser: DiscordAPIUser) {
 	// Check if the user already exist
 	const user = await UserModel.findOne({ "discord_id": discordUser.id }).exec();
 
@@ -61,7 +32,6 @@ export async function getUserAsLogin(discordUser: DiscordAPIUser, refreshToken: 
 		// And then refresh the data pulled from discord, as the user might have changed their profile
 		await user.updateOne({
 			last_login: new Date(),
-			refresh_token: refreshToken,
 			username: discordUser.username + '#' + discordUser.discriminator,
 			picture_url:
 				`https://cdn.discordapp.com/avatars/${discordUser?.id}/${discordUser?.avatar}.png` ||
@@ -82,13 +52,12 @@ export async function getUserAsLogin(discordUser: DiscordAPIUser, refreshToken: 
 	}
 }
 
-export async function createPartialUser(discordUser: DiscordAPIUser, refreshToken: string) {
+export async function createPartialUser(discordUser: DiscordAPIUser) {
 	// Create partial user if no user exists
 	const newPartial = new PartialUserModel({
 		email: discordUser.email,
 		is_email_verified: discordUser.verified,
 		username: discordUser.username + '#' + discordUser.discriminator,
-		refresh_token: refreshToken,
 		// If the user doesn't have a profile picture, give them the default discord pfp
 		picture_url:
 			`https://cdn.discordapp.com/avatars/${discordUser?.id}/${discordUser?.avatar}.png` ||
@@ -101,7 +70,6 @@ export async function createPartialUser(discordUser: DiscordAPIUser, refreshToke
 
 	return mapDocumentToUser(newPartial);
 }
-
 
 export async function refreshAccessToken(refreshToken: string) {
 	// initializing data object to be pushed to Discord's token endpoint.
@@ -121,13 +89,33 @@ export async function refreshAccessToken(refreshToken: string) {
 	});
 
 	const response = await request.json();
-
 	if (response.error) throw error(500, response.error);
 
 	return {
 		accessToken: response.access_token,
-		refreshToken: response.refresh_token
+		refreshToken: response.refresh_token,
+	};
+}
+
+// Retrive a new access token
+// Using a the refresh token, if present
+// Otherwise fetching the refresh token from the database
+// And in both cases invalidating the old refreshCode and updating the database with the new refreshToken
+export async function getNewAccessToken(userId: string, refreshToken?: string) {
+	if (!refreshToken) {
+		const user = await UserModel.findById(userId).exec();
+		if (!user) throw error(500, 'User not found');
+		refreshToken = user.refresh_token;
 	}
+
+	const { accessToken, refreshToken: newRefreshToken } = await refreshAccessToken(refreshToken);
+	
+	await updateDiscordRefreshToken('_id', userId, newRefreshToken);
+	return accessToken;
+}
+
+export async function updateDiscordRefreshToken(key: 'discord_id' | '_id', discordId: string, refreshToken: string) {
+	await UserModel.findOneAndUpdate({ [key]: discordId }, { refresh_token: refreshToken });
 }
 
 export function mapDocumentToUser<T extends User | PartialUser>(documeny: Document<unknown, any, T> & T): T {
