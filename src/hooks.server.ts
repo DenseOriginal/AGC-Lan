@@ -1,5 +1,3 @@
-import { setupOnce } from "$lib/discord/client";
-
-setupOnce();
+import "$lib/discord/client";
 
 export {};

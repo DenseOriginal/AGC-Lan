@@ -1,7 +1,7 @@
 import { Intents, Client } from "discord.js";
 import { handleInteractions, setupSlashCommands } from "./commands";
-import chalk from 'chalk';
 import { botError, botLog } from "./helpers/log";
+
 
 export const client = new Client({
 	intents: [
@@ -19,19 +19,18 @@ client.on("ready", async () => {
 	botLog(`Ready!`);
 });
 
-let hasRunSetup = false;
-export async function setupOnce() {
-	if (hasRunSetup) return;
-	hasRunSetup = true;
+client.on('error', (error) => {
+	botError('An error occured', error);
+});
 
-	try {
-		botLog(`Setting up bot`);
-		client.login(import.meta.env.VITE_BOT_TOKEN || "");
-		setupSlashCommands();
-	} catch (error) {
-		botError('Failed to setup')
-		console.error(error);
-	}
+try {
+	botLog(`Setting up bot`);
+	client.destroy();
+	client.login(import.meta.env.VITE_BOT_TOKEN || "");
+	setupSlashCommands();
+} catch (error) {
+	botError('Failed to setup')
+	console.error(error);
 }
 
 client.on('interactionCreate', handleInteractions);
