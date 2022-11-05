@@ -1,14 +1,14 @@
 <script lang="ts">
 	import Nav from "$lib/components/nav.svelte";
 	import Footer from "$lib/components/footer.svelte";
-    import type { PageData } from "./$types";
-
-	export let data: PageData;
+    import { page } from "$app/stores";
 </script>
 
 <div class="background-image" />
 
-<Nav user={data.user} />
+{#if !$page.data.noHeader}
+	<Nav user={$page.data.user} />
+{/if}
 
 <main class="page">
 	<div class="inner">

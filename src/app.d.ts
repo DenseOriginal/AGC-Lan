@@ -4,8 +4,12 @@
 declare namespace App {
 	interface Locals {
 		user: AnyUser;
+		noHeader?: boolean;
 	}
-	// interface PageData {}
+	interface PageData {
+		user: AnyUser;
+		noHeader?: boolean;
+	}
 	// interface Error {}
 	// interface Platform {}
 }
