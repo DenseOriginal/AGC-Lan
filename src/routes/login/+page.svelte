@@ -1,0 +1,46 @@
+<div class="login">
+	<div class="inner">
+		<a href="/api/auth" class="button">Login med Discord</a>
+		<p>
+			Af sikkerhedsgrunde er det kun muligt at logge ind ved hjælp af en
+			Discord bruger. Hvis du ikke har en Discord konto opfordres du til
+			at oprette en <a href="https://discord.com/register">her</a>
+		</p>
+	</div>
+</div>
+
+<style>
+	.login {
+		width: 100%;
+		height: 90vh;
+		display: grid;
+		place-content: center;
+	}
+
+	.login > .inner {
+		display: grid;
+		place-items: center;
+	}
+
+	.login > .inner > p {
+		text-align: center;
+		width: min(90%, 550px);
+		color: var(--muted-text);
+	}
+
+	.login > .inner > p > a {
+		color: var(--muted-text);
+	}
+
+	.login > .inner > .button {
+		width: fit-content;
+		background-color: #6c89e0;
+		color: white;
+		padding: 8px 32px;
+		text-decoration: none;
+		border-radius: 4px;
+		margin-bottom: 16px;
+		font-weight: unset;
+		font-size: 16px;
+	}
+</style>
