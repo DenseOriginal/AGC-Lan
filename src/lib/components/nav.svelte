@@ -55,7 +55,7 @@
 				</a>
 
 				<div class="dropdown">
-					<a href="/api/signout" class="flex-space-between"
+					<a href="/api/logout" class="flex-space-between"
 						>Log ud <i class="fas fa-sign-out-alt" /></a
 					>
 				</div>

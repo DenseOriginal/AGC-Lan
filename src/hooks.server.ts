@@ -3,9 +3,10 @@ import "$lib/services/db";
 import { decodeJWT, updateJWT } from "$lib/helper/jwt";
 import { getDiscordUserWithToken, getNewAccessToken, updateUserWithDiscordData } from "$lib/helper/user";
 import type { Handle } from "@sveltejs/kit";
+import chalk from "chalk";
 
 export const handle: Handle = async ({ event, resolve }) => {
-	if (import.meta.env.DEV) console.log('\n------ New request incomming ------');
+	if (import.meta.env.DEV) console.log(`\n------ New request incomming, URL ${chalk.yellow(event.url.pathname)} ------`);
 
 	const jwt = event.cookies.get('aglan_jwt');
 	const jwtUser = jwt ? decodeJWT(jwt) : false;
