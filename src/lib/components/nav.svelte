@@ -10,6 +10,16 @@
 	}
 </script>
 
+{#if user && !user.setup_finished}
+<span class="setup-banner">
+	<div class="inner">
+		Vi mangler stadig lidt information omkring dig, <a href="/profile/setup"
+			>Klik her</a
+		> for at færdig gøre din bruger
+	</div>
+</span>
+{/if}
+
 <header>
 	<div class="logo">
 		<a href="/">
@@ -41,7 +51,7 @@
 						src={user.picture_url}
 						alt="Profile"
 					/>
-					<p><span>{user.username.split('#')[0]}</span></p>
+					<p><span>{user.username.split("#")[0]}</span></p>
 				</a>
 
 				<div class="dropdown">
@@ -60,28 +70,44 @@
 		<input type="checkbox" name="is-open" id="is-open" />
 		<div class="container {smallNavOpen && 'is-open'}">
 			<div class="inner">
-				<a on:click={() => smallNavOpen = false} href="/faq">Information</a>
-				<a on:click={() => smallNavOpen = false} href="/kalender">Kalender</a>
-				<a on:click={() => smallNavOpen = false} href="/lan/list">Lan</a>
+				<a on:click={() => (smallNavOpen = false)} href="/faq"
+					>Information</a
+				>
+				<a on:click={() => (smallNavOpen = false)} href="/kalender"
+					>Kalender</a
+				>
+				<a on:click={() => (smallNavOpen = false)} href="/lan/list"
+					>Lan</a
+				>
 
 				<!-- {{#if (isStaff user)}} -->
-				<a on:click={() => smallNavOpen = false} href="/staff">Staff</a>
+				<a on:click={() => (smallNavOpen = false)} href="/staff"
+					>Staff</a
+				>
 				<!-- {{/if}} -->
 
 				<div class="spacer" />
 
 				{#if isUser(user)}
-					<a class="user" on:click={() => smallNavOpen = false} href="/profile">
+					<a
+						class="user"
+						on:click={() => (smallNavOpen = false)}
+						href="/profile"
+					>
 						<img
 							class="avatar"
 							height="28"
 							src={user.picture_url}
 							alt="Profile"
 						/>
-						<p>{user.username.split('#')[0]}</p>
+						<p>{user.username.split("#")[0]}</p>
 					</a>
 				{:else}
-					<a class="user" on:click={() => smallNavOpen = false} href="/login">Login</a>
+					<a
+						class="user"
+						on:click={() => (smallNavOpen = false)}
+						href="/login">Login</a
+					>
 				{/if}
 
 				<button class="close" on:click={() => (smallNavOpen = false)}
@@ -98,37 +124,57 @@
 </header>
 
 <style>
+	.setup-banner {
+		width: 100%;
+		padding: 16px;
+		background-color: transparent;
+		text-align: center;
+		position: absolute;
+		top: 10px;
+		color: var(--primary-text);
+		z-index: 1;
+	}
+
+	.setup-banner > .inner {
+		background-color: rgb(236, 201, 103);
+		padding: 8px 0;
+	}
+
+	.setup-banner > .inner > a {
+		color: var(--primary-text);
+	}
+
 	.dropdown-container {
-      position: relative;
-      height: 100%;
-    }
+		position: relative;
+		height: 100%;
+	}
 
-    .dropdown-container .dropdown {
-      visibility: hidden;
-      opacity: 0;
-      position: absolute;
-      list-style-type: none;
-      width: 150%;
-      top: 48px;
-      right: 0;
-      background-color: var(--background-200);
-      transition: var(--fast-transition);
-      display: flex;
-      flex-direction: column;
-    }
+	.dropdown-container .dropdown {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		list-style-type: none;
+		width: 150%;
+		top: 48px;
+		right: 0;
+		background-color: var(--background-200);
+		transition: var(--fast-transition);
+		display: flex;
+		flex-direction: column;
+	}
 
-    .dropdown-container:hover .dropdown {
-      visibility: unset;
-      opacity: 1;
-    }
+	.dropdown-container:hover .dropdown {
+		visibility: unset;
+		opacity: 1;
+	}
 
-    .dropdown-container .dropdown a {
-      width: 100%;
-      text-align: center;
-      height: 42px;
-	  display: flex;
-	  justify-content: space-between;
-    }
+	.dropdown-container .dropdown a {
+		width: 100%;
+		text-align: center;
+		height: 42px;
+		display: flex;
+		justify-content: space-between;
+	}
 
 	header {
 		background-color: var(--background-100);
