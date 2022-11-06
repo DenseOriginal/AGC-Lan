@@ -5,6 +5,8 @@ import { getDiscordUserWithToken, getNewAccessToken, updateUserWithDiscordData }
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
+	if (import.meta.env.DEV) console.log('\n------ New request incomming ------');
+
 	const jwt = event.cookies.get('aglan_jwt');
 	const jwtUser = jwt ? decodeJWT(jwt) : false;
 
