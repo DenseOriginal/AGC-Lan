@@ -1,10 +1,25 @@
 <script lang="ts">
-	export let color: 'main' | 'warn' | 'alert' = 'main';
+    import Spinner from "./spinner.svelte";
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+	
+	export let color: "main" | "warn" | "alert" = "main";
 	export let fullWidth: boolean = false;
+	export let loading: boolean = false;
 </script>
 
-<button class="{color} {fullWidth ? 'full' : ''}" {...$$props}>
-	<slot></slot>
+<button
+	class="{color} {fullWidth && 'full'} {loading && 'loading'}"
+	{...$$props} on:click={() => !loading && dispatch('click')}
+>
+	{#if !loading}
+		<slot />
+	{:else}
+		<Spinner size="20px" />
+	{/if}
+
+
 </button>
 
 <style>
@@ -21,18 +36,24 @@
 		font-family: "Roboto", sans-serif;
 		font-size: 13.3px;
 		position: relative;
+		display: grid;
+		place-items: center;
 	}
 
 	button.full {
 		width: 100%;
 	}
 
-	button:not(:disabled):hover {
+	button.loading {
+		padding-block: 8px;
+	}
+
+	button:not(:disabled, .loading):hover {
 		background-color: var(--hoverBackground);
 		color: var(--hoverColor);
 	}
 
-	button:disabled:after {
+	button:not(.loading):disabled:after {
 		content: "";
 		width: 100%;
 		height: 100%;
