@@ -93,9 +93,9 @@ export async function refreshAccessToken(refreshToken: string) {
 	if (response.error) throw error(500, response.error);
 
 	return {
-		accessToken: response.access_token,
-		refreshToken: response.refresh_token,
-		expiresIn: response.expires_in
+		accessToken: response.access_token as string,
+		refreshToken: response.refresh_token as string,
+		expiresIn: new Date(Date.now() + response.expires_in)
 	};
 }
 
