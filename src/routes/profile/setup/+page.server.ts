@@ -2,11 +2,18 @@ import { checkForDiscordRoles } from "$lib/discord/functions/check-for-roles";
 import { isUserInServer } from "$lib/discord/functions/in-server";
 import { verifyUser } from "$lib/discord/functions/verify-user";
 import { botError } from "$lib/discord/helpers/log";
-import { createJWT, decodeJWT, updateJWT } from "$lib/helper/jwt";
-import { getNewAccessToken, isPartialUser, mapDocumentToUser } from "$lib/helper/user";
+import { decodeJWT, updateJWT } from "$lib/helper/jwt";
+import { isPartialUser, mapDocumentToUser } from "$lib/helper/user";
 import { PartialUserModel } from "$lib/models/partial-user";
 import { UserModel } from "$lib/models/user";
+import type { PageServerLoad } from "./$types";
 import { invalid, redirect, type Actions } from "@sveltejs/kit";
+
+export const load: PageServerLoad = (request) => {
+	if (!isPartialUser(request.locals.user)) {
+		throw redirect(301, '/');
+	}	
+}
 
 export const actions: Actions = {
 	setupUser: async ({ request, locals, cookies }) => {
