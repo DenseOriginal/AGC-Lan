@@ -13,8 +13,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (jwtUser) {
 		// Get the access token from the JWT, or get a new one
 		const hasAccessTokenExpired = new Date(jwtUser.accessTokenExpiresAt) < new Date();
+		let refreshedToken = undefined;
+		if (hasAccessTokenExpired) {
+			refreshedToken = await getNewAccessToken(jwtUser.id);
+		}
+
 		const accessToken = hasAccessTokenExpired ?
-			await getNewAccessToken(jwtUser.id) :
+			refreshedToken?.accessToken :
 			jwtUser.accessToken;
 
 		// Get the latest data from discord
@@ -29,7 +34,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const user = await updateUserWithDiscordData(discordUser);
 
 		// Issue a new JWT with the updated data
-		const newJWT = updateJWT(jwtUser, { accessToken });
+		const accessTokenExpiresAt = hasAccessTokenExpired ? refreshedToken?.expiresIn : jwtUser.accessTokenExpiresAt;
+		const newJWT = updateJWT(jwtUser, { accessToken, accessTokenExpiresAt });
 		const jwtExpireIn = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); // 10 days
 		event.cookies.set('aglan_jwt', newJWT, { httpOnly: true, sameSite: 'strict', expires: jwtExpireIn, path: '/' });
 

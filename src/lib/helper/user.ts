@@ -95,6 +95,7 @@ export async function refreshAccessToken(refreshToken: string) {
 	return {
 		accessToken: response.access_token,
 		refreshToken: response.refresh_token,
+		expiresIn: response.expires_in
 	};
 }
 
@@ -115,10 +116,10 @@ export async function getNewAccessToken(userId: string, isPartialUser: boolean =
 		}
 	}
 
-	const { accessToken, refreshToken: newRefreshToken } = await refreshAccessToken(refreshToken);
+	const { accessToken, refreshToken: newRefreshToken, expiresIn } = await refreshAccessToken(refreshToken);
 	
 	await updateDiscordRefreshToken('_id', userId, newRefreshToken, isPartialUser);
-	return accessToken;
+	return { accessToken, expiresIn };
 }
 
 export async function updateDiscordRefreshToken(key: 'discord_id' | '_id', id: string, refreshToken: string, isPartialUser: boolean) {
