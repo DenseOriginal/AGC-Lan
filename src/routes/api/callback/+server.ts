@@ -51,8 +51,8 @@ export const GET: RequestHandler = async ({ url }) => {
 	const [user] = await Promise.all([
 		hasProfile ? 
 			updateUserWithDiscordData(discordUser) :
-			createPartialUser(discordUser),
-		updateDiscordRefreshToken('discord_id', discordUser.id, response.refresh_token)
+			createPartialUser(discordUser, response.refresh_token),
+		updateDiscordRefreshToken('discord_id', discordUser.id, response.refresh_token, !hasProfile)
 	])
 
 	if (hasProfile && !user) throw error(400, 'No user found');

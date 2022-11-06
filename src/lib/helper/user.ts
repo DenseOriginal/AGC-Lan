@@ -1,4 +1,4 @@
-import type { DiscordAPIUser, PartialUser, User } from "src/types/user";
+import type { AnyUser, DiscordAPIUser, PartialUser, User } from "src/types/user";
 import type { Document } from "mongoose";
 import { UserModel } from "$lib/models/user";
 import { PartialUserModel } from "$lib/models/partial-user";
@@ -52,12 +52,13 @@ export async function updateUserWithDiscordData(discordUser: DiscordAPIUser) {
 	}
 }
 
-export async function createPartialUser(discordUser: DiscordAPIUser) {
+export async function createPartialUser(discordUser: DiscordAPIUser, refresh_token: string) {
 	// Create partial user if no user exists
 	const newPartial = new PartialUserModel({
 		email: discordUser.email,
 		is_email_verified: discordUser.verified,
 		username: discordUser.username + '#' + discordUser.discriminator,
+		refresh_token,
 		// If the user doesn't have a profile picture, give them the default discord pfp
 		picture_url:
 			`https://cdn.discordapp.com/avatars/${discordUser?.id}/${discordUser?.avatar}.png` ||
@@ -101,25 +102,39 @@ export async function refreshAccessToken(refreshToken: string) {
 // Using a the refresh token, if present
 // Otherwise fetching the refresh token from the database
 // And in both cases invalidating the old refreshCode and updating the database with the new refreshToken
-export async function getNewAccessToken(userId: string, refreshToken?: string) {
+export async function getNewAccessToken(userId: string, isPartialUser: boolean = false, refreshToken?: string) {
 	if (!refreshToken) {
 		const user = await UserModel.findById(userId).exec();
-		if (!user) throw error(500, 'User not found');
-		refreshToken = user.refresh_token;
+		if (!user) {
+			const partialUser = await PartialUserModel.findById(userId).exec();
+			if (!partialUser) throw error(500, 'User not found');
+			refreshToken = partialUser.refresh_token;
+			isPartialUser = true;
+		} else {
+			refreshToken = user.refresh_token;
+		}
 	}
 
 	const { accessToken, refreshToken: newRefreshToken } = await refreshAccessToken(refreshToken);
 	
-	await updateDiscordRefreshToken('_id', userId, newRefreshToken);
+	await updateDiscordRefreshToken('_id', userId, newRefreshToken, isPartialUser);
 	return accessToken;
 }
 
-export async function updateDiscordRefreshToken(key: 'discord_id' | '_id', discordId: string, refreshToken: string) {
-	await UserModel.findOneAndUpdate({ [key]: discordId }, { refresh_token: refreshToken });
+export async function updateDiscordRefreshToken(key: 'discord_id' | '_id', id: string, refreshToken: string, isPartialUser: boolean) {
+	if (!isPartialUser) {
+		await UserModel.findOneAndUpdate({ [key]: id }, { refresh_token: refreshToken });
+	} else {
+		await PartialUserModel.findOneAndUpdate({ [key]: id }, { refresh_token: refreshToken });
+	}
 }
 
 export function mapDocumentToUser<T extends User | PartialUser>(documeny: Document<unknown, any, T> & T): T {
 	const user = documeny.toObject<T>();
 	user._id = user._id.toString();
 	return user;
+}
+
+export function isPartialUser(user: AnyUser): user is PartialUser {
+	return (user as PartialUser).setup_finished === false;
 }

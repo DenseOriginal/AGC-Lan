@@ -1,45 +1,65 @@
 <script lang="ts">
+    import Button from "$lib/components/button.svelte";
 	import Card from "$lib/components/card.svelte";
-    import ClassPicker from "$lib/components/classPicker.svelte";
+	import ClassPicker from "$lib/components/classPicker.svelte";
 	import Input from "$lib/components/input.svelte";
+	import { isValidClass } from "$lib/helper/utils";
+    import { requestJson } from "$lib/helper/web";
 	import { writable } from "svelte/store";
 
+	const errors = writable<string[]>([]);
 	const form = writable({
 		firstname: "",
 		lastname: "",
 		class: "",
-		error: ''
 	});
 
-	const required = (err: string) => (val: string) =>
-		!val ? err : undefined;
+	let loading = false;
+
+	$: hasErrors = $errors.some((err) => !!err);
+	$: allTouched = Object.values($form).every(val => !!val);
+
+	const required = (err: string) => (val: string) => !val ? err : undefined;
+
+	const classValidator = (val: string) =>
+		isValidClass(val)
+			? undefined
+			: "Er du sikker på at dette er din klasse?";
 </script>
 
 <div class="setup">
 	<Card>
 		<div class="setup-card" slot="content">
-			<form action="/profile/setup" id="setupForm" method="post">
+			<form method="post" action="?/setupUser">
 				<Input
 					bind:value={$form.firstname}
+					bind:error={$errors[0]}
 					id="firstname"
 					placeholder="Fornanvn"
-					validators={[required('Venligts udfyld fornavn')]}
+					validators={[required("Venligts udfyld fornavn")]}
 				/>
 				<Input
 					bind:value={$form.lastname}
-					bind:error={$form.error}
+					bind:error={$errors[1]}
 					id="lastname"
 					placeholder="Efternavn"
-					validators={[required('Venligts udfyld efternavn')]}
+					validators={[required("Venligts udfyld efternavn")]}
 				/>
 				<Input
 					bind:value={$form.class}
+					bind:error={$errors[2]}
 					id="class"
 					placeholder="Stam klasse (f. eks. 20HTXCR)"
 					list="classes"
+					validators={[classValidator]}
 				/>
 
-				<button type="button" on:click={() => console.log($form.error)}>Opret</button>
+				<Button
+					type="submit"
+					disabled={hasErrors || !allTouched}
+					fullWidth={true}
+					{loading}
+				>Opret</Button>
 
 				<ClassPicker />
 			</form>
