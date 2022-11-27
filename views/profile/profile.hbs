@@ -203,7 +203,7 @@
         <h1 style="font-weight: bold; border-bottom: 2px solid; border-bottom-color: #333333;">Er du sikker?</h1>
         <h3>Du er ved at slette din konto {{ user.username }}</h3>
         <p style="text-align: center;">I overensstemmelse med GDPR, bliver alt dit data slettet fra vores server for altid. Vi har derfor, af samme grund IKKE mulighed for genrulle denne handling</p>
-        <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()">
+        <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()" style="float: left;">
             <button class="deleteAccountpopUp" id="sletButton">Slet konto</button>
         </form>
         <button class="cancelpopUp-button" style="font-weight: bold">Annullere!</button>
