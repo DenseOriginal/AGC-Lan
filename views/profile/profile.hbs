@@ -204,9 +204,6 @@
         <h3>Du er ved at slette din konto {{ user.username }}</h3>
         <p style="text-align: center;">I overensstemmelse med GDPR, bliver alt dit data slettet fra vores server for altid. Vi har derfor, af samme grund IKKE mulighed for genrulle denne handling</p>
         <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()">
-            {{!-- This is filled out by javascript when we agree to delete our account --}}
-            <input type="hidden" id="check_token" name="check_token" value="">
-            {{!-- Include the csrf token --}}
             <button class="deleteAccountpopUp" id="sletButton">Slet konto</button>
         </form>
         <button class="cancelpopUp-button" style="font-weight: bold">Annullere!</button>
