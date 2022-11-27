@@ -90,6 +90,80 @@
     margin-left: 8px;
     font-size: 14px;
   }
+  
+  .delete-popUp {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-blend-mode: normal;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.popUp-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2E2E2E;
+    padding: 8rem 6.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+    color: white;
+    padding: 10px 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13.3px;
+}
+
+.show-popUp {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.cancelpopUp-button {
+  float: right;
+  outline: none;
+  border: none;
+  text-align: center;
+  color: white;
+  padding: 12px 18px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13.3px;
+  background-color: #333333;
+}
+
+.cancelpopUp-button:hover {
+    background-color: #262626;
+}
+
+.deleteAccountPopUp {
+  background-color: #ff3333;
+  outline: none;
+  border: none;
+  text-align: center;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13.3px;
+}
+
+.deleteAccountpopUp:hover {
+    background-color: #ff1a1a;
+}
 </style>
 
 <h1>Din profil</h1>
@@ -110,6 +184,16 @@
       <button type="submit" onclick="gtag('event', 'updare_profile', { event_category: 'Profile', transport_type: 'beacon'}">Opdater</button>
     </div>
   </form>
+</div>
+
+<div class="delete-popUp">
+    <div class="popUp-content">
+        <h1 style="font-weight: bold; border-bottom: 2px solid; border-bottom-color: #333333;">Er du sikker?</h1>
+        <h3>Du er ved at slette din konto {{ user.username }}</h3>
+        <p style="text-align: center;">I overensstemmelse med GDPR, bliver alt dit data slettet fra vores server for altid. Vi har derfor, af samme grund IKKE mulighed for genrulle denne handling</p>
+        <button class="deleteAccountpopUp">Slet konto</button>
+        <button class="cancelpopUp-button" style="font-weight: bold">Annullere!</button>
+    </div>
 </div>
 
 {{#if tilmeldinger}}
@@ -141,7 +225,7 @@
 
       {{!-- Include the csrf token --}}
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <button class="warn" type="submit">Slet konto</button>
+      <button class="warn popUp" type="submit">Slet konto</button>
     </form>
   </div>
 </div>
@@ -150,18 +234,9 @@
 
 <script src="/scripts/classPicker.js"></script>
 <script>
-const email = "{{ user.email }}";
-
 function deleteAccount() {
-  const confirm = prompt(`Indtast din email (${email}) for at bekræfte at din bruger bliver slettet. DETTE KAN IKKE GØRES OM`)
-  if(confirm == email) {
-    document.getElementById('check_token').value = email;
     gtag('event', 'delete_profile', { event_category: 'Profile', transport_type: 'beacon'})
     return true;
-  } else {
-    alert('Det du indtastede matcher ikke din email, din bruger vil IKKE blive slettet');
-    return false;
-  }
 }
 
 if(window.location.hash == "#edit") editProfile();
@@ -183,6 +258,25 @@ function stopEditing() {
     input.disabled = true;
   }
 }
+
+const popUp = document.querySelector(".delete-popUp");
+const trigger = document.querySelector(".popUp");
+const cancelButton = document.querySelector(".cancelpopUp-button");
+
+function togglepopUp() {
+    popUp.classList.toggle("show-popUp");
+}
+
+function windowOnClick(event) {
+    if (event.target === popUp) {
+        togglepopUp();
+    }
+}
+
+deleteAccountpopUp.addEventListener("click", deleteAccount);
+trigger.addEventListener("click", togglepopUp);
+cancelButton.addEventListener("click", togglepopUp);
+window.addEventListener("click", windowOnClick);
 
 createClassPicker('editProfile');
 </script>
