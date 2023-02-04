@@ -326,7 +326,7 @@
   // Injected by server
   // This disables all taken seats
   try {
-    JSON.parse("{{ takenSeats }}".replaceAll('&quot;', '"'))
+    JSON.parse("{{ takenSeats }}".replaceAll('&quot;', '"').replaceAll('\\', '\\\\'))
       .forEach(obj => {
         const elm = document.querySelector(`input[name="seat"]#${obj.seat}.seat-radio:not(#none)`);
         if(!elm) return;
