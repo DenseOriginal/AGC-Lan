@@ -32,7 +32,7 @@ export const getTilmeld: RequestHandler = async (req, res) => {
     const takenSeats = takenSeatsRaw.map((document) => document.toObject())
       .map(tilmelding => ({
         seat: tilmelding.seat,
-        name: ((tilmelding.user as IUser).first_name + ' ' + (tilmelding.user as IUser).last_name).replace(/"/, ''),
+        name: ((tilmelding.user as IUser).first_name + ' ' + (tilmelding.user as IUser).last_name).replace(/"/g, ''),
         discord: (tilmelding.user as IUser).username,
       }));
 
