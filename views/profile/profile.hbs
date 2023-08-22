@@ -1,188 +1,263 @@
 <style>
-  .card {
-    background-color: var(--card-background);
-    -webkit-box-shadow: var(--shadow-basic); 
-    box-shadow: var(--shadow-basic);
-    padding: 0 0 32px 0;
-    border-radius: 10px;
-    margin-bottom: 32px;
-  }
+    .card {
+      background-color: var(--card-background);
+      -webkit-box-shadow: var(--shadow-basic); 
+      box-shadow: var(--shadow-basic);
+      padding: 0 0 32px 0;
+      border-radius: 10px;
+      margin-bottom: 32px;
+    }
+    .card:first-of-type {
+      border-top: 3px solid {{ user.accent_color }};
+    }
+    .card .row {
+      width: 100%;
+      padding: 12px 32px !important;
+      margin: 0 !important;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .card .row > .title {
+      min-width: 150px !important;
+      color: var(--muted-text);
+    } 
+    .card .row:nth-child(odd) {
+      background-color: var(--background-200);
+    }
+    .edit-button {
+      display: flex;
+      align-items: center;
+    }
+    .edit-logo {
+      margin-left: 8px;
+      font-size: 14px;
+    }
+    form#editProfile input {
+      background-color: transparent;
+      border: none;
+      border-bottom: var(--background-400) 2px solid;
+      border-radius: 3px;
+      outline: none;
+      font-size: 1rem;
+      padding-bottom: 2px;
+      padding-left: 4px;
+    }
+    form#editProfile input:focus,
+    form#editProfile input:active {
+      border-color: var(--active);
+    }
+    form#editProfile input:disabled {
+      border: none;
+      color: unset;
+    }
+    form#editProfile {
+      padding: 0;
+    }
+    #edit-button-row button {
+      margin-right: 12px;
+    }
+    #edit-button-row {
+      display: none;
+      margin-top: 12px !important;
+      padding: 0 !important;
+      padding-left: 32px !important;
+    }
+    .card.tilmeldinger .row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .card.tilmeldinger .row a {
+      display: flex;
+      align-items: center;
+    }
+    .card.tilmeldinger .row a i {
+      margin-left: 8px;
+      font-size: 14px;
+    }
 
-  .card:first-of-type {
-    border-top: 3px solid {{ user.accent_color }};
-  }
-
-  .card .row {
+    .delete-popUp {
+    position: fixed;
+    left: 0;
+    top: 0;
     width: 100%;
-    padding: 12px 32px !important;
-    margin: 0 !important;
-    display: flex;
-    justify-content: flex-start;
-  }
+    height: 100%;
+    background-blend-mode: normal;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
 
-  .card .row > .title {
-    min-width: 150px !important;
-    color: var(--muted-text);
-  } 
+.popUp-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2E2E2E;
+    padding: 8rem 6.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+    color: white;
+    padding: 10px 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13.3px;
+}
 
-  .card .row:nth-child(odd) {
-    background-color: var(--background-200);
-  }
+.show-popUp {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
 
-  .edit-button {
-    display: flex;
-    align-items: center;
-  }
+.cancelpopUp-button {
+  float: right;
+  outline: none;
+  border: none;
+  text-align: center;
+  color: white;
+  padding: 12px 18px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13.3px;
+  background-color: #333333;
+}
 
-  .edit-logo {
-    margin-left: 8px;
-    font-size: 14px;
-  }
+.cancelpopUp-button:hover {
+    background-color: #262626;
+}
 
-  form#editProfile input {
-    background-color: transparent;
-    border: none;
-    border-bottom: var(--background-400) 2px solid;
-    border-radius: 3px;
-    outline: none;
-    font-size: 1rem;
-    padding-bottom: 2px;
-    padding-left: 4px;
-  }
+.deleteAccountPopUp {
+  background-color: #ff3333;
+  outline: none;
+  border: none;
+  text-align: center;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13.3px;
+}
 
-  form#editProfile input:focus,
-  form#editProfile input:active {
-    border-color: var(--active);
-  }
-
-  form#editProfile input:disabled {
-    border: none;
-    color: unset;
-  }
-
-  form#editProfile {
-    padding: 0;
-  }
-
-  #edit-button-row button {
-    margin-right: 12px;
-  }
-
-  #edit-button-row {
-    display: none;
-    margin-top: 12px !important;
-    padding: 0 !important;
-    padding-left: 32px !important;
-  }
-
-  .card.tilmeldinger .row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .card.tilmeldinger .row a {
-    display: flex;
-    align-items: center;
-  }
-
-  .card.tilmeldinger .row a i {
-    margin-left: 8px;
-    font-size: 14px;
-  }
-</style>
-
-<h1>Din profil</h1>
-<br>
-<div class="card profile">
-  <div class="head flex-space-between">
-    <h3>Personlig information</h3>
-    <a class="edit-button" href="#edit" onclick="editProfile()">Edit <i class="far fa-edit edit-logo"></i></a>
-  </div>
-  <form action="/profile" method="POST" id="editProfile">
-    <div class="row"><p class="title">Fornavn:</p> <input type="text" name="first_name" disabled value="{{ user.first_name }}"></div>
-    <div class="row"><p class="title">Efternavn:</p> <input type="text" name="last_name" disabled value="{{ user.last_name }}"></div>
-    <div class="row"><p class="title">Stam klasse:</p> <input type="text" name="class" disabled value="{{ user.class }}" list="classes"></div>
-    <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
-    <div class="row"><p class="title">Brugernavn:</p> <input type="text" name="username" disabled value="{{ user.username }}"></div>
-    <div class="row" id="edit-button-row">
-      <button type="reset" class="warn" onclick="stopEditing()">Annuller</button>
-      <button type="submit" onclick="gtag('event', 'updare_profile', { event_category: 'Profile', transport_type: 'beacon'}">Opdater</button>
+.deleteAccountpopUp:hover {
+    background-color: #ff1a1a;
+}
+  </style>
+  
+  <h1>Din profil</h1>
+  <br>
+  <div class="card profile">
+    <div class="head flex-space-between">
+      <h3>Personlig information</h3>
+      <a class="edit-button" href="#edit" onclick="editProfile()">Edit <i class="far fa-edit edit-logo"></i></a>
     </div>
-  </form>
-</div>
-
-{{#if tilmeldinger}}
-<div class="card tilmeldinger">
-  <div class="head">
-    <h3>Dine tilmeldinger</h3>
-  </div>
-  {{#each tilmeldinger}}
-    {{#if (isFuture this.lan.start)}}
-      <div class="row">
-        <p>Du er tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p>
-        <a href="/lan/tilmelding/{{ this._id }}">Vis <i class="far fa-eye"></i></a>
+    <form action="/profile" method="POST" id="editProfile">
+      <div class="row"><p class="title">Fornavn:</p> <input type="text" name="first_name" disabled value="{{ user.first_name }}"></div>
+      <div class="row"><p class="title">Efternavn:</p> <input type="text" name="last_name" disabled value="{{ user.last_name }}"></div>
+      <div class="row"><p class="title">Stam klasse:</p> <input type="text" name="class" disabled value="{{ user.class }}" list="classes"></div>
+      <div class="row"><p class="title">Email:</p> {{ user.email }}</div>
+      <div class="row"><p class="title">Brugernavn:</p> <input type="text" name="username" disabled value="{{ user.username }}"></div>
+      <div class="row" id="edit-button-row">
+        <button type="reset" class="warn" onclick="stopEditing()">Annuller</button>
+        <button type="submit" onclick="gtag('event', 'updare_profile', { event_category: 'Profile', transport_type: 'beacon'}">Opdater</button>
       </div>
-    {{else}}
-      <div class="row"><p>Du var tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p></div>
-    {{/if}}
-  {{/each}}
-</div>
-{{/if}}
-
-<div class="card">
-  <div class="head">
-    <h3>Danger zone</h3>
-  </div>
-  <div class="row">
-    <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()">
-      {{!-- This is filled out by javascript when we agree to delete our account --}}
-      <input type="hidden" id="check_token" name="check_token" value="">
-
-      {{!-- Include the csrf token --}}
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <button class="warn" type="submit">Slet konto</button>
     </form>
   </div>
-</div>
+  
+  {{#if tilmeldinger}}
+  <div class="card tilmeldinger">
+    <div class="head">
+      <h3>Dine tilmeldinger</h3>
+    </div>
+    {{#each tilmeldinger}}
+      {{#if (isFuture this.lan.start)}}
+        <div class="row">
+          <p>Du er tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p>
+          <a href="/lan/tilmelding/{{ this._id }}">Vis <i class="far fa-eye"></i></a>
+        </div>
+      {{else}}
+        <div class="row"><p>Du var tilmeldt til {{ this.lan.name }} D. {{ formatDate this.lan.start }}</p></div>
+      {{/if}}
+    {{/each}}
+  </div>
+  {{/if}}
+  
+  <div class="card">
+    <div class="head">
+      <h3>Danger zone</h3>
+    </div>
+    <div class="row">
+        <button class="warn trigger">Slet konto</button>
+    </div>
+  </div>
+  
+  <div class="delete-popUp">
+    <div class="popUp-content">
+        <h1 style="font-weight: bold; border-bottom: 2px solid; border-bottom-color: #333333;">Er du sikker?</h1>
+        <h3>Du er ved at slette din konto {{ user.username }}</h3>
+        <p style="text-align: center;">I overensstemmelse med GDPR, bliver alt dit data slettet fra vores server for altid. Vi har derfor, af samme grund IKKE mulighed for genrulle denne handling</p>
+        <form action="/profile/delete" method="POST" onsubmit="return deleteAccount()" style="float: left;">
+            <button class="deleteAccountpopUp" id="sletButton">Slet konto</button>
+        </form>
+        <button class="cancelpopUp-button" style="font-weight: bold">Annullere!</button>
+    </div>
+  </div>
 
-<a href="/logout">Log ud</a>
-
-<script src="/scripts/classPicker.js"></script>
-<script>
-const email = "{{ user.email }}";
-
-function deleteAccount() {
-  const confirm = prompt(`Indtast din email (${email}) for at bekræfte at din bruger bliver slettet. DETTE KAN IKKE GØRES OM`)
-  if(confirm == email) {
-    document.getElementById('check_token').value = email;
-    gtag('event', 'delete_profile', { event_category: 'Profile', transport_type: 'beacon'})
-    return true;
-  } else {
-    alert('Det du indtastede matcher ikke din email, din bruger vil IKKE blive slettet');
-    return false;
+  <a href="/logout">Log ud</a>
+  
+  <script src="/scripts/classPicker.js"></script>
+  <script>
+  function deleteAccount() {
+    const sletButton = document.getElementById("sletButton");
+    if(sletButton == sletButton) {
+      gtag('event', 'delete_profile', { event_category: 'Profile', transport_type: 'beacon'})
+      return true;
+    } else {
+      console.log("Afbryd deleteAccount function")
+      return false;
+    }
   }
-}
 
-if(window.location.hash == "#edit") editProfile();
-function editProfile() {
-  const inputs = document.querySelectorAll("form#editProfile input:disabled");
-  document.getElementById('edit-button-row').style.display = "block"
+  const popUp = document.querySelector(".delete-popUp");
+  const trigger = document.querySelector(".trigger");
+  const cancelButton = document.querySelector(".cancelpopUp-button");
 
-  for(const input of inputs) {
-    input.disabled = false;
+  function togglepopUp() {
+    popUp.classList.toggle("show-popUp");
   }
-}
 
-function stopEditing() {
-  window.location.hash = "";
-  const inputs = document.querySelectorAll("form#editProfile input");
-  document.getElementById('edit-button-row').style.display = "none"
-
-  for(const input of inputs) {
-    input.disabled = true;
+  function windowOnClick(event) {
+    if (event.target === popUp) {
+        togglepopUp();
+    }
   }
-}
 
-createClassPicker('editProfile');
-</script>
+  trigger.addEventListener("click", togglepopUp);
+  cancelButton.addEventListener("click", togglepopUp);
+  window.addEventListener("click", windowOnClick);
+
+  if(window.location.hash == "#edit") editProfile();
+  function editProfile() {
+    const inputs = document.querySelectorAll("form#editProfile input:disabled");
+    document.getElementById('edit-button-row').style.display = "block"
+    for(const input of inputs) {
+      input.disabled = false;
+    }
+  }
+  function stopEditing() {
+    window.location.hash = "";
+    const inputs = document.querySelectorAll("form#editProfile input");
+    document.getElementById('edit-button-row').style.display = "none"
+    for(const input of inputs) {
+      input.disabled = true;
+    }
+  }
+  createClassPicker('editProfile');
+  </script>
